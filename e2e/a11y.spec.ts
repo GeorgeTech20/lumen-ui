@@ -120,6 +120,33 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(radios.nth(2)).toHaveAttribute('aria-checked', 'true');
   });
 
+  test('accordion: aria-expanded toggles + lazy content (inherited from @angular/aria)', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    const trigger = page.getByRole('button', { name: '¿Qué es signng?' });
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await trigger.click();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.getByText('Librería de componentes Angular signals-native')).toBeVisible();
+  });
+
+  test('select: combobox opens listbox, selecting an option updates + closes', async ({ page }) => {
+    await page.goto('/');
+    const trigger = page.getByRole('combobox', { name: 'País' });
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await trigger.click();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    const listbox = page.getByRole('listbox');
+    await expect(listbox).toBeVisible();
+    const listboxId = await listbox.getAttribute('id');
+    expect(listboxId).toBeTruthy();
+    await expect(trigger).toHaveAttribute('aria-controls', listboxId!); // combobox owns the listbox
+    await page.getByRole('option', { name: 'México' }).click();
+    await expect(trigger).toContainText('México');
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  });
+
   test('popover: opens, focus moves in, axe clean open, Esc closes + restores focus', async ({
     page,
   }) => {

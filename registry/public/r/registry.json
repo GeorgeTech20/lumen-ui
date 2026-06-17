@@ -82,6 +82,18 @@
       "integrity": "sha256-b3GQI4iru6WIJ4aaUSVOc31nLwEXeJACWHd0kmlLyc0="
     },
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "description": "Accordion over @angular/aria (keyboard, aria-expanded, lazy content inherited).",
+      "integrity": "sha256-ur9PMNYsn5dkNlLu/qszev7f05mdsihqv+ZPVM0WpAQ="
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "description": "Select: trigger + CDK overlay hosting @angular/aria Listbox (single-select).",
+      "integrity": "sha256-DzYSPtKRtzmPSYPFgegup/QftrIPeg93zycFaEtfW4I="
+    },
+    {
       "name": "theme",
       "type": "registry:theme",
       "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
@@ -89,6 +101,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "9KziDvxcrOR/lL+fKz3VaAr4Zi06QHFrqCsEuTkYA5Yrd95bhjSCQmWewKJ6/2ggy5kOBSq3cu2PwdOF/mQ0Aw==",
+  "signature": "02VxN8x3GXZLj+GOUwOs6OOLSk0afNP4ZCcvcsqkGyJ91A4ahpA8YHf1j6S93cevTzRqMNoHu1FVBG/YrmhyBQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

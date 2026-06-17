@@ -83,6 +83,15 @@
     </section>
 
     <section class="space-y-3">
+      <h2 class="text-sm font-medium">Accordion + Select (@angular/aria · a11y heredada)</h2>
+      <signng-accordion [items]="faq" />
+      <div class="max-w-xs space-y-2">
+        <span class="text-sm font-medium">País ({{ country() ?? '—' }})</span>
+        <signng-select label="País" placeholder="Elige país" [options]="countries" [(value)]="country" />
+      </div>
+    </section>
+
+    <section class="space-y-3">
       <h2 class="text-sm font-medium">Tabs (@angular/aria · a11y heredada)</h2>
       <div ngTabs class="rounded-lg border border-border">
         <ul ngTabList [(selectedTab)]="selectedTab" class="flex gap-1 border-b border-border p-1">

@@ -123,6 +123,22 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/textarea.ts', target: 'src/components/ui/textarea.ts', type: 'registry:ui' }],
   },
   {
+    name: 'accordion',
+    type: 'registry:ui',
+    description: 'Accordion over @angular/aria (keyboard, aria-expanded, lazy content inherited).',
+    dependencies: ['@signng/core', '@angular/aria'],
+    registryDependencies: ['utils'],
+    files: [{ src: 'ui/accordion.ts', target: 'src/components/ui/accordion.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'select',
+    type: 'registry:ui',
+    description: 'Select: trigger + CDK overlay hosting @angular/aria Listbox (single-select).',
+    dependencies: ['@signng/core', '@angular/cdk', '@angular/aria'],
+    registryDependencies: ['utils', 'overlay'],
+    files: [{ src: 'ui/select.ts', target: 'src/components/ui/select.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'theme',
     type: 'registry:theme',
     description: 'signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.',
