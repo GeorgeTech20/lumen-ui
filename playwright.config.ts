@@ -3,7 +3,9 @@ import { defineConfig, devices } from '@playwright/test';
 // Runs the a11y + interaction gate against the SSR server (tests SSR + hydration + zoneless).
 export default defineConfig({
   testDir: './e2e',
-  fullyParallel: true,
+  fullyParallel: false,
+  workers: 1, // C: disk-constrained here; serial avoids headless-shell crashes
+  retries: 2, // tolerate intermittent headless-shell crashes under disk pressure
   reporter: [['list']],
   use: {
     baseURL: 'http://localhost:4000',

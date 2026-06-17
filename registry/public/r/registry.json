@@ -64,6 +64,24 @@
       "integrity": "sha256-Mwii0nZVh95YIRy7YOhZfDC+n8SLhj9c7ct9g8NjY8A="
     },
     {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "description": "Accessible radio group (roving tabindex, arrow nav) on @signng/core/radio-group.",
+      "integrity": "sha256-ZKsSLQVEHVA1Ml6p3scn/jXEEbzcASrgZwssUbvUw2o="
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "description": "Non-modal popover (CDK connected overlay, outside-click + Esc dismiss).",
+      "integrity": "sha256-cFAg/6wsjwrEhiv83Tl4e1RB8UAvW5Od8gpfFY2JOgE="
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "description": "Styled native textarea.",
+      "integrity": "sha256-b3GQI4iru6WIJ4aaUSVOc31nLwEXeJACWHd0kmlLyc0="
+    },
+    {
       "name": "theme",
       "type": "registry:theme",
       "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
@@ -71,6 +89,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "HRO5OubHdIGvrPQT2RiKYY9Oq7CUuk72rkF18Icd6NpA7EGkmMXVLkxWn9CqQ5hRJw/LOuQDGFWyYZtcdcSfCQ==",
+  "signature": "9KziDvxcrOR/lL+fKz3VaAr4Zi06QHFrqCsEuTkYA5Yrd95bhjSCQmWewKJ6/2ggy5kOBSq3cu2PwdOF/mQ0Aw==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

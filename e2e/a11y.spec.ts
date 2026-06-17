@@ -103,4 +103,45 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await page.keyboard.press('Escape');
     await expect(page.getByRole('tooltip')).toHaveCount(0);
   });
+
+  test('radiogroup: roving tabindex + arrow selection follows focus', async ({ page }) => {
+    await page.goto('/');
+    const radios = page.getByRole('radio');
+    await expect(radios).toHaveCount(3);
+    await expect(radios.nth(0)).toHaveAttribute('aria-checked', 'true'); // 'free' initial
+    await expect(radios.nth(0)).toHaveAttribute('tabindex', '0');
+    await expect(radios.nth(1)).toHaveAttribute('tabindex', '-1');
+
+    await radios.nth(0).focus();
+    await page.keyboard.press('ArrowDown');
+    await expect(radios.nth(1)).toHaveAttribute('aria-checked', 'true');
+    await expect(radios.nth(0)).toHaveAttribute('aria-checked', 'false');
+    await page.keyboard.press('End');
+    await expect(radios.nth(2)).toHaveAttribute('aria-checked', 'true');
+  });
+
+  test('popover: opens, focus moves in, axe clean open, Esc closes + restores focus', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    const trigger = page.getByRole('button', { name: 'Abrir popover' });
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await trigger.click();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+
+    const panel = page.getByRole('dialog');
+    await expect(panel).toBeVisible();
+    // focus moved into the panel (auto-capture lands on the first control)
+    await expect(page.getByRole('button', { name: 'Entendido' })).toBeFocused();
+
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    expect(results.violations).toEqual([]);
+
+    await page.keyboard.press('Escape');
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await expect(trigger).toBeFocused(); // focus restored
+  });
 });
