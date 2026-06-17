@@ -212,6 +212,26 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(grid).toHaveAttribute('aria-activedescendant', /2026-06-20$/);
   });
 
+  test('toggle-group: single-select roving — selecting one clears the other', async ({ page }) => {
+    await page.goto('/');
+    const group = page.getByRole('group', { name: 'Alineación de texto' });
+    const left = group.getByRole('button', { name: 'Izq' });
+    const center = group.getByRole('button', { name: 'Centro' });
+    await expect(left).toHaveAttribute('aria-pressed', 'true'); // initial ['left']
+    await center.click();
+    await expect(center).toHaveAttribute('aria-pressed', 'true');
+    await expect(left).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  test('context-menu: right-click opens menu at pointer, select emits', async ({ page }) => {
+    await page.goto('/');
+    await page.getByText('Click derecho aquí').click({ button: 'right' });
+    await expect(page.getByRole('menu')).toBeVisible();
+    await page.getByRole('menuitem', { name: 'Copiar' }).click();
+    await expect(page.getByTestId('ctx-value')).toContainText('copy');
+    await expect(page.getByRole('menu')).toHaveCount(0);
+  });
+
   test('toggle: aria-pressed flips on click', async ({ page }) => {
     await page.goto('/');
     const toggle = page.getByRole('button', { name: 'Negrita' });

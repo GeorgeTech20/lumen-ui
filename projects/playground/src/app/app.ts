@@ -22,6 +22,10 @@ import { Command } from '@/components/ui/command';
 import { Toggle } from '@/components/ui/toggle';
 import { Collapsible } from '@/components/ui/collapsible';
 import { HoverCard } from '@/components/ui/hover-card';
+import { SIGNNG_TOGGLE_GROUP } from '@/components/ui/toggle-group';
+import { ContextMenu } from '@/components/ui/context-menu';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { SIGNNG_CARD } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -43,8 +47,8 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
     RadioGroup, Radio, Dialog, Tooltip, Popover, Accordion, Select,
     Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet, Toaster,
     Skeleton, Progress, Combobox, Calendar, DatePicker, Pagination, Command,
-    Toggle, Collapsible, HoverCard,
-    ...SIGNNG_BREADCRUMB, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
+    Toggle, Collapsible, HoverCard, ContextMenu, ScrollArea, AspectRatio,
+    ...SIGNNG_TOGGLE_GROUP, ...SIGNNG_BREADCRUMB, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
   ],
   templateUrl: './app.html',
 })
@@ -59,6 +63,13 @@ export class App {
   protected readonly date = signal<string | null>('2026-06-15');
   protected readonly dob = signal<string | null>(null);
   protected readonly bold = signal(false);
+  protected readonly align = signal<string[]>(['left']);
+  protected readonly ctxAction = signal('');
+  protected readonly ctxItems = [
+    { value: 'copy', label: 'Copiar' },
+    { value: 'paste', label: 'Pegar' },
+    { value: 'delete', label: 'Eliminar' },
+  ];
   protected readonly currentPage = signal(3);
   protected readonly lastCmd = signal('');
   protected readonly cmds = [

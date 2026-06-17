@@ -202,6 +202,30 @@
       "integrity": "sha256-FMpZ77AXZZETFC7FvDoyp3BqRILh68PZdlWRXOtiY5s="
     },
     {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "description": "Roving toggle group (single/multiple, role=group, arrow nav) reusing toggle variants.",
+      "integrity": "sha256-W3ZOOIqczoQz0NH1cyfUl1SjNLG9aSd6H7f0pViulHY="
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "description": "Right-click menu over @angular/aria Menu, positioned at the pointer (CDK overlay).",
+      "integrity": "sha256-yG9SFCUbUvpEBUWCwLgrelhV9CnQ9AzOmFdeTg7U210="
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "description": "Styled scroll container (thin themed scrollbar).",
+      "integrity": "sha256-7NUFgnrFaKYocV3meEj+GaZ94Bk/0CNGNI2Gs+HXptE="
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "description": "Aspect-ratio box.",
+      "integrity": "sha256-CWVlCmnbNUVDc1A7PbDYHo2nxaFZMyY3+q09b+TByyo="
+    },
+    {
       "name": "breadcrumb",
       "type": "registry:ui",
       "description": "Breadcrumb nav part directives (aria-current page, separator).",
@@ -227,6 +251,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "UcJwb574qWAjJW3MvtEZeSVUykiNUtIYjfn7Nih6llOANf9EdeJS0tJJm3LcY5pKG/4nRSdtGnakSYXFDxzUBg==",
+  "signature": "R9xRyhqq1gTLxrx7ZVnlo6h2SYlwcX3kUAy0+dEtWAL79dujo/1SxJ7mGNf8V6QBrP30MGfSgkdENxk0RvoPCg==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
