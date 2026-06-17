@@ -20,6 +20,10 @@ import { Avatar } from '@/components/ui/avatar';
 import { AlertDialog } from '@/components/ui/alert-dialog';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { Toaster, ToastService } from '@/components/ui/toast';
+import { SIGNNG_ALERT } from '@/components/ui/alert';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Progress } from '@/components/ui/progress';
+import { SIGNNG_TABLE } from '@/components/ui/table';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 @Component({
@@ -28,7 +32,8 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
   imports: [
     Button, Slider, Switch, Checkbox, Input, Label, Textarea,
     RadioGroup, Radio, Dialog, Tooltip, Popover, Accordion, Select,
-    Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet, Toaster, ...SIGNNG_CARD, ...SIGNNG_TABS,
+    Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet, Toaster,
+    Skeleton, Progress, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
   ],
   templateUrl: './app.html',
 })

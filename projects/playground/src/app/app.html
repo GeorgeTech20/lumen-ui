@@ -129,6 +129,40 @@
       }
     </section>
 
+    <section class="space-y-4">
+      <h2 class="text-sm font-medium">Alert · Progress · Skeleton · Table</h2>
+      <div signngAlert variant="destructive">
+        <div signngAlertTitle>Atención</div>
+        <div signngAlertDescription>Algo requiere tu atención.</div>
+      </div>
+      <signng-progress [value]="66" label="Carga" class="max-w-sm" />
+      <div class="flex items-center gap-3">
+        <div signngSkeleton class="size-10 rounded-full"></div>
+        <div class="space-y-2">
+          <div signngSkeleton class="h-4 w-32"></div>
+          <div signngSkeleton class="h-4 w-24"></div>
+        </div>
+      </div>
+      <table signngTable class="max-w-md">
+        <thead signngTableHeader>
+          <tr signngTableRow>
+            <th signngTableHead>Plan</th>
+            <th signngTableHead>Precio</th>
+          </tr>
+        </thead>
+        <tbody signngTableBody>
+          <tr signngTableRow>
+            <td signngTableCell>Free</td>
+            <td signngTableCell>$0</td>
+          </tr>
+          <tr signngTableRow>
+            <td signngTableCell>Pro</td>
+            <td signngTableCell>$12</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
     <section class="space-y-3">
       <h2 class="text-sm font-medium">Accordion + Select (@angular/aria · a11y heredada)</h2>
       <signng-accordion [items]="faq" />

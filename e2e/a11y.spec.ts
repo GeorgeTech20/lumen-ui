@@ -161,6 +161,14 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(page.getByTestId('last-action')).toContainText('deleted');
   });
 
+  test('progress: role=progressbar with aria-valuenow/min/max', async ({ page }) => {
+    await page.goto('/');
+    const bar = page.getByRole('progressbar', { name: 'Carga' });
+    await expect(bar).toHaveAttribute('aria-valuenow', '66');
+    await expect(bar).toHaveAttribute('aria-valuemin', '0');
+    await expect(bar).toHaveAttribute('aria-valuemax', '100');
+  });
+
   test('sheet: edge drawer opens modal, Esc closes + restores focus', async ({ page }) => {
     await page.goto('/');
     const trigger = page.getByRole('button', { name: 'Abrir sheet' });

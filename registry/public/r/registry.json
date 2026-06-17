@@ -142,6 +142,30 @@
       "integrity": "sha256-pnU/eoyWjrx6qPAUCdFYZu5uopev/3JqaMcG2fFAwjI="
     },
     {
+      "name": "alert",
+      "type": "registry:ui",
+      "description": "Alert callout (title/description directives, CVA variants).",
+      "integrity": "sha256-Is/RF/tHBU0GJ6+IT25gq0wM3TFo10chGVSEVwmquEs="
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "description": "Skeleton loading placeholder (decorative, aria-hidden).",
+      "integrity": "sha256-hoIg3hL+qwyHodPYD5thQom+FFxDqSC5lqapt9ICt/o="
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "description": "Progress bar (role=progressbar, aria-valuenow/min/max).",
+      "integrity": "sha256-u2V2J3iv5KE6lMz3Q7dj/O6prsT5vFI8rGg+RCPea6E="
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "description": "Table part directives (native semantics + skin).",
+      "integrity": "sha256-4ZcPUwJUjWvpkNCDryQCwp/VVC7TYmdkNK1z9jJF0mc="
+    },
+    {
       "name": "theme",
       "type": "registry:theme",
       "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
@@ -149,6 +173,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "ktcvXgKP3O94M13/uRxFYwHwYs7t9o/LPE6R4w1HI+f2QLTMds+Wm7O2Smixq4RvitQhsbeCBPS+3NO1+K3rBw==",
+  "signature": "MP3hV8guyIcy24k4ub7HMboGtEBtZ3w0MAoFWCBl+4FzH7l4QyNq1a4mMuA2lOR3faBC7+ZNz6Vm7pBDMElbDg==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
