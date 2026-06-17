@@ -83,6 +83,44 @@
     </section>
 
     <section class="space-y-3">
+      <h2 class="text-sm font-medium">Card · Badge · Avatar · Separator · Menu · AlertDialog</h2>
+      <div signngCard class="max-w-sm">
+        <div signngCardHeader>
+          <div class="flex items-center gap-3">
+            <signng-avatar src="https://i.pravatar.cc/80" alt="Avatar de usuario" fallback="GT" />
+            <div class="flex flex-col gap-1">
+              <div signngCardTitle class="flex items-center gap-2">
+                Giorgi <span signngBadge variant="secondary">Pro</span>
+              </div>
+              <div signngCardDescription>giorgi&#64;example.com</div>
+            </div>
+          </div>
+        </div>
+        <div signngSeparator></div>
+        <div signngCardContent class="pt-6">
+          <p class="text-sm text-muted-foreground">Card con badge, avatar y separator.</p>
+        </div>
+        <div signngCardFooter class="gap-2">
+          <signng-dropdown-menu
+            triggerLabel="Acciones"
+            label="Acciones"
+            [items]="menuItems"
+            (selected)="lastAction.set($event)"
+          />
+          <signng-alert-dialog
+            triggerLabel="Eliminar"
+            title="¿Eliminar cuenta?"
+            description="Esta acción no se puede deshacer."
+            (confirmed)="lastAction.set('deleted')"
+          />
+        </div>
+      </div>
+      @if (lastAction()) {
+        <p class="text-sm" data-testid="last-action">Última acción: {{ lastAction() }}</p>
+      }
+    </section>
+
+    <section class="space-y-3">
       <h2 class="text-sm font-medium">Accordion + Select (@angular/aria · a11y heredada)</h2>
       <signng-accordion [items]="faq" />
       <div class="max-w-xs space-y-2">

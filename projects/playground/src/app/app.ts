@@ -12,6 +12,12 @@ import { Tooltip } from '@/components/ui/tooltip';
 import { Popover } from '@/components/ui/popover';
 import { Accordion } from '@/components/ui/accordion';
 import { Select } from '@/components/ui/select';
+import { SIGNNG_CARD } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Avatar } from '@/components/ui/avatar';
+import { AlertDialog } from '@/components/ui/alert-dialog';
+import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 @Component({
@@ -19,7 +25,8 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     Button, Slider, Switch, Checkbox, Input, Label, Textarea,
-    RadioGroup, Radio, Dialog, Tooltip, Popover, Accordion, Select, ...SIGNNG_TABS,
+    RadioGroup, Radio, Dialog, Tooltip, Popover, Accordion, Select,
+    Badge, Separator, Avatar, AlertDialog, DropdownMenu, ...SIGNNG_CARD, ...SIGNNG_TABS,
   ],
   templateUrl: './app.html',
 })
@@ -40,5 +47,12 @@ export class App {
     { value: 'pe', label: 'Perú' },
     { value: 'mx', label: 'México' },
     { value: 'ar', label: 'Argentina' },
+  ];
+
+  protected readonly lastAction = signal('');
+  protected readonly menuItems = [
+    { value: 'edit', label: 'Editar' },
+    { value: 'share', label: 'Compartir' },
+    { value: 'archive', label: 'Archivar' },
   ];
 }

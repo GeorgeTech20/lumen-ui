@@ -120,6 +120,38 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(radios.nth(2)).toHaveAttribute('aria-checked', 'true');
   });
 
+  test('dropdown-menu: role=menu/menuitem, select emits value + closes', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Acciones' }).click();
+    await expect(page.getByRole('menu')).toBeVisible();
+    await page.getByRole('menuitem', { name: 'Compartir' }).click();
+    await expect(page.getByTestId('last-action')).toContainText('share');
+    await expect(page.getByRole('menu')).toHaveCount(0);
+  });
+
+  test('dropdown-menu: keyboard (arrow + Enter) activates an item (B1 regression)', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Acciones' }).click();
+    await expect(page.getByRole('menu')).toBeVisible();
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
+    await expect(page.getByTestId('last-action')).toBeVisible(); // keyboard selection fired
+    await expect(page.getByRole('menu')).toHaveCount(0);
+  });
+
+  test('alert-dialog: role=alertdialog modal, confirm emits + closes', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Eliminar' }).click();
+    const dlg = page.getByRole('alertdialog');
+    await expect(dlg).toBeVisible();
+    await expect(dlg).toHaveAttribute('aria-modal', 'true');
+    await page.getByRole('button', { name: 'Confirmar' }).click();
+    await expect(page.getByRole('alertdialog')).toHaveCount(0);
+    await expect(page.getByTestId('last-action')).toContainText('deleted');
+  });
+
   test('accordion: aria-expanded toggles + lazy content (inherited from @angular/aria)', async ({
     page,
   }) => {

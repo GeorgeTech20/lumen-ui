@@ -1,0 +1,22 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "avatar",
+  "type": "registry:ui",
+  "description": "Avatar with image + initials fallback; src run through URL scheme allowlist.",
+  "dependencies": [
+    "@signng/core"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/avatar.ts",
+      "target": "src/components/ui/avatar.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, computed, input, linkedSignal } from '@angular/core';\nimport { sanitizeUrl } from '@signng/core/primitives';\nimport { cn } from '@/lib/utils';\n\n/**\n * Styled Avatar (helm). Renders an image, falling back to initials on error or unsafe src.\n * Security: the src is run through the signng URL scheme allowlist (`sanitizeUrl`) before binding,\n * so `javascript:`/unsafe schemes can never reach `[src]` (defense-in-depth over Angular's sanitizer).\n */\n@Component({\n  selector: 'signng-avatar',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: {\n    '[class]': 'hostClass()',\n  },\n  template: `\n    @if (!errored() && safeSrc()) {\n      <img\n        [src]=\"safeSrc()\"\n        [alt]=\"alt()\"\n        (error)=\"errored.set(true)\"\n        class=\"aspect-square size-full object-cover\"\n      />\n    } @else {\n      <span class=\"flex size-full items-center justify-center text-sm font-medium text-muted-foreground\">\n        {{ fallback() }}\n      </span>\n    }\n  `,\n})\nexport class Avatar {\n  readonly src = input('');\n  readonly alt = input('');\n  readonly fallback = input('?');\n  readonly class = input('');\n\n  protected readonly safeSrc = computed(() => {\n    const raw = this.src();\n    return raw ? sanitizeUrl(raw, '') : '';\n  });\n  // Reset the error state whenever the (sanitized) src changes — avoids stale fallback on reuse.\n  protected readonly errored = linkedSignal({ source: this.safeSrc, computation: () => false });\n  protected readonly hostClass = computed(() =>\n    cn('relative flex size-10 shrink-0 overflow-hidden rounded-full bg-muted', this.class()),\n  );\n}\n",
+      "integrity": "sha256-6CHbYWMRnX/54ZH1K3Sy6C6G7H280fwZXh2oMduYyZw="
+    }
+  ],
+  "integrity": "sha256-lwMYev5s85pPkSBgxjjGLHFo0LCy7Hg9nir8Yyb6jKQ="
+}

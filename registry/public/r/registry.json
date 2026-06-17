@@ -94,6 +94,42 @@
       "integrity": "sha256-DzYSPtKRtzmPSYPFgegup/QftrIPeg93zycFaEtfW4I="
     },
     {
+      "name": "card",
+      "type": "registry:ui",
+      "description": "Card part directives (header/title/description/content/footer).",
+      "integrity": "sha256-ywqPru2pKRKhYBwQb4lrdtNEhdxRWQMJi558RVBtPPo="
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "description": "Badge with CVA variants.",
+      "integrity": "sha256-Zv3YR+8VcZhVCONJ4q1Y88UMI1XXof5NubmGKYpyDiA="
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "description": "Separator (role=separator, orientation).",
+      "integrity": "sha256-LQHjsytehFpYf+HxmGutbbba6gIzJYjVseqr4Z8sgeo="
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "description": "Avatar with image + initials fallback; src run through URL scheme allowlist.",
+      "integrity": "sha256-lwMYev5s85pPkSBgxjjGLHFo0LCy7Hg9nir8Yyb6jKQ="
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "description": "Confirm/cancel modal (role=alertdialog) on @signng/core/dialog.",
+      "integrity": "sha256-thrknNc8k3ZNEOeEaQK1U/MtrqemtQLdH5l8Zh7pgMI="
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "description": "Dropdown menu over @angular/aria Menu (role=menu, roving, typeahead) in a CDK overlay.",
+      "integrity": "sha256-7XfLSn860XENp0BJwmzqEpk4dAwDnULbGG+eWdIXRzY="
+    },
+    {
       "name": "theme",
       "type": "registry:theme",
       "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
@@ -101,6 +137,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "02VxN8x3GXZLj+GOUwOs6OOLSk0afNP4ZCcvcsqkGyJ91A4ahpA8YHf1j6S93cevTzRqMNoHu1FVBG/YrmhyBQ==",
+  "signature": "2YRPQGosWMFcwrG+2iSXiZSCiszsJ2bkFqJ2yDdkBXSlaCQn3QKglUdbbBpoBxUD8mZbCr618B+l1RJyCAaBAQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
