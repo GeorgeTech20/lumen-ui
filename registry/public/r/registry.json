@@ -202,6 +202,18 @@
       "integrity": "sha256-FiZ0LbzcnMOITpLdXzonsWgkwL7O6FLPpkkJ/Yjvra4="
     },
     {
+      "name": "chart",
+      "type": "registry:ui",
+      "description": "Minimal pure-SVG charts (bar, line, donut, sparkline) — signals, role=img, no deps.",
+      "integrity": "sha256-5/orZBFpP2xX1ryH2759cl+EUm+lQnwOXPSSJ3NQj/Q="
+    },
+    {
+      "name": "icon",
+      "type": "registry:ui",
+      "description": "Owned minimal stroke icon set (~30 feather-style) rendered as path d (no innerHTML).",
+      "integrity": "sha256-/yCEMbcl0wbBRBsRJqPRdNG2CmI3XBCHamUMBOPFjjM="
+    },
+    {
       "name": "navigation-menu",
       "type": "registry:ui",
       "description": "Navigation menu: disclosure triggers revealing projected panels (CDK overlay, hover/click).",
@@ -281,6 +293,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "99GRIDtcdBH2UK6rxJHKGFZRRZx6OHH5Gj7Nzw3sLVIbtSzav7ABotpCBuH67J/slIIDGQ6bIH6qcLU6Y6dFBw==",
+  "signature": "F1aXXoFK+EI9veWH+27t1P7sXlgz/Z+GIUV7oyYHFUQoVTaTggct5nXWl21KP53M7CTQRkqmX1PnmuXJLIWbDQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

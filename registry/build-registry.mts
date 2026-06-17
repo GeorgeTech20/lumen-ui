@@ -276,6 +276,18 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/hover-card.ts', target: 'src/components/ui/hover-card.ts', type: 'registry:ui' }],
   },
   {
+    name: 'chart',
+    type: 'registry:ui',
+    description: 'Minimal pure-SVG charts (bar, line, donut, sparkline) — signals, role=img, no deps.',
+    files: [{ src: 'ui/chart.ts', target: 'src/components/ui/chart.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'icon',
+    type: 'registry:ui',
+    description: 'Owned minimal stroke icon set (~30 feather-style) rendered as path d (no innerHTML).',
+    files: [{ src: 'ui/icon.ts', target: 'src/components/ui/icon.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'navigation-menu',
     type: 'registry:ui',
     description: 'Navigation menu: disclosure triggers revealing projected panels (CDK overlay, hover/click).',

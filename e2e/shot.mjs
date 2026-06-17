@@ -1,9 +1,11 @@
 import { chromium } from '@playwright/test';
 const b = await chromium.launch();
-const p = await b.newPage({ viewport: { width: 1320, height: 2400 } });
+const p = await b.newPage({ viewport: { width: 1320, height: 1600 } });
 await p.goto('http://localhost:4000/', { waitUntil: 'networkidle' });
 await p.getByRole('button', { name: 'Ver dashboard →' }).click();
+await p.waitForTimeout(300);
+await p.getByRole('tab', { name: 'Analítica' }).click();
 await p.waitForTimeout(400);
-await p.screenshot({ path: 'C:/Users/Lenovo/AppData/Local/Temp/dashboard.png', fullPage: true });
+await p.screenshot({ path: 'C:/Users/Lenovo/AppData/Local/Temp/charts.png', fullPage: true });
 await b.close();
-console.log('dashboard shot ok');
+console.log('charts shot ok');

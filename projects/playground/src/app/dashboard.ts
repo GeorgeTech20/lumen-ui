@@ -42,6 +42,8 @@ import { SIGNNG_TOGGLE_GROUP } from '@/components/ui/toggle-group';
 import { SIGNNG_CAROUSEL } from '@/components/ui/carousel';
 import { SIGNNG_NAVIGATION_MENU } from '@/components/ui/navigation-menu';
 import { SignngResizable } from '@/components/ui/resizable';
+import { Icon } from '@/components/ui/icon';
+import { SIGNNG_CHART } from '@/components/ui/chart';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 interface Row {
@@ -61,6 +63,7 @@ interface Row {
     Dialog, AlertDialog, Sheet, Popover, Tooltip, HoverCard, Command, Toaster,
     Accordion, DropdownMenu, ContextMenu, Menubar, Pagination, Calendar, DatePicker,
     Avatar, Badge, Separator, Skeleton, Progress, Toggle, Collapsible, ScrollArea, AspectRatio, SignngResizable,
+    Icon, ...SIGNNG_CHART,
     ...SIGNNG_CARD, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_BREADCRUMB, ...SIGNNG_TOGGLE_GROUP,
     ...SIGNNG_CAROUSEL, ...SIGNNG_NAVIGATION_MENU, ...SIGNNG_TABS,
   ],
@@ -122,18 +125,21 @@ export class Dashboard {
     { value: 'b', title: 'Exportación GDPR', content: 'Export completo en JSON bajo el Art. 20.' },
   ];
   protected readonly stats = [
-    { label: 'MRR', value: '$48.2k', delta: '+12%', good: true, goal: 72 },
-    { label: 'Usuarios activos', value: '3,940', delta: '+4%', good: true, goal: 58 },
-    { label: 'Churn', value: '2.1%', delta: '-0.3%', good: true, goal: 21 },
-    { label: 'Tickets', value: '38', delta: '+9', good: false, goal: 44 },
+    { label: 'MRR', value: '$48.2k', delta: '+12%', good: true, goal: 72, trend: [30, 42, 38, 55, 60, 72] },
+    { label: 'Usuarios activos', value: '3,940', delta: '+4%', good: true, goal: 58, trend: [40, 44, 50, 48, 54, 58] },
+    { label: 'Churn', value: '2.1%', delta: '-0.3%', good: true, goal: 21, trend: [35, 30, 28, 25, 23, 21] },
+    { label: 'Tickets', value: '38', delta: '+9', good: false, goal: 44, trend: [20, 26, 30, 34, 40, 44] },
   ];
-  protected readonly bars = [
-    { label: 'Ene', v: 40 },
-    { label: 'Feb', v: 55 },
-    { label: 'Mar', v: 48 },
-    { label: 'Abr', v: 70 },
-    { label: 'May', v: 62 },
-    { label: 'Jun', v: 80 },
+  protected readonly chartBars = [
+    { label: 'Ene', value: 40 }, { label: 'Feb', value: 55 }, { label: 'Mar', value: 48 },
+    { label: 'Abr', value: 70 }, { label: 'May', value: 62 }, { label: 'Jun', value: 80 },
+  ];
+  protected readonly lineData = [
+    { label: 'L', value: 12 }, { label: 'M', value: 19 }, { label: 'X', value: 15 },
+    { label: 'J', value: 27 }, { label: 'V', value: 22 }, { label: 'S', value: 31 }, { label: 'D', value: 28 },
+  ];
+  protected readonly donutData = [
+    { label: 'Free', value: 48 }, { label: 'Pro', value: 32 }, { label: 'Team', value: 20 },
   ];
   protected readonly rows: Row[] = [
     { id: 1, name: 'Giorgi Franck', email: 'giorgi@example.com', role: 'Owner', status: 'active', usage: 82 },

@@ -7,7 +7,7 @@
     <signng-command triggerLabel="Buscar… ⌘K" [commands]="commands" (selected)="notify('Comando ' + $event)" />
     <div class="flex items-center gap-2">
       <signng-tooltip text="Cambiar tema claro/oscuro">
-        <button signngToggle variant="outline" size="sm" [(pressed)]="dark" aria-label="Tema oscuro">◐</button>
+        <button signngToggle variant="outline" size="sm" [(pressed)]="dark" aria-label="Tema oscuro"><signng-icon name="moon" [size]="16" /></button>
       </signng-tooltip>
       <signng-dropdown-menu triggerLabel="Cuenta ▾" label="Cuenta" [items]="menu" (selected)="notify('Cuenta ' + $event)" />
       <signng-hover-card label="Perfil">
@@ -60,7 +60,7 @@
             <div signngCardDescription class="flex items-center gap-1">
               {{ s.label }}
               <signng-tooltip text="Comparado con el mes anterior">
-                <span class="cursor-help text-muted-foreground">ⓘ</span>
+                <span class="cursor-help text-muted-foreground"><signng-icon name="info" [size]="14" /></span>
               </signng-tooltip>
             </div>
             <div class="flex items-center gap-2">
@@ -68,8 +68,9 @@
               <span signngBadge [variant]="s.good ? 'default' : 'destructive'">{{ s.delta }}</span>
             </div>
           </div>
-          <div signngCardContent class="pt-0">
+          <div signngCardContent class="space-y-2 pt-0">
             <signng-progress [value]="s.goal" [label]="s.label + ' meta'" />
+            <signng-sparkline [values]="s.trend" [class]="s.good ? 'text-primary' : 'text-destructive'" />
           </div>
         </div>
       }
@@ -162,16 +163,15 @@
           <div class="grid gap-6 lg:grid-cols-2">
             <div signngCard>
               <div signngCardHeader class="pb-2"><span signngCardTitle>Ingresos por mes</span></div>
-              <div signngCardContent>
-                <div class="flex h-40 items-end gap-3">
-                  @for (b of bars; track b.label) {
-                    <div class="flex flex-1 flex-col items-center gap-1">
-                      <div class="w-full rounded-t bg-primary" [style.height.%]="b.v"></div>
-                      <span class="text-xs text-muted-foreground">{{ b.label }}</span>
-                    </div>
-                  }
-                </div>
-              </div>
+              <div signngCardContent><signng-bar-chart [data]="chartBars" /></div>
+            </div>
+            <div signngCard>
+              <div signngCardHeader class="pb-2"><span signngCardTitle>Actividad semanal</span></div>
+              <div signngCardContent><signng-line-chart [data]="lineData" /></div>
+            </div>
+            <div signngCard>
+              <div signngCardHeader class="pb-2"><span signngCardTitle>Distribución de planes</span></div>
+              <div signngCardContent><signng-donut-chart [data]="donutData" /></div>
             </div>
             <div signngCard>
               <div signngCardHeader class="pb-2"><span signngCardTitle>Destacados</span></div>
