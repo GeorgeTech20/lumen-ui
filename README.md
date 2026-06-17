@@ -30,21 +30,37 @@ e2e/           Playwright + axe-core (WCAG 2.2 AA) + prueba de seguridad fail-cl
 | Heredar a11y de `@angular/aria` (Tabs) vía adapter | roles/selección aria ✔, 1 archivo aísla el churn |
 | Seguridad horneada (proto-pollution, URL allowlist) | 9 unit tests adversariales ✔ |
 | Theming oklch portable (drop-in tweakcn) | editar solo `signng-theme.css` re-tematiza, axe sigue AA ✔ |
-| Distribución firmada/verificada (la cuña enterprise) | SRI por item + CLI **fail-closed** 6/6 (tamper/traversal/http) ✔ |
+| Distribución **firmada** + verificada + sandboxeada (la cuña enterprise) | Ed25519 sobre el manifest + SRI por item + CLI **fail-closed** 9/9 (tamper/firma/signer/traversal/http) ✔ |
+
+## Fase 1A — seguridad (cerrada)
+
+| Pieza | Estado |
+|---|---|
+| Firma Ed25519 del registry + verify contra signer **pineado** + cross-check SRI | ✔ runnable (`registry:build` firma, `signng add` verifica) |
+| `security:lint` (banea `bypassSecurityTrust*`/innerHTML/eval) | ✔ 27 files, 0 sinks |
+| Prueba adversarial fail-closed | ✔ 9/9 (`security:test`) |
+| Packages publicables | ✔ `npm pack --dry-run`: core 14 files / cli 2 files |
+| SBOM CycloneDX 1.5 | ✔ `sbom.cyclonedx.json` (10 components) |
+| CI: ci/CodeQL/OSV/release(OIDC+provenance) + Semgrep + SECURITY.md + security.txt | ✔ autorado |
+| **cosign/Sigstore keyless** | ⚙ integración cableada (`tools/cosign.mjs`, `release.yml`); corre en CI o con cosign instalado. Mismo property que Ed25519 (verify-before-write + pinning) |
+| **publish npm real** | ⛔ gated externamente (necesita org npm + trusted publisher); dry-run probado |
 
 ## Correr todo
 
 ```bash
 pnpm install
-pnpm verify:all     # core build + unit tests + tokens + registry + security + playground + a11y
+pnpm verify:all          # core + unit + tokens + signed registry + lint + fail-closed + playground + a11y
+pnpm run sbom            # CycloneDX SBOM
+pnpm cli:build           # bundle CLI -> packages/cli/dist/index.mjs
+pnpm publish:dry         # npm pack --dry-run (core + cli)
 ```
 
 Individuales: `pnpm tokens:build` · `pnpm registry:build` ·
 `pnpm signng add button slider --cwd projects/playground --dry-run` ·
-`pnpm a11y` · `pnpm security:test`
+`pnpm a11y` · `pnpm security:lint` · `pnpm security:test` · `pnpm verify:cosign` (si cosign instalado)
 
-## Diferido (post-Fase 0)
+## Diferido (post-Fase 1A)
 
-Firma cosign/Sigstore real + publish OIDC, los otros 10 primitivos + 18 componentes,
-Storybook/Compodoc, MCP server, marketplace de temas. Ver el análisis completo en
+cosign keyless real en CI + publish npm vivo (gated externamente), los otros 10 primitivos
++ 18 componentes, Storybook/Compodoc, MCP server, marketplace de temas. Análisis completo en
 `~/.claude/plans/analiza-la-creacion-de-glowing-glacier.md`.

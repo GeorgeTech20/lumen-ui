@@ -39,8 +39,13 @@ testem.log
 /typings
 __screenshots__/
 
-# Signing — private key never committed (public key IS committed for pinning)
+# Signing — private keys never committed (public keys ARE committed for pinning)
 /registry/keys/signing.key
+/registry/keys/cosign.key
+# Local toolchain (compiled cosign) + generated SBOM
+/.tools
+/sbom.cyclonedx.json
+/packages/cli/dist
 
 # Playwright
 /test-results
