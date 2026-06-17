@@ -13,6 +13,7 @@ import { Popover } from '@/components/ui/popover';
 import { Sheet } from '@/components/ui/sheet';
 import { Accordion } from '@/components/ui/accordion';
 import { Select } from '@/components/ui/select';
+import { Combobox } from '@/components/ui/combobox';
 import { SIGNNG_CARD } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -33,7 +34,7 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
     Button, Slider, Switch, Checkbox, Input, Label, Textarea,
     RadioGroup, Radio, Dialog, Tooltip, Popover, Accordion, Select,
     Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet, Toaster,
-    Skeleton, Progress, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
+    Skeleton, Progress, Combobox, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
   ],
   templateUrl: './app.html',
 })
@@ -44,6 +45,14 @@ export class App {
   protected readonly terms = signal(false);
   protected readonly plan = signal<string | null>('free');
   protected readonly country = signal<string | null>(null);
+  protected readonly tech = signal<string | null>(null);
+  protected readonly frameworks = [
+    { value: 'ng', label: 'Angular' },
+    { value: 'react', label: 'React' },
+    { value: 'vue', label: 'Vue' },
+    { value: 'svelte', label: 'Svelte' },
+    { value: 'solid', label: 'Solid' },
+  ];
 
   protected readonly faq = [
     { value: 'a', title: '¿Qué es signng?', content: 'Librería de componentes Angular signals-native.' },

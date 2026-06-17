@@ -161,6 +161,29 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(page.getByTestId('last-action')).toContainText('deleted');
   });
 
+  test('combobox: type filters, keyboard activedescendant, Enter selects', async ({ page }) => {
+    await page.goto('/');
+    const input = page.getByRole('combobox', { name: 'Framework' });
+    await input.click();
+    await expect(page.getByRole('listbox')).toBeVisible();
+    await input.pressSequentially('vu');
+    await expect(page.getByRole('option', { name: 'Vue' })).toBeVisible();
+    await expect(page.getByRole('option', { name: 'Angular' })).toHaveCount(0);
+    // keyboard: ArrowDown sets aria-activedescendant, Enter selects
+    await page.keyboard.press('ArrowDown');
+    await expect(input).toHaveAttribute('aria-activedescendant', /signng-combobox-/);
+    await page.keyboard.press('Enter');
+    await expect(input).toHaveValue('Vue');
+    await expect(input).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.getByText('Framework (vue)')).toBeVisible();
+
+    // H1: Tab/blur while open closes the popup (no dead-first-click)
+    await input.click();
+    await expect(page.getByRole('listbox')).toBeVisible();
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('listbox')).toHaveCount(0);
+  });
+
   test('progress: role=progressbar with aria-valuenow/min/max', async ({ page }) => {
     await page.goto('/');
     const bar = page.getByRole('progressbar', { name: 'Carga' });

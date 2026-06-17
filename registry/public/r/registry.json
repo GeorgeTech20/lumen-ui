@@ -130,6 +130,12 @@
       "integrity": "sha256-7XfLSn860XENp0BJwmzqEpk4dAwDnULbGG+eWdIXRzY="
     },
     {
+      "name": "combobox",
+      "type": "registry:ui",
+      "description": "Searchable single-select (controlled APG combobox: input + CDK overlay listbox).",
+      "integrity": "sha256-Cb8TT8+j73oZx2I76m3cvaVacEwXCerAkTIZeUHmxKM="
+    },
+    {
       "name": "sheet",
       "type": "registry:ui",
       "description": "Side drawer (edge-positioned modal) on @signng/core/dialog.",
@@ -173,6 +179,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "MP3hV8guyIcy24k4ub7HMboGtEBtZ3w0MAoFWCBl+4FzH7l4QyNq1a4mMuA2lOR3faBC7+ZNz6Vm7pBDMElbDg==",
+  "signature": "uCPAI8y2anC7pX9MivMnuX0YAOj8mOJFtxPXDkgOmEst2y4/2X/SAeZuUFUnfKxhFCEPNoLCus1uBQm5QUEpAQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

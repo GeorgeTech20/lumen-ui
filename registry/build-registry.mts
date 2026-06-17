@@ -185,6 +185,14 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/dropdown-menu.ts', target: 'src/components/ui/dropdown-menu.ts', type: 'registry:ui' }],
   },
   {
+    name: 'combobox',
+    type: 'registry:ui',
+    description: 'Searchable single-select (controlled APG combobox: input + CDK overlay listbox).',
+    dependencies: ['@angular/cdk'],
+    registryDependencies: ['utils', 'overlay'],
+    files: [{ src: 'ui/combobox.ts', target: 'src/components/ui/combobox.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'sheet',
     type: 'registry:ui',
     description: 'Side drawer (edge-positioned modal) on @signng/core/dialog.',
