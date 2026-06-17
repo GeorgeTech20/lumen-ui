@@ -177,6 +177,14 @@
     </section>
 
     <section class="space-y-4">
+      <h2 class="text-sm font-medium">Menubar</h2>
+      <signng-menubar [menus]="barMenus" (selected)="barAction.set($event.menu + ':' + $event.value)" />
+      @if (barAction()) {
+        <p class="text-sm" data-testid="bar-value">Menubar: {{ barAction() }}</p>
+      }
+    </section>
+
+    <section class="space-y-4">
       <h2 class="text-sm font-medium">InputOTP · Carousel · Resizable</h2>
       <signng-input-otp [(value)]="otp" [length]="6" label="Código 2FA" />
       <p class="text-sm" data-testid="otp-value">OTP: {{ otp() || '—' }}</p>

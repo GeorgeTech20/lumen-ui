@@ -212,6 +212,16 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(grid).toHaveAttribute('aria-activedescendant', /2026-06-20$/);
   });
 
+  test('menubar: role=menubar, open menu + select emits {menu,value}', async ({ page }) => {
+    await page.goto('/');
+    const menubar = page.getByRole('menubar');
+    await menubar.getByRole('menuitem', { name: 'Archivo' }).click();
+    await expect(page.getByRole('menu', { name: 'Archivo' })).toBeVisible();
+    await page.getByRole('menuitem', { name: 'Nuevo' }).click();
+    await expect(page.getByTestId('bar-value')).toContainText('Archivo:new');
+    await expect(page.getByRole('menu')).toHaveCount(0);
+  });
+
   test('input-otp: sequential entry advances focus + builds value', async ({ page }) => {
     await page.goto('/');
     const boxes = page.getByRole('group', { name: 'Código 2FA' }).getByRole('textbox');

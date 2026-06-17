@@ -277,6 +277,14 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/hover-card.ts', target: 'src/components/ui/hover-card.ts', type: 'registry:ui' }],
   },
   {
+    name: 'menubar',
+    type: 'registry:ui',
+    description: 'Menubar: role=menubar of menu buttons, each an @angular/aria Menu in a CDK overlay.',
+    dependencies: ['@angular/cdk', '@angular/aria'],
+    registryDependencies: ['overlay'],
+    files: [{ src: 'ui/menubar.ts', target: 'src/components/ui/menubar.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'input-otp',
     type: 'registry:ui',
     description: 'Segmented OTP input (role=group, auto-advance, paste, numeric autofill).',

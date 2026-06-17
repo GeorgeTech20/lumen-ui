@@ -29,6 +29,7 @@ import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { InputOtp } from '@/components/ui/input-otp';
 import { SIGNNG_CAROUSEL } from '@/components/ui/carousel';
 import { SignngResizable } from '@/components/ui/resizable';
+import { Menubar } from '@/components/ui/menubar';
 import { SIGNNG_CARD } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -51,7 +52,7 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
     Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet, Toaster,
     Skeleton, Progress, Combobox, Calendar, DatePicker, Pagination, Command,
     Toggle, Collapsible, HoverCard, ContextMenu, ScrollArea, AspectRatio,
-    InputOtp, SignngResizable,
+    InputOtp, SignngResizable, Menubar,
     ...SIGNNG_CAROUSEL, ...SIGNNG_TOGGLE_GROUP, ...SIGNNG_BREADCRUMB, ...SIGNNG_ALERT,
     ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
   ],
@@ -69,6 +70,11 @@ export class App {
   protected readonly dob = signal<string | null>(null);
   protected readonly bold = signal(false);
   protected readonly otp = signal('');
+  protected readonly barAction = signal('');
+  protected readonly barMenus = [
+    { label: 'Archivo', items: [{ value: 'new', label: 'Nuevo' }, { value: 'open', label: 'Abrir' }] },
+    { label: 'Editar', items: [{ value: 'undo', label: 'Deshacer' }, { value: 'redo', label: 'Rehacer' }] },
+  ];
   protected readonly slide = signal(0);
   protected readonly splitPct = signal(40);
   protected readonly align = signal<string[]>(['left']);
