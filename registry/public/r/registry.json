@@ -184,6 +184,24 @@
       "integrity": "sha256-4ZcPUwJUjWvpkNCDryQCwp/VVC7TYmdkNK1z9jJF0mc="
     },
     {
+      "name": "toggle",
+      "type": "registry:ui",
+      "description": "Two-state toggle button (aria-pressed, CVA variants).",
+      "integrity": "sha256-VqLGDqTYcmflPe+Tw7pCRhc7Q0yabRpOf6SEvVLZmDI="
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "description": "Single disclosure (aria-expanded + lazy region).",
+      "integrity": "sha256-FDOTBd6eY4onJzjFWWwTFX653NfvsCzS56Bw+OxIpM8="
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "description": "Supplementary hover/focus card (CDK overlay, hoverable, Esc).",
+      "integrity": "sha256-FMpZ77AXZZETFC7FvDoyp3BqRILh68PZdlWRXOtiY5s="
+    },
+    {
       "name": "breadcrumb",
       "type": "registry:ui",
       "description": "Breadcrumb nav part directives (aria-current page, separator).",
@@ -209,6 +227,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "dMW2YjX6q4P0UlbvK/hY0COIBSQVvlq5BwItq3reMbK1XGVJny8yUGEK6xecH+/Q6khB7pMP2wqrqptUuluqBQ==",
+  "signature": "UcJwb574qWAjJW3MvtEZeSVUykiNUtIYjfn7Nih6llOANf9EdeJS0tJJm3LcY5pKG/4nRSdtGnakSYXFDxzUBg==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

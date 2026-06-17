@@ -212,6 +212,32 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(grid).toHaveAttribute('aria-activedescendant', /2026-06-20$/);
   });
 
+  test('toggle: aria-pressed flips on click', async ({ page }) => {
+    await page.goto('/');
+    const toggle = page.getByRole('button', { name: 'Negrita' });
+    await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  test('collapsible: aria-expanded + lazy region', async ({ page }) => {
+    await page.goto('/');
+    const trigger = page.getByRole('button', { name: 'Ver detalles del plan' });
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.getByText('usuarios ilimitados')).toHaveCount(0);
+    await trigger.click();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.getByText('usuarios ilimitados')).toBeVisible();
+  });
+
+  test('hover-card: card shows on focus, hides on Escape', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('link', { name: '@georgetech' }).focus();
+    await expect(page.getByRole('dialog', { name: 'Perfil de usuario' })).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog', { name: 'Perfil de usuario' })).toHaveCount(0);
+  });
+
   test('pagination: aria-current page, navigation updates page', async ({ page }) => {
     await page.goto('/');
     const nav = page.getByRole('navigation', { name: 'Paginación' });

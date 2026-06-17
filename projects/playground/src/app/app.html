@@ -177,6 +177,24 @@
     </section>
 
     <section class="space-y-4">
+      <h2 class="text-sm font-medium">Toggle · Collapsible · HoverCard</h2>
+      <div class="flex items-center gap-3">
+        <button signngToggle variant="outline" [(pressed)]="bold" aria-label="Negrita">B</button>
+        <span class="text-sm">Negrita {{ bold() ? 'on' : 'off' }}</span>
+      </div>
+      <signng-collapsible triggerLabel="Ver detalles del plan" class="max-w-sm">
+        <p class="text-muted-foreground">Plan Pro: usuarios ilimitados, soporte prioritario, export GDPR.</p>
+      </signng-collapsible>
+      <signng-hover-card label="Perfil de usuario">
+        <a hoverCardTrigger href="#" signngBreadcrumbLink class="underline">&commat;georgetech</a>
+        <div hoverCardContent>
+          <div class="font-medium">GeorgeTech20</div>
+          <p class="mt-1 text-muted-foreground">Construye MLM Suite + signng.</p>
+        </div>
+      </signng-hover-card>
+    </section>
+
+    <section class="space-y-4">
       <h2 class="text-sm font-medium">Breadcrumb · Pagination · Command</h2>
       <nav signngBreadcrumb>
         <ol signngBreadcrumbList>

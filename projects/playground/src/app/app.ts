@@ -19,6 +19,9 @@ import { DatePicker } from '@/components/ui/date-picker';
 import { SIGNNG_BREADCRUMB } from '@/components/ui/breadcrumb';
 import { Pagination } from '@/components/ui/pagination';
 import { Command } from '@/components/ui/command';
+import { Toggle } from '@/components/ui/toggle';
+import { Collapsible } from '@/components/ui/collapsible';
+import { HoverCard } from '@/components/ui/hover-card';
 import { SIGNNG_CARD } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -40,6 +43,7 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
     RadioGroup, Radio, Dialog, Tooltip, Popover, Accordion, Select,
     Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet, Toaster,
     Skeleton, Progress, Combobox, Calendar, DatePicker, Pagination, Command,
+    Toggle, Collapsible, HoverCard,
     ...SIGNNG_BREADCRUMB, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_CARD, ...SIGNNG_TABS,
   ],
   templateUrl: './app.html',
@@ -54,6 +58,7 @@ export class App {
   protected readonly tech = signal<string | null>(null);
   protected readonly date = signal<string | null>('2026-06-15');
   protected readonly dob = signal<string | null>(null);
+  protected readonly bold = signal(false);
   protected readonly currentPage = signal(3);
   protected readonly lastCmd = signal('');
   protected readonly cmds = [

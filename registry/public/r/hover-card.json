@@ -1,0 +1,23 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "hover-card",
+  "type": "registry:ui",
+  "description": "Supplementary hover/focus card (CDK overlay, hoverable, Esc).",
+  "dependencies": [
+    "@angular/cdk"
+  ],
+  "registryDependencies": [
+    "utils",
+    "overlay"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/hover-card.ts",
+      "target": "src/components/ui/hover-card.ts",
+      "type": "registry:ui",
+      "content": "import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';\nimport { _IdGenerator } from '@angular/cdk/a11y';\nimport { CdkConnectedOverlay, CdkOverlayOrigin, type ConnectedPosition } from '@angular/cdk/overlay';\n\n/**\n * Styled HoverCard (helm) — supplementary card shown on hover/focus of the trigger (CDK connected\n * overlay). Hoverable (the card stays open while the pointer is over it; WCAG 1.4.13) and Escape-\n * dismissable. The trigger references the card via aria-describedby while open.\n * Project `[hoverCardTrigger]` and `[hoverCardContent]`. Requires the `overlay` registry item.\n */\n@Component({\n  selector: 'signng-hover-card',\n  imports: [CdkConnectedOverlay, CdkOverlayOrigin],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  host: {\n    '(document:keydown.escape)': 'dismiss()',\n  },\n  template: `\n    <span\n      cdkOverlayOrigin\n      #origin=\"cdkOverlayOrigin\"\n      class=\"inline-flex\"\n      [attr.aria-describedby]=\"open() ? id : null\"\n      (mouseenter)=\"triggerHovered.set(true)\"\n      (mouseleave)=\"triggerHovered.set(false)\"\n      (focusin)=\"focused.set(true)\"\n      (focusout)=\"focused.set(false)\"\n    >\n      <ng-content select=\"[hoverCardTrigger]\" />\n    </span>\n    <ng-template\n      cdkConnectedOverlay\n      [cdkConnectedOverlayOrigin]=\"origin\"\n      [cdkConnectedOverlayOpen]=\"open()\"\n      [cdkConnectedOverlayPositions]=\"positions\"\n      [cdkConnectedOverlayPush]=\"true\"\n    >\n      <div\n        [id]=\"id\"\n        role=\"dialog\"\n        [attr.aria-label]=\"label() || 'Más información'\"\n        (mouseenter)=\"cardHovered.set(true)\"\n        (mouseleave)=\"cardHovered.set(false)\"\n        class=\"z-50 w-64 rounded-md border border-border bg-popover p-4 text-sm text-popover-foreground shadow-md outline-none\"\n      >\n        <ng-content select=\"[hoverCardContent]\" />\n      </div>\n    </ng-template>\n  `,\n})\nexport class HoverCard {\n  readonly label = input('');\n\n  protected readonly id = inject(_IdGenerator).getId('signng-hovercard-');\n  protected readonly triggerHovered = signal(false);\n  protected readonly cardHovered = signal(false);\n  protected readonly focused = signal(false);\n  protected readonly open = computed(() => this.triggerHovered() || this.cardHovered() || this.focused());\n\n  protected dismiss(): void {\n    this.triggerHovered.set(false);\n    this.cardHovered.set(false);\n    this.focused.set(false);\n  }\n\n  protected readonly positions: ConnectedPosition[] = [\n    { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top', offsetY: 8 },\n    { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom', offsetY: -8 },\n  ];\n}\n",
+      "integrity": "sha256-KRcmVlL03HNou2xL68zRhGnrmMUx87R70U+nDimII4Y="
+    }
+  ],
+  "integrity": "sha256-FMpZ77AXZZETFC7FvDoyp3BqRILh68PZdlWRXOtiY5s="
+}
