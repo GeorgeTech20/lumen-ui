@@ -12,6 +12,7 @@
     "signng": "tsx packages/cli/src/index.mts",
     "cli:build": "esbuild packages/cli/src/index.mts --bundle --platform=node --format=esm --target=node20 --packages=external --outfile=packages/cli/dist/index.mjs --banner:js=\"#!/usr/bin/env node\"",
     "sbom": "node tools/sbom.mjs",
+    "docs": "node tools/docs.mjs",
     "sign:cosign": "node tools/cosign.mjs sign",
     "verify:cosign": "node tools/cosign.mjs verify",
     "publish:dry": "ng build @signng/core && pnpm cli:build && cd dist/signng/core && npm pack --dry-run && cd ../../../packages/cli && npm pack --dry-run",
