@@ -1,0 +1,310 @@
+<div [class.dark]="dark()" class="min-h-screen bg-background text-foreground">
+  <!-- Topbar -->
+  <header class="sticky top-0 z-30 flex items-center gap-4 border-b border-border bg-background/95 px-6 py-3 backdrop-blur">
+    <span class="text-lg font-semibold tracking-tight">signng <span class="text-muted-foreground">Admin</span></span>
+    <signng-menubar [menus]="bar" (selected)="notify($event.menu + ': ' + $event.value)" />
+    <div class="flex-1"></div>
+    <signng-command triggerLabel="Buscar… ⌘K" [commands]="commands" (selected)="notify('Comando ' + $event)" />
+    <div class="flex items-center gap-2">
+      <signng-tooltip text="Cambiar tema claro/oscuro">
+        <button signngToggle variant="outline" size="sm" [(pressed)]="dark" aria-label="Tema oscuro">◐</button>
+      </signng-tooltip>
+      <signng-dropdown-menu triggerLabel="Cuenta ▾" label="Cuenta" [items]="menu" (selected)="notify('Cuenta ' + $event)" />
+      <signng-hover-card label="Perfil">
+        <span hoverCardTrigger><signng-avatar fallback="GF" alt="Giorgi Franck" class="cursor-pointer" /></span>
+        <div hoverCardContent>
+          <div class="flex items-center gap-3">
+            <signng-avatar fallback="GF" alt="Giorgi Franck" />
+            <div>
+              <div class="font-medium">Giorgi Franck</div>
+              <div class="text-muted-foreground">Owner · giorgi&#64;example.com</div>
+            </div>
+          </div>
+        </div>
+      </signng-hover-card>
+    </div>
+  </header>
+
+  <div class="mx-auto max-w-6xl space-y-6 p-6">
+    <!-- Breadcrumb + nav -->
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <nav signngBreadcrumb>
+        <ol signngBreadcrumbList>
+          <li signngBreadcrumbItem><a signngBreadcrumbLink href="#">Inicio</a></li>
+          <li signngBreadcrumbSeparator></li>
+          <li signngBreadcrumbItem><a signngBreadcrumbLink href="#">Dashboard</a></li>
+          <li signngBreadcrumbSeparator></li>
+          <li signngBreadcrumbItem><span signngBreadcrumbPage>Resumen</span></li>
+        </ol>
+      </nav>
+      <signng-nav-menu>
+        <signng-nav-item label="Productos">
+          <div class="grid gap-1">
+            <a href="#" class="block rounded px-2 py-1 hover:bg-accent">Analytics</a>
+            <a href="#" class="block rounded px-2 py-1 hover:bg-accent">Compliance</a>
+          </div>
+        </signng-nav-item>
+        <signng-nav-item label="Recursos">
+          <a href="#" class="block rounded px-2 py-1 hover:bg-accent">Documentación</a>
+        </signng-nav-item>
+      </signng-nav-menu>
+    </div>
+
+    <h1 class="text-2xl font-semibold tracking-tight">Resumen</h1>
+
+    <!-- Stat cards -->
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      @for (s of stats; track s.label) {
+        <div signngCard>
+          <div signngCardHeader class="gap-1 pb-2">
+            <div signngCardDescription class="flex items-center gap-1">
+              {{ s.label }}
+              <signng-tooltip text="Comparado con el mes anterior">
+                <span class="cursor-help text-muted-foreground">ⓘ</span>
+              </signng-tooltip>
+            </div>
+            <div class="flex items-center gap-2">
+              <span signngCardTitle class="text-2xl">{{ s.value }}</span>
+              <span signngBadge [variant]="s.good ? 'default' : 'destructive'">{{ s.delta }}</span>
+            </div>
+          </div>
+          <div signngCardContent class="pt-0">
+            <signng-progress [value]="s.goal" [label]="s.label + ' meta'" />
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Tabs -->
+    <div ngTabs class="rounded-lg border border-border">
+      <ul ngTabList [(selectedTab)]="tab" class="flex gap-1 border-b border-border p-1">
+        @for (t of [['overview','Resumen'],['analytics','Analítica'],['reports','Reportes']]; track t[0]) {
+          <li ngTab [value]="t[0]" class="cursor-pointer rounded px-3 py-2 text-sm aria-selected:bg-accent aria-selected:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{{ t[1] }}</li>
+        }
+      </ul>
+
+      <!-- Overview: toolbar + table + pagination -->
+      <div ngTabPanel value="overview" class="p-4">
+        <ng-template ngTabContent>
+          <div class="mb-3 flex flex-wrap items-center gap-2">
+            <div signngToggleGroup [(value)]="density" type="single" aria-label="Densidad de tabla">
+              <button signngToggleItem value="compact" size="sm">Compacta</button>
+              <button signngToggleItem value="comfortable" size="sm">Cómoda</button>
+            </div>
+            <button signngToggle variant="outline" size="sm" [(pressed)]="bold" aria-label="Negrita">B</button>
+            <div class="flex-1"></div>
+            <signng-popover triggerLabel="Añadir" label="Añadir rápido">
+              <p class="mb-2 text-sm">Crear elemento rápido.</p>
+              <button signngButton size="sm" (click)="notify('Creado')">Crear</button>
+            </signng-popover>
+            <signng-sheet side="right" triggerLabel="Filtros" title="Filtros" description="Refina la tabla.">
+              <div class="space-y-3">
+                <label signngLabel for="f-q">Buscar</label>
+                <input signngInput id="f-q" placeholder="nombre…" />
+                <div class="flex items-center gap-2"><signng-checkbox ariaLabelledby="f-act" /><span id="f-act" class="text-sm">Solo activos</span></div>
+              </div>
+            </signng-sheet>
+            <signng-dialog title="Nuevo usuario" description="Invita a un miembro al equipo." triggerLabel="Nuevo usuario">
+              <div class="space-y-3">
+                <label signngLabel for="n-email">Email</label>
+                <input signngInput id="n-email" type="email" placeholder="email@empresa.com" />
+                <label signngLabel for="n-role">Rol</label>
+                <signng-select label="Rol" placeholder="Elegir rol" [options]="frameworks" />
+              </div>
+            </signng-dialog>
+            <signng-alert-dialog triggerLabel="Eliminar" title="¿Eliminar seleccionados?" description="No se puede deshacer." (confirmed)="notify('Eliminados')" />
+          </div>
+
+          <signng-context-menu [items]="ctx" (selected)="notify('Fila ' + $event)">
+            <table signngTable>
+              <thead signngTableHeader>
+                <tr signngTableRow>
+                  <th signngTableHead>Usuario</th>
+                  <th signngTableHead>Rol</th>
+                  <th signngTableHead>Estado</th>
+                  <th signngTableHead>Uso</th>
+                  <th signngTableHead><span class="sr-only">Acciones</span></th>
+                </tr>
+              </thead>
+              <tbody signngTableBody>
+                @for (r of rows; track r.id) {
+                  <tr signngTableRow>
+                    <td signngTableCell>
+                      <div class="flex items-center gap-3">
+                        <signng-avatar [fallback]="initials(r.name)" [alt]="r.name" />
+                        <div>
+                          <div [class.font-bold]="bold()" class="font-medium">{{ r.name }}</div>
+                          <div class="text-xs text-muted-foreground">{{ r.email }}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td signngTableCell><span signngBadge variant="secondary">{{ r.role }}</span></td>
+                    <td signngTableCell><span signngBadge [variant]="statusVariant(r.status)">{{ r.status }}</span></td>
+                    <td signngTableCell class="w-32"><signng-progress [value]="r.usage" [label]="r.name + ' uso'" /></td>
+                    <td signngTableCell>
+                      <signng-dropdown-menu triggerLabel="⋯" label="Acciones de fila" [items]="menu" (selected)="notify($event + ' ' + r.name)" />
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </signng-context-menu>
+
+          <div class="mt-3 flex justify-end">
+            <signng-pagination [(page)]="page" [total]="12" />
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Analytics: chart + carousel + progress rows -->
+      <div ngTabPanel value="analytics" class="p-4">
+        <ng-template ngTabContent>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div signngCard>
+              <div signngCardHeader class="pb-2"><span signngCardTitle>Ingresos por mes</span></div>
+              <div signngCardContent>
+                <div class="flex h-40 items-end gap-3">
+                  @for (b of bars; track b.label) {
+                    <div class="flex flex-1 flex-col items-center gap-1">
+                      <div class="w-full rounded-t bg-primary" [style.height.%]="b.v"></div>
+                      <span class="text-xs text-muted-foreground">{{ b.label }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+            <div signngCard>
+              <div signngCardHeader class="pb-2"><span signngCardTitle>Destacados</span></div>
+              <div signngCardContent>
+                <signng-carousel label="Métricas destacadas">
+                  <div signngCarouselItem class="flex h-32 flex-col items-center justify-center rounded-md bg-muted text-foreground">
+                    <span class="text-2xl font-semibold">98.2%</span><span class="text-sm text-muted-foreground">Uptime</span>
+                  </div>
+                  <div signngCarouselItem class="flex h-32 flex-col items-center justify-center rounded-md bg-accent text-accent-foreground">
+                    <span class="text-2xl font-semibold">1.4s</span><span class="text-sm">Latencia p95</span>
+                  </div>
+                  <div signngCarouselItem class="flex h-32 flex-col items-center justify-center rounded-md bg-primary text-primary-foreground">
+                    <span class="text-2xl font-semibold">+312</span><span class="text-sm">Nuevos hoy</span>
+                  </div>
+                </signng-carousel>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Reports: calendar + date-picker + skeleton + alert -->
+      <div ngTabPanel value="reports" class="p-4">
+        <ng-template ngTabContent>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="space-y-3">
+              <div signngAlert>
+                <div signngAlertTitle>Reporte programado</div>
+                <div signngAlertDescription>El próximo export se genera el día seleccionado.</div>
+              </div>
+              <signng-calendar label="Fecha de reporte" [(value)]="date" />
+              <div class="max-w-xs"><signng-date-picker label="Rango fin" [(value)]="date" /></div>
+            </div>
+            <div signngCard>
+              <div signngCardHeader class="pb-2"><span signngCardTitle>Cargando…</span></div>
+              <div signngCardContent class="space-y-2">
+                <div signngSkeleton class="h-4 w-3/4"></div>
+                <div signngSkeleton class="h-4 w-1/2"></div>
+                <div signngSkeleton class="h-24 w-full"></div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Settings form + disclosure -->
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div signngCard>
+        <div signngCardHeader><span signngCardTitle>Preferencias</span><span signngCardDescription>Configura tu cuenta.</span></div>
+        <div signngCardContent class="space-y-4">
+          <div class="space-y-1">
+            <label signngLabel for="p-name">Nombre</label>
+            <input signngInput id="p-name" placeholder="Tu nombre" />
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div class="space-y-1">
+              <span class="text-sm font-medium">Región</span>
+              <signng-select label="Región" placeholder="Elegir" [options]="regions" [(value)]="region" />
+            </div>
+            <div class="space-y-1">
+              <span class="text-sm font-medium">Framework</span>
+              <signng-combobox label="Framework" placeholder="Buscar…" [options]="frameworks" [(value)]="framework" />
+            </div>
+          </div>
+          <div class="space-y-1">
+            <span class="text-sm font-medium">Presupuesto: {{ budget() }}</span>
+            <signng-slider ariaLabel="Presupuesto" [min]="0" [max]="100" [(value)]="budget" />
+          </div>
+          <div class="flex items-center gap-3">
+            <signng-switch ariaLabelledby="p-notif" [(checked)]="notifications" />
+            <span id="p-notif" class="text-sm">Notificaciones por email</span>
+          </div>
+          <div class="space-y-1">
+            <span id="p-plan" class="text-sm font-medium">Plan</span>
+            <signng-radio-group [(value)]="plan" aria-labelledby="p-plan" class="flex gap-4">
+              <signng-radio value="free">Free</signng-radio>
+              <signng-radio value="pro">Pro</signng-radio>
+              <signng-radio value="team">Team</signng-radio>
+            </signng-radio-group>
+          </div>
+          <div class="space-y-1">
+            <label signngLabel for="p-notes">Notas</label>
+            <textarea signngTextarea id="p-notes" placeholder="Comentarios…"></textarea>
+          </div>
+          <div class="space-y-1">
+            <span class="text-sm font-medium">Código 2FA</span>
+            <signng-input-otp [(value)]="twoFactor" [length]="6" label="Código 2FA" />
+          </div>
+          <div class="flex gap-2">
+            <button signngButton (click)="notify('Guardado')">Guardar</button>
+            <button signngButton variant="outline">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <signng-accordion [items]="faq" />
+        <signng-collapsible triggerLabel="Opciones avanzadas">
+          <div class="space-y-2 text-muted-foreground">
+            <p>Webhooks, claves de API y exportación programada.</p>
+            <button signngButton variant="outline" size="sm">Generar API key</button>
+          </div>
+        </signng-collapsible>
+        <hr signngSeparator />
+        <div signngCard>
+          <div signngCardHeader class="pb-2"><span signngCardTitle>Editor / Vista previa</span></div>
+          <div signngCardContent>
+            <signng-resizable label="Editor y vista previa" [(split)]="budget" class="h-40 overflow-hidden rounded-md border border-border">
+              <div resizableStart class="h-full bg-muted p-3 text-sm text-foreground">Editor</div>
+              <div resizableEnd class="h-full p-3 text-sm">Vista previa</div>
+            </signng-resizable>
+          </div>
+        </div>
+        <div signngCard>
+          <div signngCardHeader class="pb-2"><span signngCardTitle>Logs</span></div>
+          <div signngCardContent>
+            <div signngScrollArea class="h-28 border border-border p-2 text-xs">
+              @for (l of logs; track l) { <div>{{ l }}</div> }
+            </div>
+          </div>
+        </div>
+        <div signngCard>
+          <div signngCardHeader class="pb-2"><span signngCardTitle>Media</span></div>
+          <div signngCardContent>
+            <div signngAspectRatio ratio="16/9" class="rounded-md bg-muted">
+              <div class="flex h-full items-center justify-center text-sm font-medium text-foreground">16 / 9</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <signng-toaster />
+</div>

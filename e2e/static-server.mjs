@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { extname, join, normalize } from 'node:path';
 
-const ROOT = join(process.cwd(), 'dist/playground/browser');
+const ROOT = join(process.cwd(), process.env.ROOT || 'dist/playground/browser');
 const PORT = Number(process.env.PORT) || 4000;
 const TYPES = {
   '.html': 'text/html',

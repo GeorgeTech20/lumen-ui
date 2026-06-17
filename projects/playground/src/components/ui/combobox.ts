@@ -213,7 +213,7 @@ export class Combobox {
         if (this.expanded()) this.activeIndex.update((i) => Math.max(i - 1, 0));
         break;
       case 'Enter': {
-        const i = this.activeIndex();
+        const i = this.activeClamped(); // clamped: highlight/activedescendant + activation agree
         if (this.expanded() && i >= 0 && i <= last) {
           event.preventDefault();
           this.select(this.filtered()[i]);

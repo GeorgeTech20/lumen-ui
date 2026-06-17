@@ -163,8 +163,7 @@ const ITEMS: ItemDef[] = [
   {
     name: 'avatar',
     type: 'registry:ui',
-    description: 'Avatar with image + initials fallback; src run through URL scheme allowlist.',
-    dependencies: ['@signng/core'],
+    description: 'Avatar with image + initials fallback; src run through an image-scoped URL allowlist.',
     registryDependencies: ['utils'],
     files: [{ src: 'ui/avatar.ts', target: 'src/components/ui/avatar.ts', type: 'registry:ui' }],
   },

@@ -61,7 +61,7 @@
       "name": "tooltip",
       "type": "registry:ui",
       "description": "Tooltip via CDK connected overlay (hover/focus, role=tooltip).",
-      "integrity": "sha256-gfGKGHL1Vp722J29VBR+UPybTMbiJXz5saHBmj5gL98="
+      "integrity": "sha256-WXo8C/H6PDli3qZwlFX0bzeJliBGp4yxqApvXdJ1LkY="
     },
     {
       "name": "radio-group",
@@ -114,8 +114,8 @@
     {
       "name": "avatar",
       "type": "registry:ui",
-      "description": "Avatar with image + initials fallback; src run through URL scheme allowlist.",
-      "integrity": "sha256-lwMYev5s85pPkSBgxjjGLHFo0LCy7Hg9nir8Yyb6jKQ="
+      "description": "Avatar with image + initials fallback; src run through an image-scoped URL allowlist.",
+      "integrity": "sha256-sxobyrUmXq55IqnKysbs5YOxlqi10lXJ+UsITK3/Hkc="
     },
     {
       "name": "alert-dialog",
@@ -145,7 +145,7 @@
       "name": "combobox",
       "type": "registry:ui",
       "description": "Searchable single-select (controlled APG combobox: input + CDK overlay listbox).",
-      "integrity": "sha256-Cb8TT8+j73oZx2I76m3cvaVacEwXCerAkTIZeUHmxKM="
+      "integrity": "sha256-418vjKj8pcklRnAt6icl7enYlOD8aCtvDnDBexAJOUs="
     },
     {
       "name": "sheet",
@@ -199,7 +199,7 @@
       "name": "hover-card",
       "type": "registry:ui",
       "description": "Supplementary hover/focus card (CDK overlay, hoverable, Esc).",
-      "integrity": "sha256-FMpZ77AXZZETFC7FvDoyp3BqRILh68PZdlWRXOtiY5s="
+      "integrity": "sha256-FiZ0LbzcnMOITpLdXzonsWgkwL7O6FLPpkkJ/Yjvra4="
     },
     {
       "name": "navigation-menu",
@@ -281,6 +281,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "WSUxbY/dFVdx+BelKMV7VXdMUDXGrVUUH5YBuU3vGHDSOgSDOjoiRPSJfzNnMx6hrCAsuZyVzAr8/c/gipNIBg==",
+  "signature": "99GRIDtcdBH2UK6rxJHKGFZRRZx6OHH5Gj7Nzw3sLVIbtSzav7ABotpCBuH67J/slIIDGQ6bIH6qcLU6Y6dFBw==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
