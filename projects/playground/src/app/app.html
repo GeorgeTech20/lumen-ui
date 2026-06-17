@@ -19,6 +19,22 @@
       </div>
     </section>
 
+    <section class="space-y-4">
+      <h2 class="text-sm font-medium">Form (Input · Switch · Checkbox · Label)</h2>
+      <div class="max-w-sm space-y-2">
+        <label signngLabel for="email">Email</label>
+        <input signngInput id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+      </div>
+      <div class="flex items-center gap-3">
+        <signng-switch ariaLabelledby="notif-label" [(checked)]="notifications" />
+        <span id="notif-label" class="text-sm">Notificaciones {{ notifications() ? 'on' : 'off' }}</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <signng-checkbox ariaLabelledby="terms-label" [(checked)]="terms" />
+        <span id="terms-label" class="text-sm">Acepto los términos</span>
+      </div>
+    </section>
+
     <section class="space-y-3">
       <h2 class="text-sm font-medium">Slider (primitivo net-new)</h2>
       <p class="text-muted-foreground text-sm">Volumen: {{ volume() }}</p>

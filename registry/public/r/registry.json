@@ -22,6 +22,30 @@
       "integrity": "sha256-ecISmj4yHdLvOAkY08tDlvI1px1Sh0geZ02Yionwrkg="
     },
     {
+      "name": "switch",
+      "type": "registry:ui",
+      "description": "Accessible switch (role=switch) on @signng/core/switch.",
+      "integrity": "sha256-Ac7zzytph9rYQlEcXn+VgzCKBxbk6cdj+HzJaJLtoiY="
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "description": "Tri-state checkbox (role=checkbox, mixed) on @signng/core/checkbox.",
+      "integrity": "sha256-PLeS9Q0807AcVhp8iwooUoSSfrjrG71hPi1i4op6tzk="
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "description": "Styled native input.",
+      "integrity": "sha256-jb41M+HjkKS6cUrgXu5nbkt2mci/VIIpZGLQzxs/6tg="
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "description": "Styled native label.",
+      "integrity": "sha256-IREO+yQc7VWAWP7F9HJ9nKBGZp+/d0OpZ91cHWBMNys="
+    },
+    {
       "name": "theme",
       "type": "registry:theme",
       "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
@@ -29,6 +53,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "lLw/CVCGr4uP+2HOqamza9l01Q28zTNm8NCNftoO7nYFeQsXSAlFVvM7kEOqKoSQLv97mM87iS0Zu4RMT/qOBQ==",
+  "signature": "ZUSYvOqhjY/WkcmlftFox5gV/K7IsX1ZB1HAd3IjJo5EuNQxbSvHS9cQtqLK1pSyMWAEy025uO4Po2f+N2NLDA==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

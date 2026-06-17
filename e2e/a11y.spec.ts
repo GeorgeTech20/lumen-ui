@@ -41,4 +41,24 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
     await expect(tabs.nth(0)).toHaveAttribute('aria-selected', 'false');
   });
+
+  test('switch: role=switch, aria-checked, Space/Enter toggle', async ({ page }) => {
+    await page.goto('/');
+    const sw = page.getByRole('switch');
+    await expect(sw).toHaveAttribute('aria-checked', 'true');
+    await sw.focus();
+    await page.keyboard.press('Space');
+    await expect(sw).toHaveAttribute('aria-checked', 'false');
+    await page.keyboard.press('Enter');
+    await expect(sw).toHaveAttribute('aria-checked', 'true');
+  });
+
+  test('checkbox: role=checkbox, aria-checked, Space toggle', async ({ page }) => {
+    await page.goto('/');
+    const cb = page.getByRole('checkbox');
+    await expect(cb).toHaveAttribute('aria-checked', 'false');
+    await cb.focus();
+    await page.keyboard.press('Space');
+    await expect(cb).toHaveAttribute('aria-checked', 'true');
+  });
 });
