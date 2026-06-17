@@ -108,12 +108,16 @@ async function runAdd(names: string[], opts: { cwd: string; yes?: boolean; dryRu
     writeFileSync(w.abs, w.content);
   }
   console.log(pc.green(`\n✔ wrote ${writes.length} file(s).`));
+  // Auto-wire any written stylesheet (theme/overlay/style items) into src/styles.css.
+  for (const w of writes) {
+    if (w.target.endsWith('.css')) ensureCssImport(projectRoot, w.target);
+  }
   if (npmDeps.size) console.log(pc.dim(`  ensure deps: ${[...npmDeps].join(' ')}`));
 }
 
-function ensureThemeImport(projectRoot: string, themePath: string): void {
+function ensureCssImport(projectRoot: string, cssTarget: string): void {
   const styles = resolve(projectRoot, 'src/styles.css');
-  const importLine = `@import './${relative(resolve(projectRoot, 'src'), resolve(projectRoot, themePath)).replace(/\\/g, '/')}';`;
+  const importLine = `@import './${relative(resolve(projectRoot, 'src'), resolve(projectRoot, cssTarget)).replace(/\\/g, '/')}';`;
   let current = existsSync(styles) ? readFileSync(styles, 'utf8') : '';
   if (!current.includes(importLine)) {
     current = `${importLine}\n${current}`;
@@ -142,9 +146,7 @@ async function runInit(opts: { cwd: string; registry: string; yes?: boolean }) {
   writeFileSync(cfgFile, JSON.stringify(cfg, null, 2));
   console.log(pc.green(`✔ ui.config.json (signer pinned: ${signer ? 'yes' : 'no'})`));
 
-  const config = loadConfig(projectRoot);
-  await runAdd(['theme'], { cwd: opts.cwd, yes: true });
-  ensureThemeImport(projectRoot, config.theme);
+  await runAdd(['theme'], { cwd: opts.cwd, yes: true }); // theme.css auto-imported by runAdd
 }
 
 const program = new Command();

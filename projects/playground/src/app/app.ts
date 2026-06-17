@@ -5,12 +5,14 @@ import { Switch } from '@/components/ui/switch';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Dialog } from '@/components/ui/dialog';
+import { Tooltip } from '@/components/ui/tooltip';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 @Component({
   selector: 'app-root',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Button, Slider, Switch, Checkbox, Input, Label, ...SIGNNG_TABS],
+  imports: [Button, Slider, Switch, Checkbox, Input, Label, Dialog, Tooltip, ...SIGNNG_TABS],
   templateUrl: './app.html',
 })
 export class App {

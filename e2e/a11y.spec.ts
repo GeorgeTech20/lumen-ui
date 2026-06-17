@@ -61,4 +61,46 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     await page.keyboard.press('Space');
     await expect(cb).toHaveAttribute('aria-checked', 'true');
   });
+
+  test('dialog: modal opens, focus trapped, Esc closes + restores focus, axe clean when open', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    const trigger = page.getByRole('button', { name: 'Abrir dialog' });
+    await trigger.click();
+
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toHaveAttribute('aria-modal', 'true');
+    await expect(dialog).toContainText('Tab queda atrapado');
+
+    // axe over the OPEN modal state
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    expect(results.violations).toEqual([]);
+
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await expect(trigger).toBeFocused(); // focus restored to trigger
+  });
+
+  test('tooltip: role=tooltip on focus, aria-describedby association, Esc dismisses', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Hover / focus me' }).focus();
+    const tip = page.getByRole('tooltip');
+    await expect(tip).toBeVisible();
+    await expect(tip).toContainText('Soy un tooltip');
+
+    // H2: trigger references the tooltip via aria-describedby
+    const tipId = await tip.getAttribute('id');
+    expect(tipId).toBeTruthy();
+    await expect(page.locator(`[aria-describedby="${tipId}"]`)).toBeVisible();
+
+    // H3: Escape dismisses regardless of focus path
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('tooltip')).toHaveCount(0);
+  });
 });

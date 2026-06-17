@@ -49,6 +49,22 @@
     </section>
 
     <section class="space-y-3">
+      <h2 class="text-sm font-medium">Overlays (CDK · Dialog modal + Tooltip)</h2>
+      <div class="flex flex-wrap items-center gap-4">
+        <signng-dialog
+          title="Confirmar acción"
+          description="Overlay modal con focus trap, backdrop, Esc y restauración de foco."
+          triggerLabel="Abrir dialog"
+        >
+          <p>Tab queda atrapado dentro del dialog; Esc cierra; el foco vuelve al trigger.</p>
+        </signng-dialog>
+        <signng-tooltip text="Soy un tooltip (hover o focus)">
+          <button signngButton variant="outline">Hover / focus me</button>
+        </signng-tooltip>
+      </div>
+    </section>
+
+    <section class="space-y-3">
       <h2 class="text-sm font-medium">Tabs (@angular/aria · a11y heredada)</h2>
       <div ngTabs class="rounded-lg border border-border">
         <ul ngTabList [(selectedTab)]="selectedTab" class="flex gap-1 border-b border-border p-1">

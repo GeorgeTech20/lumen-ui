@@ -1,0 +1,18 @@
+{
+  "$schema": "https://signng.dev/schema/registry-item.json",
+  "name": "overlay",
+  "type": "registry:style",
+  "description": "CDK overlay prebuilt CSS + dialog backdrop. Required by dialog/tooltip/popover.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/signng-overlay.css",
+      "target": "src/signng-overlay.css",
+      "type": "registry:style",
+      "content": "/* signng overlay styles — required by dialog / tooltip / popover (CDK overlay). */\n@import '@angular/cdk/overlay-prebuilt.css';\n\n/* Modal backdrop: opaque, pointer-blocking (clickjacking redress). */\n.signng-dialog-backdrop {\n  background: rgb(0 0 0 / 0.5);\n}\n",
+      "integrity": "sha256-vqbh24/HKBQSuNE9RsAKLDIz/UDkuKW6oNNtozTaROs="
+    }
+  ],
+  "integrity": "sha256-/TBroTti+uO7tlDS0M+0a/+bbV68y9nuqaSdC9+nBvI="
+}

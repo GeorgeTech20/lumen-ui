@@ -12,7 +12,7 @@ const ROOT = resolve(__dirname, '..');
 const ITEMS_DIR = resolve(__dirname, 'items');
 const OUT_DIR = resolve(__dirname, 'public', 'r');
 
-type RegistryType = 'registry:ui' | 'registry:lib' | 'registry:theme';
+type RegistryType = 'registry:ui' | 'registry:lib' | 'registry:theme' | 'registry:style';
 
 interface ItemDef {
   name: string;
@@ -76,6 +76,28 @@ const ITEMS: ItemDef[] = [
     description: 'Styled native label.',
     registryDependencies: ['utils'],
     files: [{ src: 'ui/label.ts', target: 'src/components/ui/label.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'overlay',
+    type: 'registry:style',
+    description: 'CDK overlay prebuilt CSS + dialog backdrop. Required by dialog/tooltip/popover.',
+    files: [{ src: 'styles/overlay.css', target: 'src/signng-overlay.css', type: 'registry:style' }],
+  },
+  {
+    name: 'dialog',
+    type: 'registry:ui',
+    description: 'Modal dialog (focus trap, backdrop, Esc, restore focus) on @signng/core/dialog.',
+    dependencies: ['@signng/core', '@angular/cdk'],
+    registryDependencies: ['utils', 'button', 'overlay'],
+    files: [{ src: 'ui/dialog.ts', target: 'src/components/ui/dialog.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'tooltip',
+    type: 'registry:ui',
+    description: 'Tooltip via CDK connected overlay (hover/focus, role=tooltip).',
+    dependencies: ['@angular/cdk'],
+    registryDependencies: ['utils', 'overlay'],
+    files: [{ src: 'ui/tooltip.ts', target: 'src/components/ui/tooltip.ts', type: 'registry:ui' }],
   },
   {
     name: 'theme',

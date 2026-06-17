@@ -1,0 +1,7 @@
+/* signng overlay styles — required by dialog / tooltip / popover (CDK overlay). */
+@import '@angular/cdk/overlay-prebuilt.css';
+
+/* Modal backdrop: opaque, pointer-blocking (clickjacking redress). */
+.signng-dialog-backdrop {
+  background: rgb(0 0 0 / 0.5);
+}
