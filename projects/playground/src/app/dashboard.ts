@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, signal } from '@angular/core';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -74,6 +74,18 @@ interface Row {
 })
 export class Dashboard {
   private readonly toast = inject(ToastService);
+
+  constructor() {
+    // Dark mode must live on <html> so CDK overlays (rendered in <body>, outside the app) inherit it.
+    effect(() => {
+      if (typeof document !== 'undefined') {
+        document.documentElement.classList.toggle('dark', this.dark());
+      }
+    });
+    inject(DestroyRef).onDestroy(() => {
+      if (typeof document !== 'undefined') document.documentElement.classList.remove('dark');
+    });
+  }
 
   protected readonly tab = signal('overview');
   protected readonly dark = signal(false);
