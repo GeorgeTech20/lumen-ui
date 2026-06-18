@@ -59,13 +59,73 @@ const depBadges = (item) => {
   return `<p class="deps">${npm.join(' ')} ${reg.join(' ')}</p>`;
 };
 
+// Inline-SVG glyphs for the previews (the docs CSS has no Tailwind, so previews use vars + these).
+const g = (d, sw = 2) => `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const chk = g('<path d="M20 6L9 17l-5-5"/>', 3);
+const chev = g('<path d="M6 9l6 6 6-6"/>');
+const info = g('<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>');
+
+// Static, var-styled previews — visually identical to the rendered component (same tokens), dark-aware.
+const PREVIEWS = {
+  button: `<span class="pv-btn">Botón</span><span class="pv-btn secondary">Secondary</span><span class="pv-btn outline">Outline</span><span class="pv-btn ghost">Ghost</span><span class="pv-btn destructive">Eliminar</span>`,
+  input: `<input class="pv-input" placeholder="email@ejemplo.com" />`,
+  label: `<span class="pv-label">Correo electrónico</span>`,
+  textarea: `<span class="pv-input" style="height:72px;min-width:280px;align-items:flex-start;padding:8px 12px;color:var(--color-muted-foreground)">Escribe tu mensaje…</span>`,
+  checkbox: `<span class="pv-check">${chk}</span><span class="pv-label">Aceptar términos</span>&nbsp;&nbsp;<span class="pv-check empty"></span><span class="pv-muted">Sin marcar</span>`,
+  switch: `<span class="pv-switch"></span><span class="pv-label">Activado</span>&nbsp;&nbsp;<span class="pv-switch off"></span><span class="pv-muted">Apagado</span>`,
+  'radio-group': `<span class="pv-radio on"></span> <span class="pv-label">Opción A</span> &nbsp;&nbsp; <span class="pv-radio"></span> <span class="pv-muted">Opción B</span>`,
+  select: `<span class="pv-input" style="justify-content:space-between;min-width:200px">Perú ${chev}</span>`,
+  slider: `<span class="pv-slider"><i></i><b></b></span>`,
+  combobox: `<span class="pv-input" style="justify-content:space-between;min-width:240px"><span class="pv-muted">Buscar framework…</span> ${chev}</span>`,
+  'input-otp': `<span class="pv-otp">2</span><span class="pv-otp">4</span><span class="pv-otp">8</span><span class="pv-otp">1</span>`,
+  'form-field': `<div class="pv-card" style="display:flex;flex-direction:column;gap:6px"><span class="pv-label">Nombre</span><input class="pv-input" placeholder="Tu nombre" /><span class="pv-muted">Como aparece en tu perfil.</span></div>`,
+  card: `<div class="pv-card"><div style="font-weight:600;margin-bottom:2px">Plan Pro</div><div class="pv-muted">$29/mes · facturación anual</div></div>`,
+  badge: `<span class="pv-badge">Default</span><span class="pv-badge secondary">Secondary</span><span class="pv-badge destructive">Destructive</span><span class="pv-badge outline">Outline</span>`,
+  avatar: `<span class="pv-avatar">GF</span><span class="pv-avatar">AT</span><span class="pv-avatar">LM</span>`,
+  separator: `<div style="width:100%;max-width:320px"><div style="font-size:13px">Sección superior</div><div class="pv-sep" style="margin:10px 0"></div><div style="font-size:13px">Sección inferior</div></div>`,
+  alert: `<div class="pv-alert"><span style="color:var(--color-primary)">${info}</span><div><div style="font-weight:600;font-size:14px">Heads up</div><div class="pv-muted">Puedes añadir componentes a tu app.</div></div></div>`,
+  skeleton: `<div style="display:flex;gap:12px;align-items:center"><div class="pv-skel" style="width:40px;height:40px;border-radius:50%"></div><div style="width:200px"><div class="pv-skel" style="width:70%;margin-bottom:8px"></div><div class="pv-skel" style="width:100%"></div></div></div>`,
+  progress: `<span class="pv-progress"><i></i></span><span class="pv-muted">62%</span>`,
+  table: `<table class="pv-table"><thead><tr><th>Nombre</th><th>Rol</th><th>Estado</th></tr></thead><tbody><tr><td>Ana Torres</td><td>Admin</td><td><span class="pv-badge">activo</span></td></tr><tr><td>Luis Méndez</td><td>Editor</td><td><span class="pv-badge secondary">invitado</span></td></tr></tbody></table>`,
+  toast: `<div class="pv-card" style="display:flex;gap:.7rem;align-items:flex-start;box-shadow:0 8px 24px rgba(0,0,0,.14)"><div style="flex:1"><div style="font-weight:600;font-size:14px">Guardado</div><div class="pv-muted">Cambios aplicados.</div></div><span class="pv-muted">✕</span></div>`,
+  dialog: `<div class="pv-card" style="max-width:340px;box-shadow:0 16px 40px rgba(0,0,0,.18)"><div style="font-weight:600;margin-bottom:4px">Confirmar acción</div><div class="pv-muted" style="margin-bottom:14px">¿Seguro que deseas continuar?</div><div style="display:flex;gap:8px;justify-content:flex-end"><span class="pv-btn outline" style="height:32px">Cancelar</span><span class="pv-btn" style="height:32px">Confirmar</span></div></div>`,
+  'alert-dialog': `<div class="pv-card" style="max-width:340px;box-shadow:0 16px 40px rgba(0,0,0,.18)"><div style="font-weight:600;margin-bottom:4px">¿Eliminar cuenta?</div><div class="pv-muted" style="margin-bottom:14px">Esta acción no se puede deshacer.</div><div style="display:flex;gap:8px;justify-content:flex-end"><span class="pv-btn outline" style="height:32px">Cancelar</span><span class="pv-btn destructive" style="height:32px">Eliminar</span></div></div>`,
+  sheet: `<div class="pv-card" style="width:240px;height:120px;border-radius:var(--radius)"><div style="font-weight:600">Panel lateral</div><div class="pv-muted">Se desliza desde el borde.</div></div>`,
+  drawer: `<div class="pv-card" style="width:280px;border-radius:14px 14px 0 0"><div style="width:36px;height:4px;border-radius:9999px;background:var(--color-muted);margin:0 auto 10px"></div><div style="font-weight:600">Hoja inferior</div><div class="pv-muted">Drawer estilo móvil.</div></div>`,
+  popover: `<div class="pv-menu" style="padding:14px"><div style="font-weight:600;font-size:14px;padding:0 0 4px">Dimensiones</div><div class="pv-muted" style="padding:0">Ajusta ancho y alto.</div></div>`,
+  tooltip: `<span style="position:relative;background:var(--color-foreground);color:var(--color-background);font-size:12px;padding:6px 10px;border-radius:7px">Añadir a la biblioteca</span>`,
+  'hover-card': `<div class="pv-card" style="max-width:300px;display:flex;gap:.7rem"><span class="pv-avatar">@</span><div><div style="font-weight:600;font-size:14px">@signng</div><div class="pv-muted">Componentes Angular que posees.</div></div></div>`,
+  command: `<div class="pv-menu" style="min-width:300px;padding:0"><div style="padding:10px 12px;border-bottom:1px solid var(--color-border);color:var(--color-muted-foreground);font-size:13px">Escribe un comando…</div><div style="padding:6px"><div class="on" style="padding:7px 10px;border-radius:6px;font-size:13px">Crear usuario</div><div style="padding:7px 10px;font-size:13px">Ir a facturación</div></div></div>`,
+  tabs: `<div><div class="pv-tabs"><span class="pv-tab on">Cuenta</span><span class="pv-tab">Contraseña</span><span class="pv-tab">Equipo</span></div></div>`,
+  accordion: `<div class="pv-card" style="min-width:320px;padding:0"><div style="padding:12px 16px;display:flex;justify-content:space-between;border-bottom:1px solid var(--color-border)"><span style="font-weight:500;font-size:14px">¿Es accesible?</span><span class="pv-muted">${chev}</span></div><div style="padding:12px 16px" class="pv-muted">Sí. Sigue WAI-ARIA APG.</div></div>`,
+  'dropdown-menu': `<div class="pv-menu"><div class="on">Editar</div><div>Duplicar</div><div>Archivar</div></div>`,
+  'context-menu': `<div class="pv-menu"><div>Copiar fila</div><div class="on">Fijar</div><div>Eliminar</div></div>`,
+  menubar: `<div class="pv-chip" style="gap:1rem;padding:6px 16px"><span>Archivo</span><span class="pv-muted">Editar</span><span class="pv-muted">Ver</span></div>`,
+  'navigation-menu': `<div class="pv-chip" style="gap:1rem;padding:8px 16px"><span style="display:inline-flex;align-items:center;gap:4px">Productos ${chev}</span><span class="pv-muted" style="display:inline-flex;align-items:center;gap:4px">Recursos ${chev}</span></div>`,
+  breadcrumb: `<span class="pv-muted" style="font-size:14px">Inicio <span style="opacity:.5">/</span> Dashboard <span style="opacity:.5">/</span> <span style="color:var(--color-foreground)">Resumen</span></span>`,
+  pagination: `<span class="pv-chip">‹</span><span class="pv-chip" style="background:var(--color-accent)">1</span><span class="pv-chip">2</span><span class="pv-chip">3</span><span class="pv-chip">›</span>`,
+  sidebar: `<div class="pv-card" style="width:200px;padding:8px"><div style="padding:8px 10px;border-radius:7px;background:var(--color-accent);font-size:13px;font-weight:500">Dashboard</div><div style="padding:8px 10px;font-size:13px;color:var(--color-muted-foreground)">Usuarios</div><div style="padding:8px 10px;font-size:13px;color:var(--color-muted-foreground)">Ajustes</div></div>`,
+  calendar: `<div class="pv-card" style="padding:12px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px;font-weight:600">junio 2026 ${chev}</div><div style="display:grid;grid-template-columns:repeat(7,26px);gap:2px;font-size:12px;text-align:center">${['L','M','X','J','V','S','D'].map((d) => `<span class="pv-muted">${d}</span>`).join('')}${Array.from({ length: 14 }, (_, i) => `<span style="padding:4px 0;${i === 7 ? 'background:var(--color-primary);color:var(--color-primary-foreground);border-radius:6px' : ''}">${i + 1}</span>`).join('')}</div></div>`,
+  'date-picker': `<span class="pv-input" style="justify-content:space-between;min-width:220px">15 jun 2026 ${g('<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>')}</span>`,
+  toggle: `<span class="pv-chip" style="background:var(--color-accent);font-weight:600">B</span><span class="pv-chip"><em>I</em></span>`,
+  'toggle-group': `<div style="display:inline-flex"><span class="pv-chip" style="border-radius:7px 0 0 7px;background:var(--color-accent)">≡</span><span class="pv-chip" style="border-radius:0;border-left:0">≢</span><span class="pv-chip" style="border-radius:0 7px 7px 0;border-left:0">☰</span></div>`,
+  collapsible: `<div class="pv-card" style="min-width:300px"><div style="display:flex;justify-content:space-between;font-size:14px;font-weight:500">Ver más ${chev}</div></div>`,
+  'scroll-area': `<div class="pv-card" style="width:200px;height:90px;overflow:hidden;position:relative"><div class="pv-muted" style="font-size:13px">Lista larga…<br/>elemento 1<br/>elemento 2<br/>elemento 3</div><div style="position:absolute;right:3px;top:6px;width:4px;height:40px;border-radius:9999px;background:var(--color-muted)"></div></div>`,
+  'aspect-ratio': `<div style="width:200px;aspect-ratio:16/9;border-radius:var(--radius);background:var(--color-muted);display:flex;align-items:center;justify-content:center" class="pv-muted">16 / 9</div>`,
+  carousel: `<div style="display:flex;align-items:center;gap:8px"><span class="pv-chip">‹</span><div class="pv-card" style="width:160px;height:80px;display:flex;align-items:center;justify-content:center;font-weight:600">Slide 1</div><span class="pv-chip">›</span></div>`,
+  resizable: `<div style="display:flex;border:1px solid var(--color-border);border-radius:var(--radius);overflow:hidden;width:300px;height:80px"><div style="flex:1;display:flex;align-items:center;justify-content:center" class="pv-muted">Panel A</div><div style="width:2px;background:var(--color-border)"></div><div style="flex:1;display:flex;align-items:center;justify-content:center" class="pv-muted">Panel B</div></div>`,
+  chart: `<div class="pv-bars">${[40, 55, 48, 70, 62, 80].map((h) => `<i style="height:${h}%"></i>`).join('')}</div>`,
+};
+
 function componentHtml(item) {
   const file = item.files[0];
+  const preview = PREVIEWS[item.name] ? `<div class="preview">${PREVIEWS[item.name]}</div>` : '';
   return `
   <section id="c-${item.name}" class="component">
     <h3>${esc(item.name)} ${badge(item.type.replace('registry:', ''))}</h3>
     <p class="desc">${esc(item.description)}</p>
     ${depBadges(item)}
+    ${preview}
     <pre class="cmd" tabindex="0">pnpm signng add ${esc(item.name)}</pre>
     <details>
       <summary>Ver fuente — <code>${esc(file.target)}</code></summary>
@@ -135,6 +195,53 @@ details summary { cursor: pointer; font-size: 13px; color: var(--color-muted-for
 .icon-card.copied { border-color: var(--color-primary); color: var(--color-primary); }
 .icon-card span { color: var(--color-muted-foreground); }
 .icon-card.copied span { color: var(--color-primary); }
+/* live-ish component previews (styled by the same oklch vars → dark-aware, no Tailwind/runtime) */
+.preview { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; padding: 1.75rem 1.5rem; border: 1px solid var(--color-border); border-radius: var(--radius) var(--radius) 0 0; background: var(--color-background); margin-top: .5rem; min-height: 56px; }
+.preview + .cmd { border-top-left-radius: 0; border-top-right-radius: 0; margin-top: -1px; }
+.pv-btn { display: inline-flex; align-items: center; gap: .4rem; height: 36px; padding: 0 16px; border-radius: calc(var(--radius) - 2px); font-size: 14px; font-weight: 500; border: 1px solid transparent; background: var(--color-primary); color: var(--color-primary-foreground); }
+.pv-btn.outline { background: transparent; border-color: var(--color-border); color: var(--color-foreground); }
+.pv-btn.secondary { background: var(--color-secondary); color: var(--color-secondary-foreground); }
+.pv-btn.ghost { background: transparent; color: var(--color-foreground); }
+.pv-btn.destructive { background: var(--color-destructive); color: #fff; }
+.pv-badge { display: inline-flex; align-items: center; height: 21px; padding: 0 10px; border-radius: 9999px; font-size: 12px; font-weight: 600; background: var(--color-primary); color: var(--color-primary-foreground); }
+.pv-badge.secondary { background: var(--color-secondary); color: var(--color-secondary-foreground); }
+.pv-badge.destructive { background: var(--color-destructive); color: #fff; }
+.pv-badge.outline { background: transparent; border: 1px solid var(--color-border); color: var(--color-foreground); }
+.pv-input { height: 36px; padding: 0 12px; border: 1px solid var(--color-input); border-radius: calc(var(--radius) - 2px); background: var(--color-background); color: var(--color-foreground); font: 14px ui-sans-serif, system-ui; min-width: 220px; display: inline-flex; align-items: center; }
+.pv-label { font-size: 14px; font-weight: 500; }
+.pv-muted { color: var(--color-muted-foreground); font-size: 13px; }
+.pv-card { border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-card); padding: 1rem 1.25rem; min-width: 250px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+.pv-switch { width: 40px; height: 22px; border-radius: 9999px; background: var(--color-primary); position: relative; flex: none; }
+.pv-switch::after { content: ''; position: absolute; top: 2px; left: 20px; width: 18px; height: 18px; border-radius: 50%; background: #fff; }
+.pv-switch.off { background: var(--color-muted); }
+.pv-switch.off::after { left: 2px; }
+.pv-check { width: 18px; height: 18px; border-radius: 5px; background: var(--color-primary); color: var(--color-primary-foreground); display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.pv-check.empty { background: transparent; border: 1px solid var(--color-input); }
+.pv-radio { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--color-input); display: inline-block; vertical-align: middle; position: relative; flex: none; }
+.pv-radio.on { border-color: var(--color-primary); }
+.pv-radio.on::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--color-primary); }
+.pv-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-muted); color: var(--color-foreground); display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex: none; }
+.pv-progress { width: 240px; height: 8px; border-radius: 9999px; background: var(--color-muted); overflow: hidden; }
+.pv-progress > i { display: block; height: 100%; width: 62%; background: var(--color-primary); }
+.pv-skel { height: 14px; border-radius: 6px; background: var(--color-muted); }
+.pv-sep { height: 1px; background: var(--color-border); width: 100%; }
+.pv-slider { width: 240px; height: 6px; border-radius: 9999px; background: var(--color-muted); position: relative; }
+.pv-slider > i { position: absolute; left: 0; top: 0; height: 100%; width: 55%; background: var(--color-primary); border-radius: 9999px; }
+.pv-slider > b { position: absolute; left: 55%; top: 50%; transform: translate(-50%,-50%); width: 16px; height: 16px; border-radius: 50%; background: var(--color-background); border: 2px solid var(--color-primary); }
+.pv-otp { width: 38px; height: 44px; border: 1px solid var(--color-input); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600; }
+.pv-tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 9px; background: var(--color-muted); }
+.pv-tab { padding: 6px 14px; border-radius: 7px; font-size: 13px; font-weight: 500; color: var(--color-muted-foreground); }
+.pv-tab.on { background: var(--color-background); color: var(--color-foreground); box-shadow: 0 1px 2px rgba(0,0,0,.1); }
+.pv-chip { display: inline-flex; align-items: center; gap: .4rem; padding: 6px 12px; border: 1px solid var(--color-border); border-radius: calc(var(--radius) - 2px); background: var(--color-background); font-size: 13px; }
+.pv-menu { border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-popover, var(--color-card)); box-shadow: 0 8px 24px rgba(0,0,0,.12); padding: 4px; min-width: 180px; }
+.pv-menu div { padding: 7px 10px; border-radius: 6px; font-size: 13px; }
+.pv-menu div.on { background: var(--color-accent); color: var(--color-accent-foreground); }
+.pv-alert { display: flex; gap: .6rem; border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-card); padding: .85rem 1rem; min-width: 320px; }
+.pv-table { border-collapse: collapse; font-size: 13px; min-width: 320px; }
+.pv-table th, .pv-table td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--color-border); }
+.pv-table th { color: var(--color-muted-foreground); font-weight: 500; }
+.pv-bars { display: flex; align-items: flex-end; gap: 7px; height: 64px; }
+.pv-bars > i { width: 16px; background: var(--color-primary); border-radius: 3px 3px 0 0; }
 @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } aside { display: none; } .patterns { grid-template-columns: 1fr; } }
 </style>
 </head>
