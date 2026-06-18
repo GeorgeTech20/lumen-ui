@@ -44,6 +44,9 @@ import { SIGNNG_NAVIGATION_MENU } from '@/components/ui/navigation-menu';
 import { SignngResizable } from '@/components/ui/resizable';
 import { Icon } from '@/components/ui/icon';
 import { SIGNNG_CHART } from '@/components/ui/chart';
+import { Drawer } from '@/components/ui/drawer';
+import { FormField } from '@/components/ui/form-field';
+import { SIGNNG_SIDEBAR } from '@/components/ui/sidebar';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
 interface Row {
@@ -63,7 +66,7 @@ interface Row {
     Dialog, AlertDialog, Sheet, Popover, Tooltip, HoverCard, Command, Toaster,
     Accordion, DropdownMenu, ContextMenu, Menubar, Pagination, Calendar, DatePicker,
     Avatar, Badge, Separator, Skeleton, Progress, Toggle, Collapsible, ScrollArea, AspectRatio, SignngResizable,
-    Icon, ...SIGNNG_CHART,
+    Icon, Drawer, FormField, ...SIGNNG_CHART, ...SIGNNG_SIDEBAR,
     ...SIGNNG_CARD, ...SIGNNG_ALERT, ...SIGNNG_TABLE, ...SIGNNG_BREADCRUMB, ...SIGNNG_TOGGLE_GROUP,
     ...SIGNNG_CAROUSEL, ...SIGNNG_NAVIGATION_MENU, ...SIGNNG_TABS,
   ],
@@ -74,6 +77,7 @@ export class Dashboard {
 
   protected readonly tab = signal('overview');
   protected readonly dark = signal(false);
+  protected readonly sidebarCollapsed = signal(false);
   protected readonly notifications = signal(true);
   protected readonly twoFactor = signal('');
   protected readonly region = signal<string | null>('pe');

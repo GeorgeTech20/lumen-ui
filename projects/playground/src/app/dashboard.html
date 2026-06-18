@@ -1,6 +1,25 @@
-<div [class.dark]="dark()" class="min-h-screen bg-background text-foreground">
+<div [class.dark]="dark()" class="flex h-screen overflow-hidden bg-background text-foreground">
+  <signng-sidebar [(collapsed)]="sidebarCollapsed">
+    <div signngSidebarHeader>
+      <signng-icon name="bar" [size]="22" class="text-primary" />
+      @if (!sidebarCollapsed()) { <span class="text-lg font-semibold">signng</span> }
+      <signng-sidebar-trigger class="ml-auto" />
+    </div>
+    <div signngSidebarContent>
+      <signng-sidebar-item icon="home" label="Dashboard" [active]="true" />
+      <signng-sidebar-item icon="users" label="Usuarios" />
+      <signng-sidebar-item icon="bar" label="Analítica" />
+      <signng-sidebar-item icon="calendar" label="Facturación" />
+      <signng-sidebar-item icon="settings" label="Preferencias" />
+    </div>
+    <div signngSidebarFooter>
+      <signng-sidebar-item icon="user" label="Mi cuenta" />
+    </div>
+  </signng-sidebar>
+
+  <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
   <!-- Topbar -->
-  <header class="sticky top-0 z-30 flex items-center gap-4 border-b border-border bg-background/95 px-6 py-3 backdrop-blur">
+  <header class="flex items-center gap-4 border-b border-border bg-background/95 px-6 py-3 backdrop-blur">
     <span class="text-lg font-semibold tracking-tight">signng <span class="text-muted-foreground">Admin</span></span>
     <signng-menubar [menus]="bar" (selected)="notify($event.menu + ': ' + $event.value)" />
     <div class="flex-1"></div>
@@ -25,6 +44,7 @@
     </div>
   </header>
 
+  <div class="flex-1 overflow-auto">
   <div class="mx-auto max-w-6xl space-y-6 p-6">
     <!-- Breadcrumb + nav -->
     <div class="flex flex-wrap items-center justify-between gap-3">
@@ -137,6 +157,9 @@
               </div>
             </signng-dialog>
             <signng-alert-dialog triggerLabel="Eliminar" title="¿Eliminar seleccionados?" description="No se puede deshacer." (confirmed)="notify('Eliminados')" />
+            <signng-drawer triggerLabel="Detalles" title="Detalles del registro" description="Vista ampliada (bottom sheet).">
+              <p>Contenido del drawer. Sube desde abajo con manija, focus trap y Esc.</p>
+            </signng-drawer>
           </div>
 
           <signng-context-menu [items]="ctx" (selected)="notify('Fila ' + $event)">
@@ -246,10 +269,9 @@
       <div signngCard>
         <div signngCardHeader><span signngCardTitle>Preferencias</span><span signngCardDescription>Configura tu cuenta.</span></div>
         <div signngCardContent class="space-y-4">
-          <div class="space-y-1">
-            <label signngLabel for="p-name">Nombre</label>
-            <input signngInput id="p-name" placeholder="Tu nombre" />
-          </div>
+          <signng-form-field label="Nombre" htmlFor="p-name" description="Como aparece en tu perfil.">
+            <input signngInput id="p-name" placeholder="Tu nombre" class="mt-1.5" />
+          </signng-form-field>
           <div class="grid gap-3 sm:grid-cols-2">
             <div class="space-y-1">
               <span class="text-sm font-medium">Región</span>
@@ -327,6 +349,8 @@
         </div>
       </div>
     </div>
+  </div>
+  </div>
   </div>
 
   <signng-toaster />

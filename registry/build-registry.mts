@@ -276,6 +276,28 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/hover-card.ts', target: 'src/components/ui/hover-card.ts', type: 'registry:ui' }],
   },
   {
+    name: 'drawer',
+    type: 'registry:ui',
+    description: 'Bottom-sheet drawer (grab handle) on @signng/core/dialog.',
+    dependencies: ['@signng/core', '@angular/cdk'],
+    registryDependencies: ['utils', 'button', 'overlay'],
+    files: [{ src: 'ui/drawer.ts', target: 'src/components/ui/drawer.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'form-field',
+    type: 'registry:ui',
+    description: 'Form field wrapper (label + control + description + error, role=alert).',
+    registryDependencies: ['utils'],
+    files: [{ src: 'ui/form-field.ts', target: 'src/components/ui/form-field.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'sidebar',
+    type: 'registry:ui',
+    description: 'Collapsible app-shell sidebar (header/content/footer + items + trigger).',
+    registryDependencies: ['utils', 'icon'],
+    files: [{ src: 'ui/sidebar.ts', target: 'src/components/ui/sidebar.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'chart',
     type: 'registry:ui',
     description: 'Minimal pure-SVG charts (bar, line, donut, sparkline) — signals, role=img, no deps.',

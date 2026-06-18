@@ -202,6 +202,24 @@
       "integrity": "sha256-FiZ0LbzcnMOITpLdXzonsWgkwL7O6FLPpkkJ/Yjvra4="
     },
     {
+      "name": "drawer",
+      "type": "registry:ui",
+      "description": "Bottom-sheet drawer (grab handle) on @signng/core/dialog.",
+      "integrity": "sha256-nTVyqSBAuSFqCs8XEB9evb+sJ1TaliFvtRx71rAfuoA="
+    },
+    {
+      "name": "form-field",
+      "type": "registry:ui",
+      "description": "Form field wrapper (label + control + description + error, role=alert).",
+      "integrity": "sha256-9m8kBkmPIfbd0ubSx/0DLPqsMobsR/SNg0EZyvh7VlI="
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "description": "Collapsible app-shell sidebar (header/content/footer + items + trigger).",
+      "integrity": "sha256-sqy1bdjKTuMbz2jfcSlS+heivrTW7MP5Hlfuedwm7p4="
+    },
+    {
       "name": "chart",
       "type": "registry:ui",
       "description": "Minimal pure-SVG charts (bar, line, donut, sparkline) — signals, role=img, no deps.",
@@ -293,6 +311,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "F1aXXoFK+EI9veWH+27t1P7sXlgz/Z+GIUV7oyYHFUQoVTaTggct5nXWl21KP53M7CTQRkqmX1PnmuXJLIWbDQ==",
+  "signature": "2AF3DxkdAunjwhWpLbYei5DR2GPsk9U9Af0tjlvzPbsEoalt5pRzPWwcO3uE9DP2vsG1cCtrHxZXVpC6V6q9AA==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
