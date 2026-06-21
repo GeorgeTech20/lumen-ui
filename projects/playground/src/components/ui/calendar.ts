@@ -68,35 +68,30 @@ interface Day {
       <div class="mb-2 flex items-center gap-1">
         <button
           type="button"
-          (click)="cursor.set(addMonths(cursor(), -1))"
-          [attr.aria-label]="i18n.calendarPrevMonth"
+          (click)="onPrev()"
+          [attr.aria-label]="prevLabel()"
           class="inline-flex size-7 shrink-0 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true">
             <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
-        <!-- jump straight to any month / year (no clicking through) -->
-        <select
-          [value]="cursorMonth()"
-          (change)="onMonth($any($event.target).value)"
-          aria-label="Mes"
-          class="h-7 flex-1 cursor-pointer rounded-md border border-input bg-background px-1.5 text-sm font-medium capitalize outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          @for (m of months(); track m.i) { <option [value]="m.i">{{ m.name }}</option> }
-        </select>
-        <select
-          [value]="cursorYear()"
-          (change)="onYear($any($event.target).value)"
-          aria-label="Año"
-          class="h-7 cursor-pointer rounded-md border border-input bg-background px-1.5 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          @for (y of years(); track y) { <option [value]="y">{{ y }}</option> }
-        </select>
+        <!-- click month/year to switch the grid below to a month/year picker -->
+        <div class="flex flex-1 items-center justify-center gap-1">
+          @if (view() === 'days') {
+            <button type="button" (click)="view.set('months')" aria-label="Elegir mes" class="rounded-md px-2 py-1 text-sm font-medium capitalize hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{{ monthName() }}</button>
+          }
+          @if (view() === 'days' || view() === 'months') {
+            <button type="button" (click)="view.set('years')" aria-label="Elegir año" class="rounded-md px-2 py-1 text-sm font-medium tabular-nums hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{{ cursorYear() }}</button>
+          }
+          @if (view() === 'years') {
+            <button type="button" (click)="view.set('days')" class="rounded-md px-2 py-1 text-sm font-medium tabular-nums hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{{ yearWindow()[0] }} – {{ yearWindow()[11] }}</button>
+          }
+        </div>
         <button
           type="button"
-          (click)="cursor.set(addMonths(cursor(), 1))"
-          [attr.aria-label]="i18n.calendarNextMonth"
+          (click)="onNext()"
+          [attr.aria-label]="nextLabel()"
           class="inline-flex size-7 shrink-0 items-center justify-center rounded-md hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4" aria-hidden="true">
@@ -109,6 +104,7 @@ interface Day {
       <!-- polite boundary announcement (month changes) without making the visible label a live region -->
       <div aria-live="polite" class="sr-only">{{ monthLabel() }}</div>
 
+      @if (view() === 'days') {
       <div
         role="grid"
         tabindex="0"
@@ -155,6 +151,31 @@ interface Day {
           </div>
         }
       </div>
+      }
+
+      @if (view() === 'months') {
+        <div role="grid" aria-label="Elegir mes" class="grid grid-cols-3 gap-1.5 p-1">
+          @for (m of months(); track m.i) {
+            <button
+              type="button"
+              (click)="pickMonth(m.i)"
+              [class]="cn('rounded-md py-2.5 text-sm capitalize hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', m.i === cursorMonth() ? 'bg-primary text-primary-foreground hover:bg-primary' : '')"
+            >{{ m.name }}</button>
+          }
+        </div>
+      }
+
+      @if (view() === 'years') {
+        <div role="grid" aria-label="Elegir año" class="grid grid-cols-3 gap-1.5 p-1">
+          @for (y of yearWindow(); track y) {
+            <button
+              type="button"
+              (click)="pickYear(y)"
+              [class]="cn('rounded-md py-2.5 text-sm tabular-nums hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', y === cursorYear() ? 'bg-primary text-primary-foreground hover:bg-primary' : '')"
+            >{{ y }}</button>
+          }
+        </div>
+      }
     </div>
   `,
 })
@@ -203,28 +224,47 @@ export class Calendar {
     new Intl.DateTimeFormat(this.locale(), { month: 'long', year: 'numeric' }).format(parse(this.cursor())),
   );
 
-  // month/year jump dropdowns — pick any month/year directly instead of stepping the arrows
+  // header view switcher: click the month/year header → swap the grid below to an in-component month or
+  // year picker (no native <select>). days <-> months <-> years.
+  protected readonly view = signal<'days' | 'months' | 'years'>('days');
   protected readonly cursorMonth = computed(() => parse(this.cursor()).getMonth());
   protected readonly cursorYear = computed(() => parse(this.cursor()).getFullYear());
+  protected readonly monthName = computed(() =>
+    new Intl.DateTimeFormat(this.locale(), { month: 'long' }).format(parse(this.cursor())),
+  );
   protected readonly months = computed(() => {
-    const fmt = new Intl.DateTimeFormat(this.locale(), { month: 'long' });
-    return Array.from({ length: 12 }, (_, i) => ({ i, name: fmt.format(new Date(2024, i, 1)) }));
+    const fmt = new Intl.DateTimeFormat(this.locale(), { month: 'short' });
+    return Array.from({ length: 12 }, (_, i) => ({ i, name: fmt.format(new Date(2024, i, 1)).replace('.', '') }));
   });
-  protected readonly years = computed(() => {
-    const cy = this.cursorYear();
-    const min = this.min();
-    const max = this.max();
-    const lo = min ? parse(min).getFullYear() : cy - 100;
-    const hi = max ? parse(max).getFullYear() : cy + 10;
-    const out: number[] = [];
-    for (let y = hi; y >= lo; y--) out.push(y); // recent-first (good for birthdays)
-    return out;
+  protected readonly yearWindow = computed(() => {
+    const base = Math.floor(this.cursorYear() / 12) * 12;
+    return Array.from({ length: 12 }, (_, i) => base + i);
   });
-  protected onMonth(v: string): void {
-    this.cursor.set(iso(new Date(this.cursorYear(), Number(v), 1)));
+  protected readonly prevLabel = computed(() =>
+    this.view() === 'days' ? this.i18n.calendarPrevMonth : this.view() === 'months' ? 'Año anterior' : 'Período anterior',
+  );
+  protected readonly nextLabel = computed(() =>
+    this.view() === 'days' ? this.i18n.calendarNextMonth : this.view() === 'months' ? 'Año siguiente' : 'Período siguiente',
+  );
+  protected onPrev(): void {
+    const v = this.view();
+    if (v === 'days') this.cursor.set(addMonths(this.cursor(), -1));
+    else if (v === 'months') this.cursor.set(iso(new Date(this.cursorYear() - 1, this.cursorMonth(), 1)));
+    else this.cursor.set(iso(new Date(this.cursorYear() - 12, this.cursorMonth(), 1)));
   }
-  protected onYear(v: string): void {
-    this.cursor.set(iso(new Date(Number(v), this.cursorMonth(), 1)));
+  protected onNext(): void {
+    const v = this.view();
+    if (v === 'days') this.cursor.set(addMonths(this.cursor(), 1));
+    else if (v === 'months') this.cursor.set(iso(new Date(this.cursorYear() + 1, this.cursorMonth(), 1)));
+    else this.cursor.set(iso(new Date(this.cursorYear() + 12, this.cursorMonth(), 1)));
+  }
+  protected pickMonth(m: number): void {
+    this.cursor.set(iso(new Date(this.cursorYear(), m, 1)));
+    this.view.set('days');
+  }
+  protected pickYear(y: number): void {
+    this.cursor.set(iso(new Date(y, this.cursorMonth(), 1)));
+    this.view.set('months');
   }
 
   protected readonly weeks = computed<Day[][]>(() => {

@@ -111,7 +111,7 @@ pnpm signng add button card dialog form-field input select
 <details>
 <summary><b>Fecha</b> (3)</summary>
 
-`calendar` (grid APG + **dropdown mes/año**, Intl, min/max) · `date-picker` · `time-picker` (HH:mm)
+`calendar` (grid APG + **picker de mes/año in-component**, Intl, min/max) · `date-picker` · `time-picker` (HH:mm)
 </details>
 
 <details>
