@@ -142,6 +142,24 @@
       "integrity": "sha256-s5UiZxHoyLku4pKQJfHqdVET85Ceu08EgeQIHeNyi2k="
     },
     {
+      "name": "segmented",
+      "type": "registry:ui",
+      "description": "iOS-style segmented control with sliding pill indicator (role=radiogroup, arrow keys).",
+      "integrity": "sha256-lXpNgNYfsHjskK11lzPww/kW1z2oHRQvJxFgQIDdKhA="
+    },
+    {
+      "name": "transfer",
+      "type": "registry:ui",
+      "description": "Dual-list transfer/shuttle: check + move items between source and target panels.",
+      "integrity": "sha256-cB1IEaMqfyhXPyrZNJr7Xa5LA0j/pQAkZ53o3HLNjg4="
+    },
+    {
+      "name": "descriptions",
+      "type": "registry:ui",
+      "description": "Semantic key/value detail list (dl/dt/dd) in a column grid; optional bordered box.",
+      "integrity": "sha256-EmvihhyT5PfGtwBlRpNfGV9OpxJXWQTqN+pO84ew3bo="
+    },
+    {
       "name": "utils",
       "type": "registry:lib",
       "description": "cn() class-merge helper.",
@@ -449,6 +467,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "BzXjE22xg4Z6HQvMCUVfif7B5iV1SRlqhKeag3Xq3kTjb3jIXKLpK8v5Yp6AmAa+Dh1iD1AYl+fyCtPyvAhQBg==",
+  "signature": "oEI+wxYGWzHJMgNsAa9z8xRqqbkl8JEzUBTitsi+at49kCYUTYeLhGMv9iBdNqXwXXLFhF2DxW5RK1gSsXJ6Dg==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

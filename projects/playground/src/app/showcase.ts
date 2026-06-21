@@ -69,6 +69,9 @@ import { RangeSlider } from '@/components/ui/range-slider';
 import { SIGNNG_TOOLBAR } from '@/components/ui/toolbar';
 import { Spinner } from '@/components/ui/spinner';
 import { TimePicker } from '@/components/ui/time-picker';
+import { Segmented } from '@/components/ui/segmented';
+import { Transfer } from '@/components/ui/transfer';
+import { Descriptions } from '@/components/ui/descriptions';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SIGNNG_TABS } from '@signng/core/tabs';
 
@@ -92,7 +95,7 @@ interface Demo { name: string; cat: string; code: string }
     DataTable, ...SIGNNG_ANALYTICS_CHARTS, ...SIGNNG_FILE_UPLOAD, LoginForm,
     StatCard, EmptyState, Timeline, Stepper, NumberInput, MultiSelect, TagInput, TreeView, DateRangePicker,
     Rating, ColorPicker, Kanban, NotificationCenter,
-    SignngField, RangeSlider, ...SIGNNG_TOOLBAR, Spinner, TimePicker, ReactiveFormsModule,
+    SignngField, RangeSlider, ...SIGNNG_TOOLBAR, Spinner, TimePicker, Segmented, Transfer, Descriptions, ReactiveFormsModule,
   ],
   templateUrl: './showcase.html',
 })
@@ -319,6 +322,20 @@ export class Showcase {
   });
   protected readonly range = signal<[number, number]>([25, 75]);
   protected readonly time = signal<string | null>('09:30');
+  protected readonly seg = signal('grid');
+  protected readonly segOpts = [
+    { value: 'list', label: 'Lista' }, { value: 'grid', label: 'Grilla' }, { value: 'board', label: 'Tablero' },
+  ];
+  protected readonly transferItems = [
+    { value: 'a', label: 'Dashboard' }, { value: 'b', label: 'Usuarios' }, { value: 'c', label: 'Reportes' },
+    { value: 'd', label: 'Facturación' }, { value: 'e', label: 'Ajustes' }, { value: 'f', label: 'API' },
+  ];
+  protected readonly transferSel = signal<string[]>(['b', 'd']);
+  protected readonly descItems = [
+    { label: 'Nombre', value: 'Giorgi Franck' }, { label: 'Email', value: 'giorgi@example.com' },
+    { label: 'Plan', value: 'Pro' }, { label: 'Región', value: 'Perú' },
+    { label: 'Estado', value: 'Activo' }, { label: 'Miembro desde', value: 'Jun 2026' },
+  ];
   protected readonly notifs = signal([
     { id: '1', title: 'Nuevo usuario', description: 'Ana se unió al equipo', time: 'hace 2h', icon: 'user' as const },
     { id: '2', title: 'Pago recibido', description: '$290 — plan Pro', time: 'hace 5h', icon: 'check' as const },
@@ -365,9 +382,12 @@ export class Showcase {
     { name: 'FormField', cat: 'Formularios', code: `<signng-form-field label="Nombre" description="Tu nombre">\n  <input signngInput />\n</signng-form-field>` },
     { name: 'Toggle', cat: 'Formularios', code: `<signng-toggle [(pressed)]="b">B</signng-toggle>` },
     { name: 'ToggleGroup', cat: 'Formularios', code: `<signng-toggle-group [(value)]="v">…</signng-toggle-group>` },
+    { name: 'Segmented', cat: 'Formularios', code: `<signng-segmented [options]="opts" [(value)]="view" />` },
     { name: 'Form', cat: 'Formularios', code: `<form [formGroup]="f">\n  <signng-field [control]="f.controls.email" label="Email" [required]="true">\n    <input signngInput formControlName="email" />\n  </signng-field>\n</form>` },
     { name: 'RangeSlider', cat: 'Formularios', code: `<signng-range-slider [(value)]="range" [min]="0" [max]="100" />` },
     { name: 'Toolbar', cat: 'Avanzados', code: `<signng-toolbar label="Formato">\n  <button signngToolbarItem signngToggle>B</button>\n  <span signngToolbarSeparator></span>\n  <button signngToolbarItem signngButton size="sm">Exportar</button>\n</signng-toolbar>` },
+    { name: 'Transfer', cat: 'Avanzados', code: `<signng-transfer [items]="items" [(selected)]="sel" />` },
+    { name: 'Descriptions', cat: 'Avanzados', code: `<signng-descriptions [items]="fields" [columns]="2" [bordered]="true" />` },
 
     { name: 'Dialog', cat: 'Overlays', code: `<signng-dialog title="Confirmar" triggerLabel="Abrir">…</signng-dialog>` },
     { name: 'AlertDialog', cat: 'Overlays', code: `<signng-alert-dialog title="¿Eliminar?" …>…</signng-alert-dialog>` },

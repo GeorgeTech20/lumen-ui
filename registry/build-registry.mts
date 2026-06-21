@@ -179,6 +179,24 @@ const ITEMS: ItemDef[] = [
     files: [{ src: 'ui/time-picker.ts', target: 'src/components/ui/time-picker.ts', type: 'registry:ui' }],
   },
   {
+    name: 'segmented',
+    type: 'registry:ui',
+    description: 'iOS-style segmented control with sliding pill indicator (role=radiogroup, arrow keys).',
+    files: [{ src: 'ui/segmented.ts', target: 'src/components/ui/segmented.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'transfer',
+    type: 'registry:ui',
+    description: 'Dual-list transfer/shuttle: check + move items between source and target panels.',
+    files: [{ src: 'ui/transfer.ts', target: 'src/components/ui/transfer.ts', type: 'registry:ui' }],
+  },
+  {
+    name: 'descriptions',
+    type: 'registry:ui',
+    description: 'Semantic key/value detail list (dl/dt/dd) in a column grid; optional bordered box.',
+    files: [{ src: 'ui/descriptions.ts', target: 'src/components/ui/descriptions.ts', type: 'registry:ui' }],
+  },
+  {
     name: 'utils',
     type: 'registry:lib',
     description: 'cn() class-merge helper.',

@@ -25,7 +25,7 @@ const items = index.items
   .map((i) => JSON.parse(readFileSync(resolve(R, `${i.name}.json`), 'utf8')));
 
 const CATEGORIES = [
-  ['Formularios', ['button', 'input', 'label', 'textarea', 'checkbox', 'switch', 'radio-group', 'select', 'slider', 'range-slider', 'combobox', 'input-otp', 'form-field', 'form']],
+  ['Formularios', ['button', 'input', 'label', 'textarea', 'checkbox', 'switch', 'radio-group', 'select', 'slider', 'range-slider', 'combobox', 'input-otp', 'form-field', 'form', 'segmented']],
   ['Overlays', ['dialog', 'alert-dialog', 'sheet', 'drawer', 'popover', 'tooltip', 'hover-card', 'toast', 'command']],
   ['Navegación', ['tabs', 'accordion', 'dropdown-menu', 'context-menu', 'menubar', 'navigation-menu', 'breadcrumb', 'pagination', 'sidebar']],
   ['Fecha', ['calendar', 'date-picker', 'time-picker']],
@@ -33,7 +33,7 @@ const CATEGORIES = [
   ['Interacción', ['toggle', 'toggle-group', 'collapsible', 'scroll-area', 'aspect-ratio', 'carousel', 'resizable']],
   ['Gráficos', ['chart']],
   ['Enterprise', ['data-table', 'chart-analytics', 'file-upload', 'login-form']],
-  ['Avanzados', ['stepper', 'date-range-picker', 'multi-select', 'tag-input', 'number-input', 'tree-view', 'timeline', 'stat-card', 'empty-state', 'toolbar']],
+  ['Avanzados', ['stepper', 'date-range-picker', 'multi-select', 'tag-input', 'number-input', 'tree-view', 'timeline', 'stat-card', 'empty-state', 'toolbar', 'transfer', 'descriptions']],
   ['Pro', ['kanban', 'notification-center', 'rating', 'color-picker']],
 ];
 const byName = new Map(items.map((i) => [i.name, i]));
@@ -139,6 +139,9 @@ const PREVIEWS = {
   'range-slider': `<span class="pv-slider" style="width:240px"><span style="position:absolute;left:25%;right:25%;top:0;height:100%;background:var(--color-primary);border-radius:9999px"></span><b style="left:25%"></b><b style="left:75%"></b></span>`,
   'toolbar': `<div style="display:inline-flex;align-items:center;gap:4px;border:1px solid var(--color-border);border-radius:8px;padding:4px;background:var(--color-background)"><span class="pv-btn outline" style="height:30px;width:32px;justify-content:center;padding:0;font-weight:700">B</span><span class="pv-btn outline" style="height:30px;width:32px;justify-content:center;padding:0;font-style:italic">I</span><span style="width:1px;height:20px;background:var(--color-border);margin:0 2px"></span><span class="pv-btn outline" style="height:30px">Exportar</span></div>`,
   'spinner': `<span style="color:var(--color-primary)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" style="opacity:.2"/><path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>`,
+  'segmented': `<span style="display:inline-flex;background:var(--color-muted);border-radius:9px;padding:4px;font-size:13px"><span style="padding:5px 12px;border-radius:6px;color:var(--color-muted-foreground)">Lista</span><span style="padding:5px 12px;border-radius:6px;background:var(--color-background);box-shadow:0 1px 2px rgba(0,0,0,.1);font-weight:500">Grilla</span><span style="padding:5px 12px;border-radius:6px;color:var(--color-muted-foreground)">Tablero</span></span>`,
+  'transfer': `<div style="display:flex;align-items:center;gap:8px"><div style="width:110px;border:1px solid var(--color-border);border-radius:8px;font-size:12px"><div style="padding:5px 8px;border-bottom:1px solid var(--color-border);font-weight:600">Disp. (2)</div><div style="padding:4px 8px">☐ Reportes</div><div style="padding:4px 8px">☑ API</div></div><div style="display:flex;flex-direction:column;gap:4px"><span class="pv-chip" style="width:26px;height:26px;justify-content:center;padding:0">›</span><span class="pv-chip" style="width:26px;height:26px;justify-content:center;padding:0">‹</span></div><div style="width:110px;border:1px solid var(--color-border);border-radius:8px;font-size:12px"><div style="padding:5px 8px;border-bottom:1px solid var(--color-border);font-weight:600">Sel. (1)</div><div style="padding:4px 8px">☐ Usuarios</div></div></div>`,
+  'descriptions': `<dl style="display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--color-border);border-radius:8px;overflow:hidden;min-width:300px;margin:0">${[['Nombre','Giorgi Franck'],['Email','giorgi@ej.com'],['Plan','Pro'],['Región','Perú']].map(([l,v])=>`<div style="border-bottom:1px solid var(--color-border);padding:8px 12px"><dt class="pv-muted" style="font-size:11px;margin:0">${l}</dt><dd style="font-size:13px;font-weight:500;margin:2px 0 0">${v}</dd></div>`).join('')}</dl>`,
   'time-picker': `<span class="pv-input" style="gap:6px;min-width:0">${g('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>')} <span style="font-variant-numeric:tabular-nums">09</span><span class="pv-muted">:</span><span style="font-variant-numeric:tabular-nums">30</span></span>`,
 };
 
