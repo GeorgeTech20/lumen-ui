@@ -2,8 +2,21 @@
 @import './signng-theme.css';
 /* You can add global styles to this file, and also import other style files */
 
+html { scroll-behavior: smooth; }
+
 /* showcase demo-card chrome */
-.dc { border: 1px solid var(--color-border); border-radius: 0.75rem; background: var(--color-card); overflow: hidden; }
+.dc { border: 1px solid var(--color-border); border-radius: 0.75rem; background: var(--color-card); overflow: hidden; transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
+
+/* --- motion: hover-lift + JS-free scroll reveal (animation-timeline: view) --- */
+@media (prefers-reduced-motion: no-preference) {
+  .dc:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.18); border-color: color-mix(in oklab, var(--color-primary) 30%, var(--color-border)); }
+  @keyframes signng-reveal { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @supports (animation-timeline: view()) {
+    .dc { animation: signng-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 24%; }
+  }
+  @keyframes signng-fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  .fade-up { animation: signng-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+}
 .dh { display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--color-border); padding: 0.5rem 1rem; }
 .dn { font-size: 0.875rem; font-weight: 500; }
 .dp { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 1.5rem; min-height: 124px; }

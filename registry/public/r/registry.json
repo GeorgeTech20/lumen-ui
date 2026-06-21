@@ -157,7 +157,7 @@
       "name": "overlay",
       "type": "registry:style",
       "description": "CDK overlay prebuilt CSS + dialog backdrop. Required by dialog/tooltip/popover.",
-      "integrity": "sha256-/TBroTti+uO7tlDS0M+0a/+bbV68y9nuqaSdC9+nBvI="
+      "integrity": "sha256-qbndzsrwFdR+D/6Od3yDuQGBf+h0q7+/+A1nyCZnmHE="
     },
     {
       "name": "dialog",
@@ -419,6 +419,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "KPDbUsr+BA36QcPCqBZ8R2aqhjMLI9vq+QFaVACtLDTzyQWg3uMO36ofzHmkiY/3waerUZ0nbLdbFi+ifQpABQ==",
+  "signature": "Sdd+m18ay1bvU7D0zuFvUKwh3t/9hWatlW9r8Kv1jucdo7fwd5xreVr0qTco0Ik9w+xWbQ+9F7LGYVi3uOpaAQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
