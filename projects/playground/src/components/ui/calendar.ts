@@ -114,7 +114,7 @@ interface Day {
         (focus)="focused.set(true)"
         (blur)="focused.set(false)"
         (keydown)="onKeydown($event)"
-        class="outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
+        class="w-[17.5rem] rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <div role="row" class="grid grid-cols-7">
           @for (wd of weekdays(); track wd.key) {
@@ -154,24 +154,24 @@ interface Day {
       }
 
       @if (view() === 'months') {
-        <div role="grid" aria-label="Elegir mes" class="grid grid-cols-3 gap-1.5 p-1">
+        <div role="grid" aria-label="Elegir mes" class="grid h-[16.5rem] w-[17.5rem] grid-cols-3 gap-1.5 p-1 [grid-auto-rows:1fr]">
           @for (m of months(); track m.i) {
             <button
               type="button"
               (click)="pickMonth(m.i)"
-              [class]="cn('rounded-md py-2.5 text-sm capitalize hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', m.i === cursorMonth() ? 'bg-primary text-primary-foreground hover:bg-primary' : '')"
+              [class]="cn('flex items-center justify-center rounded-md text-sm capitalize hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', m.i === cursorMonth() ? 'bg-primary text-primary-foreground hover:bg-primary' : '')"
             >{{ m.name }}</button>
           }
         </div>
       }
 
       @if (view() === 'years') {
-        <div role="grid" aria-label="Elegir año" class="grid grid-cols-3 gap-1.5 p-1">
+        <div role="grid" aria-label="Elegir año" class="grid h-[16.5rem] w-[17.5rem] grid-cols-3 gap-1.5 p-1 [grid-auto-rows:1fr]">
           @for (y of yearWindow(); track y) {
             <button
               type="button"
               (click)="pickYear(y)"
-              [class]="cn('rounded-md py-2.5 text-sm tabular-nums hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', y === cursorYear() ? 'bg-primary text-primary-foreground hover:bg-primary' : '')"
+              [class]="cn('flex items-center justify-center rounded-md text-sm tabular-nums hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', y === cursorYear() ? 'bg-primary text-primary-foreground hover:bg-primary' : '')"
             >{{ y }}</button>
           }
         </div>
