@@ -269,9 +269,14 @@ details summary { cursor: pointer; font-size: 13px; color: var(--color-muted-for
 <button class="toggle" onclick="document.documentElement.classList.toggle('dark')">◐ tema</button>
 <div class="layout">
 <aside><ul>
+<li class="nav-cat">Empezar</li>
 <li><a href="#hero">Introducción</a></li>
+<li><a href="#start">Get Started</a></li>
 <li><a href="#install">Instalación</a></li>
+<li><a href="#theming">Tema</a></li>
+<li><a href="#cli">CLI</a></li>
 <li><a href="#security">Distribución firmada</a></li>
+<li><a href="#faq">FAQ</a></li>
 <li><a href="#iconos">Iconos</a></li>
 ${nav}
 </ul></aside>
@@ -287,10 +292,56 @@ ${nav}
     <p class="desc">${items.length} componentes · ${index.items.length} items firmados.</p>
   </section>
 
+  <section id="start">
+    <h2>Get Started</h2>
+    <p class="desc">Tres pasos para tener componentes accesibles en tu app Angular 22.</p>
+    <div class="patterns" style="grid-template-columns:repeat(3,1fr);margin-top:1rem">
+      <div><strong>1 · init</strong><br/><span class="desc">Pinea el signer, cablea el tema oklch + estilos del overlay.</span></div>
+      <div><strong>2 · add</strong><br/><span class="desc">Descarga del registry firmado, verifica firma + SRI, escribe el source a tu repo.</span></div>
+      <div><strong>3 · usa</strong><br/><span class="desc">Importa el componente standalone. Es tuyo: edítalo, versiónalo.</span></div>
+    </div>
+    <pre class="cmd" tabindex="0">pnpm signng init
+pnpm signng add button data-table chart-analytics login-form</pre>
+    <pre class="src"><code>// app.ts
+import { DataTable } from '@/components/ui/data-table';
+
+&#64;Component({ imports: [DataTable], template: \`
+  &lt;signng-data-table [data]="rows" [columns]="cols" [selectable]="true" /&gt;
+\` })
+export class App { /* … */ }</code></pre>
+  </section>
+
   <section id="install" class="card">
     <h2 style="margin-top:0;border:0">Instalación</h2>
+    <p class="desc"><strong>Requisitos:</strong> Angular 22 · Tailwind v4 · pnpm. <code>signng init</code> escribe
+    <code>ui.config.json</code> (style, aliases, signer pineado) e importa <code>theme.css</code> + <code>signng-overlay.css</code>.</p>
     <pre class="cmd" tabindex="0">pnpm signng init        # pinea el signer, cablea tema + estilos
-pnpm signng add button dialog calendar   # verifica firma + SRI, luego escribe</pre>
+pnpm signng add button dialog calendar   # verifica firma + SRI, luego escribe
+pnpm signng list        # lista los componentes del registry</pre>
+    <p class="desc">El CLI es <strong>fail-closed</strong>: si la firma o el hash no cuadran, aborta sin tocar el disco.</p>
+  </section>
+
+  <section id="theming" class="card">
+    <h2 style="margin-top:0;border:0">Tema · claro / oscuro</h2>
+    <p class="desc">El tema vive en <strong>variables CSS oklch</strong> (convención shadcn: <code>--primary</code>,
+    <code>--background</code>, <code>--radius</code>…). Cambia el modo poniendo la clase <code>.dark</code> en
+    <code>&lt;html&gt;</code> — así los <strong>overlays de CDK</strong> (que se montan en <code>&lt;body&gt;</code>) también heredan el tema.</p>
+    <pre class="src"><code>// dark mode: clase en &lt;html&gt; (no en un div interno)
+document.documentElement.classList.toggle('dark', isDark);</code></pre>
+    <p class="desc">El output de <strong>tweakcn</strong> cae sin cambios — pega un tema oklch en tu <code>theme.css</code> y
+    re-tematiza todo sin tocar componentes. El showcase incluye un <strong>customizer visual</strong> (color + radio en vivo).</p>
+  </section>
+
+  <section id="cli" class="card">
+    <h2 style="margin-top:0;border:0">CLI</h2>
+    <table class="pv-table" style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr><th style="text-align:left;padding:6px 10px;border-bottom:1px solid var(--color-border)">Comando</th><th style="text-align:left;padding:6px 10px;border-bottom:1px solid var(--color-border)">Qué hace</th></tr></thead>
+      <tbody>
+        <tr><td style="padding:6px 10px"><code>signng init</code></td><td style="padding:6px 10px" class="desc">Configura el proyecto: ui.config.json, tema, estilos, signer pineado.</td></tr>
+        <tr><td style="padding:6px 10px"><code>signng add &lt;...&gt;</code></td><td style="padding:6px 10px" class="desc">Resuelve deps, verifica firma + SRI, escribe el source (fail-closed).</td></tr>
+        <tr><td style="padding:6px 10px"><code>signng list</code></td><td style="padding:6px 10px" class="desc">Lista todos los componentes disponibles en el registry.</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section id="security" class="card">
@@ -298,6 +349,18 @@ pnpm signng add button dialog calendar   # verifica firma + SRI, luego escribe</
     <p class="desc">El registry se firma con <strong>${esc(index.algorithm || 'ed25519')}</strong>. El CLI verifica la firma contra el <strong>signer pineado</strong> y el hash <strong>SRI</strong> de cada archivo <em>antes</em> de escribir — <strong>fail-closed</strong>: si algo no cuadra, no escribe nada.</p>
     <p class="integrity">signer (pubkey): ${esc(signer)}…</p>
     <p class="integrity">signature: ${esc(sig)}…</p>
+  </section>
+
+  <section id="faq">
+    <h2>FAQ</h2>
+    <details class="card"><summary style="font-size:15px;color:var(--color-foreground);font-weight:500">¿Por qué no usar Angular Material o PrimeNG?</summary>
+      <p class="desc" style="margin-top:.5rem">Son paquetes de <code>node_modules</code>: reescribir su look pelea con su CSS. signng copia el <em>source</em> a tu repo — lo posees y editas como cualquier archivo tuyo, igual que shadcn en React.</p></details>
+    <details class="card"><summary style="font-size:15px;color:var(--color-foreground);font-weight:500">¿Es accesible de verdad?</summary>
+      <p class="desc" style="margin-top:.5rem">Sí. WCAG 2.2 AA validado con <strong>axe en CI</strong> (0 violaciones) sobre 32 specs Playwright, bajo SSR + hidratación + zoneless. El ARIA vive en host bindings — un consumidor no lo puede quitar.</p></details>
+    <details class="card"><summary style="font-size:15px;color:var(--color-foreground);font-weight:500">¿Cómo se actualiza un componente copiado?</summary>
+      <p class="desc" style="margin-top:.5rem">Vuelves a correr <code>signng add &lt;nombre&gt;</code> (sobrescribe) y revisas el diff como un PR. La capa a11y crítica vive en <code>@signng/core</code> (npm, parchable por <code>ng update</code>); solo el cosmético se copia.</p></details>
+    <details class="card"><summary style="font-size:15px;color:var(--color-foreground);font-weight:500">¿Soporta i18n y dark mode?</summary>
+      <p class="desc" style="margin-top:.5rem">Sí. Token central <code>SIGNNG_I18N</code> + <code>provideSignngI18n()</code> traduce todos los textos desde un sitio; las fechas son locale-aware (Intl). Dark mode vía <code>.dark</code> en <code>&lt;html&gt;</code> (los overlays heredan).</p></details>
   </section>
 
   <section>${iconsHtml}</section>
