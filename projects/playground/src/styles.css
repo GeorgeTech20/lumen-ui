@@ -16,6 +16,12 @@ html { scroll-behavior: smooth; }
   }
   @keyframes signng-fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
   .fade-up { animation: signng-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+  /* Scroll-driven reveal without the .dc chrome (border/bg/hover-lift) — for cards that already
+     carry their own visual style (e.g. signngCard) and just need the entrance treatment. */
+  @supports (animation-timeline: view()) {
+    .reveal { animation: signng-reveal linear both; animation-timeline: view(); animation-range: entry 0% entry 24%; }
+  }
 }
 .dh { display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--color-border); padding: 0.5rem 1rem; }
 .dn { font-size: 0.875rem; font-weight: 500; }

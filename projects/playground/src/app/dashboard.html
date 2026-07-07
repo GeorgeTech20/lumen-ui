@@ -77,7 +77,7 @@
     <!-- Stat cards -->
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       @for (s of stats; track s.label) {
-        <div signngCard>
+        <div signngCard class="reveal">
           <div signngCardHeader class="gap-1 pb-2">
             <div signngCardDescription class="flex items-center gap-1">
               {{ s.label }}
@@ -100,19 +100,19 @@
 
     <!-- Charts (always visible) — compact 3-up row -->
     <div class="grid gap-4 lg:grid-cols-3">
-      <div signngCard>
+      <div signngCard class="reveal">
         <div signngCardHeader class="pb-2">
           <span signngCardTitle class="flex items-center gap-2 text-sm"><signng-icon name="bar" [size]="15" /> Ingresos por mes</span>
         </div>
         <div signngCardContent class="pt-0"><signng-bar-chart [data]="chartBars" /></div>
       </div>
-      <div signngCard>
+      <div signngCard class="reveal">
         <div signngCardHeader class="pb-2">
           <span signngCardTitle class="flex items-center gap-2 text-sm"><signng-icon name="trending" [size]="15" /> Actividad semanal</span>
         </div>
         <div signngCardContent class="pt-0"><signng-line-chart [data]="lineData" /></div>
       </div>
-      <div signngCard>
+      <div signngCard class="reveal">
         <div signngCardHeader class="pb-2">
           <span signngCardTitle class="flex items-center gap-2 text-sm"><signng-icon name="trending" [size]="15" /> Planes</span>
         </div>
@@ -122,11 +122,11 @@
 
     <!-- Area + radial gauge -->
     <div class="grid gap-4 lg:grid-cols-3">
-      <div signngCard class="lg:col-span-2">
+      <div signngCard class="reveal lg:col-span-2">
         <div signngCardHeader class="pb-2"><span signngCardTitle class="text-sm">Tendencia (área)</span></div>
         <div signngCardContent class="pt-0"><signng-area-chart [data]="lineData" [height]="170" /></div>
       </div>
-      <div signngCard>
+      <div signngCard class="reveal">
         <div signngCardHeader class="pb-2"><span signngCardTitle class="text-sm">Meta mensual</span></div>
         <div signngCardContent class="flex items-center justify-center pt-0">
           <signng-radial-chart [value]="72" label="meta" />
@@ -222,19 +222,19 @@
       <div ngTabPanel value="analytics" class="p-4">
         <ng-template ngTabContent>
           <div class="grid gap-6 lg:grid-cols-2">
-            <div signngCard>
+            <div signngCard class="reveal">
               <div signngCardHeader class="pb-2"><span signngCardTitle>Ingresos por mes</span></div>
               <div signngCardContent><signng-bar-chart [data]="chartBars" /></div>
             </div>
-            <div signngCard>
+            <div signngCard class="reveal">
               <div signngCardHeader class="pb-2"><span signngCardTitle>Actividad semanal</span></div>
               <div signngCardContent><signng-line-chart [data]="lineData" /></div>
             </div>
-            <div signngCard>
+            <div signngCard class="reveal">
               <div signngCardHeader class="pb-2"><span signngCardTitle>Distribución (pie)</span></div>
               <div signngCardContent><signng-pie-chart [data]="donutData" /></div>
             </div>
-            <div signngCard>
+            <div signngCard class="reveal">
               <div signngCardHeader class="pb-2"><span signngCardTitle>Destacados</span></div>
               <div signngCardContent>
                 <signng-carousel label="Métricas destacadas">
@@ -266,7 +266,7 @@
               <signng-calendar label="Fecha de reporte" [(value)]="date" />
               <div class="max-w-xs"><signng-date-picker label="Rango fin" [(value)]="date" /></div>
             </div>
-            <div signngCard>
+            <div signngCard class="reveal">
               <div signngCardHeader class="pb-2"><span signngCardTitle>Cargando…</span></div>
               <div signngCardContent class="space-y-2">
                 <div signngSkeleton class="h-4 w-3/4"></div>
@@ -281,7 +281,7 @@
 
     <!-- Settings form + disclosure -->
     <div class="grid gap-6 lg:grid-cols-2">
-      <div signngCard>
+      <div signngCard class="reveal">
         <div signngCardHeader><span signngCardTitle>Preferencias</span><span signngCardDescription>Configura tu cuenta.</span></div>
         <div signngCardContent class="space-y-4">
           <signng-form-field label="Nombre" htmlFor="p-name" description="Como aparece en tu perfil.">
@@ -337,7 +337,7 @@
           </div>
         </signng-collapsible>
         <hr signngSeparator />
-        <div signngCard>
+        <div signngCard class="reveal">
           <div signngCardHeader class="pb-2"><span signngCardTitle>Editor / Vista previa</span></div>
           <div signngCardContent>
             <signng-resizable label="Editor y vista previa" [(split)]="budget" class="h-40 overflow-hidden rounded-md border border-border">
@@ -346,7 +346,7 @@
             </signng-resizable>
           </div>
         </div>
-        <div signngCard>
+        <div signngCard class="reveal">
           <div signngCardHeader class="pb-2"><span signngCardTitle>Logs</span></div>
           <div signngCardContent>
             <div signngScrollArea class="h-28 border border-border p-2 text-xs">
@@ -354,7 +354,7 @@
             </div>
           </div>
         </div>
-        <div signngCard>
+        <div signngCard class="reveal">
           <div signngCardHeader class="pb-2"><span signngCardTitle>Media</span></div>
           <div signngCardContent>
             <div signngAspectRatio ratio="16/9" class="rounded-md bg-muted">

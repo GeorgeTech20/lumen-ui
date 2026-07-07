@@ -38,7 +38,7 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
       @switch (block()) {
         <!-- ============ AUTH ============ -->
         @case ('Auth') {
-          <div class="grid min-h-[calc(100vh-49px)] lg:grid-cols-2">
+          <div class="fade-up grid min-h-[calc(100vh-49px)] lg:grid-cols-2">
             <div class="relative hidden flex-col justify-between overflow-hidden bg-primary p-10 text-primary-foreground lg:flex">
               <div class="flex items-center gap-2 text-lg font-bold"><signng-icon name="bar" [size]="22" /> signng</div>
               <div>
@@ -54,7 +54,7 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
 
         <!-- ============ PRICING ============ -->
         @case ('Pricing') {
-          <div class="mx-auto max-w-5xl px-6 py-14">
+          <div class="fade-up mx-auto max-w-5xl px-6 py-14">
             <div class="text-center">
               <h1 class="text-3xl font-bold tracking-tight">Precios simples y transparentes</h1>
               <p class="mt-3 text-muted-foreground">Empieza gratis. Escala cuando crezcas.</p>
@@ -84,7 +84,7 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
 
         <!-- ============ SETTINGS ============ -->
         @case ('Settings') {
-          <div class="mx-auto max-w-4xl px-6 py-10">
+          <div class="fade-up mx-auto max-w-4xl px-6 py-10">
             <h1 class="text-2xl font-bold tracking-tight">Configuración</h1>
             <p class="text-muted-foreground">Administra tu perfil y preferencias.</p>
             <div class="mt-6 grid gap-8 md:grid-cols-[180px_1fr]">
@@ -119,7 +119,7 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
 
         <!-- ============ STATS ============ -->
         @case ('Stats') {
-          <div class="mx-auto max-w-5xl px-6 py-10">
+          <div class="fade-up mx-auto max-w-5xl px-6 py-10">
             <h1 class="text-2xl font-bold tracking-tight">Resumen</h1>
             <p class="text-muted-foreground">Métricas clave del último mes.</p>
             <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -185,7 +185,7 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
 
         <!-- ============ CARDS ============ -->
         @case ('Cards') {
-          <div class="mx-auto max-w-5xl px-6 py-10">
+          <div class="fade-up mx-auto max-w-5xl px-6 py-10">
             <h1 class="text-2xl font-bold tracking-tight">Cards</h1>
             <p class="text-muted-foreground">Patrones de tarjeta compuestos.</p>
             <div class="mt-6 grid gap-5 md:grid-cols-3">
