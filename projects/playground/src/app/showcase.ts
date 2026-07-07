@@ -85,6 +85,9 @@ interface Demo { name: string; cat: string; code: string }
   host: {
     '(document:keydown.meta.k)': 'focusSearch($event)',
     '(document:keydown.control.k)': 'focusSearch($event)',
+    // '/' fallback: Ctrl+K is a reserved browser accelerator (focus omnibox) on some
+    // Chrome/Windows setups and can't always be preempted — '/' never collides.
+    '(document:keydown./)': 'focusSearchSlash($event)',
   },
   imports: [
     NgTemplateOutlet, RouterLink,
@@ -128,7 +131,7 @@ export class Showcase {
       copy: 'Copy', explore: 'Explore ↓', dashboard: 'View dashboard →',
       badges: ['WCAG 2.2 AA · axe 0', '~1.2 KB gzip / component', 'ed25519-signed registry', 'DataTable · charts · Kanban', 'i18n · dark mode'],
       stats: ['components', 'icons', 'chart types', 'fail-closed tests', 'runtime vulnerabilities', 'WCAG 2.2 · axe 0', 'signed registry'],
-      search: 'Search components…  (⌘K)',
+      search: 'Search components…  (/ or ⌘K)',
       noResults: (q: string) => `No results for "${q}".`,
       cats: { Enterprise: 'Enterprise', Avanzados: 'Advanced', Pro: 'Pro', Formularios: 'Forms', Overlays: 'Overlays', 'Navegación': 'Navigation', Datos: 'Data', Display: 'Display', 'Gráficos': 'Charts' } as Record<string, string>,
     },
@@ -140,7 +143,7 @@ export class Showcase {
       copy: 'Copiar', explore: 'Explorar ↓', dashboard: 'Ver dashboard →',
       badges: ['WCAG 2.2 AA · axe 0', '~1.2 KB gzip / componente', 'registry ed25519 firmado', 'DataTable · charts · Kanban', 'i18n · dark mode'],
       stats: ['componentes', 'iconos', 'tipos de chart', 'tests fail-closed', 'vulnerabilidades runtime', 'WCAG 2.2 · axe 0', 'registry firmado'],
-      search: 'Buscar componente…  (⌘K)',
+      search: 'Buscar componente…  (/ o ⌘K)',
       noResults: (q: string) => `Sin resultados para "${q}".`,
       cats: { Enterprise: 'Enterprise', Avanzados: 'Avanzados', Pro: 'Pro', Formularios: 'Formularios', Overlays: 'Overlays', 'Navegación': 'Navegación', Datos: 'Datos', Display: 'Display', 'Gráficos': 'Gráficos' } as Record<string, string>,
     },
@@ -178,6 +181,12 @@ export class Showcase {
   }
 
   protected focusSearch(e: Event): void {
+    e.preventDefault();
+    this.search()?.nativeElement.focus();
+  }
+  protected focusSearchSlash(e: Event): void {
+    const target = e.target as HTMLElement | null;
+    if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
     e.preventDefault();
     this.search()?.nativeElement.focus();
   }

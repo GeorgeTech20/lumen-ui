@@ -64,7 +64,7 @@ interface Day {
   selector: 'signng-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div [class]="cn('inline-block rounded-lg border border-border bg-background p-3', class())">
+    <div [class]="cn('inline-block rounded-lg border border-border bg-background text-foreground p-3', class())">
       <div class="mb-2 flex items-center gap-1">
         <button
           type="button"

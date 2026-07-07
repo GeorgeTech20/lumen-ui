@@ -295,7 +295,7 @@
       "name": "calendar",
       "type": "registry:ui",
       "description": "Date-grid calendar (controlled APG grid: arrows/Home/End/PageUp-Down, Intl labels).",
-      "integrity": "sha256-83N3AKD8vPRlmSWpVzAwpAKT7WcZBquADxetjvC39C4="
+      "integrity": "sha256-4vI2d1G++JOpoQd4JcE1BE1XDB4yizK2Chy5yQhKOPI="
     },
     {
       "name": "date-picker",
@@ -473,6 +473,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "hoJVhCdI00j5FrvXAANFWJ8F8dv4pTC3d8khwRC6k1o8HcOjZnyC9I4l0PTK9azNff0dcb5B5VS/XMaCJDEiBg==",
+  "signature": "QkObg461f7h4CKXbtBLA7L2aYJrunKFnTxKmMsnzf1xZsPcRet5tbTA3ZhHFZHUV+F6Yf3OL5fDJk5n2wPGHBg==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
