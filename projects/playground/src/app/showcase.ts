@@ -21,7 +21,7 @@ import { Popover } from '@/components/ui/popover';
 import { Tooltip } from '@/components/ui/tooltip';
 import { HoverCard } from '@/components/ui/hover-card';
 import { Command } from '@/components/ui/command';
-import { Toaster, ToastService } from '@/components/ui/toast';
+import { ToastService } from '@/components/ui/toast';
 import { Accordion } from '@/components/ui/accordion';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { ContextMenu } from '@/components/ui/context-menu';
@@ -92,7 +92,7 @@ interface Demo { name: string; cat: string; code: string }
   imports: [
     NgTemplateOutlet, RouterLink,
     Button, Input, Textarea, Switch, Checkbox, RadioGroup, Radio, Select, Slider, Combobox, InputOtp, FormField,
-    Dialog, AlertDialog, Sheet, Drawer, Popover, Tooltip, HoverCard, Command, Toaster,
+    Dialog, AlertDialog, Sheet, Drawer, Popover, Tooltip, HoverCard, Command,
     Accordion, DropdownMenu, ContextMenu, Menubar, Pagination, Calendar, DatePicker,
     Avatar, Badge, Separator, Skeleton, Progress, Toggle, Collapsible, ScrollArea, AspectRatio,
     Icon, ...SIGNNG_CHART, ...SIGNNG_SIDEBAR, ...SIGNNG_CARD, ...SIGNNG_ALERT, ...SIGNNG_TABLE,

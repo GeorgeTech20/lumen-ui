@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, signal, computed } from '@angular/c
 import { RouterLink } from '@angular/router';
 import { Icon, ICONS, type IconName } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
-import { Toaster, ToastService } from '@/components/ui/toast';
+import { ToastService } from '@/components/ui/toast';
 import { inject } from '@angular/core';
 
 /** Icon gallery — browse the built-in stroke icon set, click a card to copy its usage snippet. */
 @Component({
   selector: 'signng-icons-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, Icon, Input, Toaster],
+  imports: [RouterLink, Icon, Input],
   template: `
     <div class="min-h-screen bg-background text-foreground">
       <div class="sticky top-0 z-20 border-b border-border bg-background/90 px-4 py-3 backdrop-blur">
@@ -44,7 +44,6 @@ import { inject } from '@angular/core';
           <p class="py-16 text-center text-muted-foreground">No icons match "{{ q() }}".</p>
         }
       </main>
-      <signng-toaster />
     </div>
   `,
 })
