@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -62,6 +63,7 @@ interface Row {
   selector: 'signng-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    RouterLink,
     Button, Input, Label, Textarea, Switch, Checkbox, RadioGroup, Radio, Select, Slider, Combobox, InputOtp,
     Dialog, AlertDialog, Sheet, Popover, Tooltip, HoverCard, Command, Toaster,
     Accordion, DropdownMenu, ContextMenu, Menubar, Pagination, Calendar, DatePicker,

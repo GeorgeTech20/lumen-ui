@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,13 +23,13 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
   selector: 'signng-blocks',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    Button, Input, Label, Textarea, Switch, Avatar, Badge, Separator, Icon, LoginForm, StatCard,
+    RouterLink, Button, Input, Label, Textarea, Switch, Avatar, Badge, Separator, Icon, LoginForm, StatCard,
     ...SIGNNG_CARD, ...SIGNNG_CHART,
   ],
   template: `
     <div class="min-h-screen bg-background text-foreground">
       <div class="sticky top-0 z-20 flex flex-wrap items-center gap-1 border-b border-border bg-background/90 px-4 py-2 backdrop-blur">
-        <span class="mr-3 flex items-center gap-2 font-bold"><span class="text-primary"><signng-icon name="bar" [size]="18" /></span> Blocks</span>
+        <a routerLink="/" class="mr-3 flex items-center gap-2 font-bold hover:opacity-80"><span class="text-primary"><signng-icon name="bar" [size]="18" /></span> Blocks</a>
         @for (b of BLOCKS; track b) {
           <button (click)="block.set(b)" [class]="'rounded-md px-3 py-1.5 text-sm ' + (block() === b ? 'bg-accent font-medium text-accent-foreground' : 'text-muted-foreground hover:bg-accent/50')">{{ b }}</button>
         }

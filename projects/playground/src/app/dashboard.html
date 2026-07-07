@@ -1,8 +1,10 @@
 <div class="flex h-screen overflow-hidden bg-background text-foreground">
   <signng-sidebar [(collapsed)]="sidebarCollapsed">
     <div signngSidebarHeader>
-      <signng-icon name="bar" [size]="22" class="text-primary" />
-      @if (!sidebarCollapsed()) { <span class="text-lg font-semibold">signng</span> }
+      <a routerLink="/" class="flex items-center gap-2 hover:opacity-80">
+        <signng-icon name="bar" [size]="22" class="text-primary" />
+        @if (!sidebarCollapsed()) { <span class="text-lg font-semibold">signng</span> }
+      </a>
       <signng-sidebar-trigger class="ml-auto" />
     </div>
     <div signngSidebarContent>
