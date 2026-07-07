@@ -391,7 +391,7 @@
       "name": "icon",
       "type": "registry:ui",
       "description": "Owned minimal stroke icon set (~30 feather-style) rendered as path d (no innerHTML).",
-      "integrity": "sha256-/yCEMbcl0wbBRBsRJqPRdNG2CmI3XBCHamUMBOPFjjM="
+      "integrity": "sha256-YtOmvUWw6jL9IVm192HQ/cSJLRvoLqwTZ8geUG1ch5s="
     },
     {
       "name": "navigation-menu",
@@ -473,6 +473,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "gC/82nPmW2r86QG9BqYjM6TuZ9TwgtmirIlCZ9bipF7Rf+gHVadbxP87O5fOK7wRXjM+AQfFBgnmsfXNkBUCBw==",
+  "signature": "hoJVhCdI00j5FrvXAANFWJ8F8dv4pTC3d8khwRC6k1o8HcOjZnyC9I4l0PTK9azNff0dcb5B5VS/XMaCJDEiBg==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
