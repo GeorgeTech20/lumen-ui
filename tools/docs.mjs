@@ -10,7 +10,13 @@ const ROOT = resolve(__dirname, '..');
 const R = resolve(ROOT, 'registry', 'public', 'r');
 const OUT = resolve(ROOT, 'docs');
 
-const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const esc = (s) =>
+  String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 
 // 1) Theme vars: @theme {…} isn't valid CSS, so rewrite it to :root {…} (the .dark block is already plain).
 const themeCss = readFileSync(resolve(ROOT, 'tokens', 'dist', 'theme.css'), 'utf8')

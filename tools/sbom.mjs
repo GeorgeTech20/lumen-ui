@@ -29,11 +29,16 @@ for (const pkg of PKGS) {
   }
 }
 
+function toPurl(name, ver) {
+  const encodedName = name.split('/').map(encodeURIComponent).join('/');
+  return `pkg:npm/${encodedName}@${encodeURIComponent(ver ?? '')}`;
+}
+
 const components = [...seen].map(([name, ver]) => ({
   type: 'library',
   name,
   version: ver,
-  purl: `pkg:npm/${name.replace('@', '%40')}@${ver}`,
+  purl: toPurl(name, ver),
 }));
 
 const bom = {
