@@ -13,6 +13,7 @@ import { LoginForm } from '@/components/ui/login-form';
 import { StatCard } from '@/components/ui/stat-card';
 import { SIGNNG_CARD } from '@/components/ui/card';
 import { SIGNNG_CHART } from '@/components/ui/chart';
+import { CodeBlock } from '@/components/ui/code-block';
 
 /**
  * Blocks gallery — full-page composed templates (shadcn "blocks" style) assembled from signng components:
@@ -24,7 +25,7 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink, Button, Input, Label, Textarea, Switch, Avatar, Badge, Separator, Icon, LoginForm, StatCard,
-    ...SIGNNG_CARD, ...SIGNNG_CHART,
+    ...SIGNNG_CARD, ...SIGNNG_CHART, CodeBlock,
   ],
   template: `
     <div class="min-h-screen bg-background text-foreground">
@@ -33,7 +34,11 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
         @for (b of BLOCKS; track b) {
           <button (click)="block.set(b)" [class]="'rounded-md px-3 py-1.5 text-sm ' + (block() === b ? 'bg-accent font-medium text-accent-foreground' : 'text-muted-foreground hover:bg-accent/50')">{{ b }}</button>
         }
-        <div class="ml-auto flex items-center gap-1 rounded-md border border-border p-0.5">
+        <div class="ml-auto flex rounded-md bg-muted p-0.5 text-xs">
+          <button (click)="mode.set('preview')" [class]="'rounded px-2 py-1 ' + (mode() === 'preview' ? 'bg-background shadow-sm' : '')">Preview</button>
+          <button (click)="mode.set('code')" [class]="'rounded px-2 py-1 ' + (mode() === 'code' ? 'bg-background shadow-sm' : '')">Code</button>
+        </div>
+        <div class="flex items-center gap-1 rounded-md border border-border p-0.5">
           @for (d of DEVICES; track d.key) {
             <button
               (click)="device.set(d.key)"
@@ -47,6 +52,9 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
         </div>
       </div>
 
+      @if (mode() === 'code') {
+        <div class="p-4"><signng-code [code]="CODE[block()]" /></div>
+      } @else {
       <div [class]="'mx-auto overflow-x-auto transition-[max-width] duration-200 ' + DEVICE_WIDTH[device()]">
       @switch (block()) {
         <!-- ============ AUTH ============ -->
@@ -235,6 +243,7 @@ import { SIGNNG_CHART } from '@/components/ui/chart';
         }
       }
       </div>
+      }
     </div>
   `,
 })
@@ -253,6 +262,65 @@ export class Blocks {
     mobile: 'max-w-sm border-x border-border',
   };
   protected readonly device = signal<'desktop' | 'tablet' | 'mobile'>('desktop');
+  protected readonly mode = signal<'preview' | 'code'>('preview');
+
+  protected readonly CODE: Record<'Auth' | 'Pricing' | 'Settings' | 'Stats' | 'Mail' | 'Cards', string> = {
+    Auth: `<div class="grid lg:grid-cols-2">
+  <div class="bg-primary p-10 text-primary-foreground">
+    <blockquote>"…"</blockquote>
+  </div>
+  <signng-login-form mode="login" [social]="true" />
+</div>`,
+    Pricing: `@for (t of tiers; track t.name) {
+  <div signngCard [class]="t.popular ? 'border-primary shadow-lg' : ''">
+    <div signngCardHeader>
+      <span signngCardTitle>{{ t.name }}</span>
+      <span signngCardDescription>{{ t.tagline }}</span>
+    </div>
+    <div signngCardContent>
+      <button signngButton [variant]="t.popular ? 'default' : 'outline'">{{ t.cta }}</button>
+      @for (f of t.features; track f) { <li>{{ f }}</li> }
+    </div>
+  </div>
+}`,
+    Settings: `<nav>
+  @for (s of ['Perfil','Cuenta','Notificaciones']; track s) {
+    <a>{{ s }}</a>
+  }
+</nav>
+<div signngCard>
+  <div signngCardHeader><span signngCardTitle>Perfil</span></div>
+  <div signngCardContent>
+    <input signngInput [(value)]="name" />
+    <signng-switch [(checked)]="pub" />
+  </div>
+</div>`,
+    Stats: `<signng-stat-card label="MRR" value="$48.2k" delta="+12%" [up]="true" icon="trending" />
+<div signngCard>
+  <div signngCardContent><signng-bar-chart [data]="bars" /></div>
+</div>`,
+    Mail: `<div class="grid md:grid-cols-[320px_1fr]">
+  <div>
+    @for (m of inbox; track m.id) {
+      <button (click)="openMail.set(m.id)">
+        <signng-avatar [fallback]="m.fallback" />
+        <span>{{ m.subject }}</span>
+      </button>
+    }
+  </div>
+  <div><!-- selected message body --></div>
+</div>`,
+    Cards: `<div signngCard>
+  <div signngCardHeader class="flex-row items-center gap-3">
+    <signng-avatar fallback="GF" />
+    <span signngCardTitle>Giorgi Franck</span>
+    <span signngBadge class="ml-auto">Pro</span>
+  </div>
+</div>
+<div signngCard class="md:col-span-2">
+  <signng-line-chart [data]="bars" />
+</div>`,
+  };
   protected readonly openMail = signal('1');
   protected readonly inbox = [
     { id: '1', from: 'Ana Torres', subject: 'Propuesta Q3 lista', preview: 'Adjunto el plan trimestral con métricas…', time: '10:24', unread: true, fallback: 'AT' },
