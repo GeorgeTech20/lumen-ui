@@ -1,0 +1,10 @@
+packages:
+  - "."
+  - "projects/*"
+  - "packages/*"
+
+overrides:
+  esbuild@<0.28.1: ">=0.28.1"
+  vite@<7.3.5: ">=7.3.5"
+  "@babel/core@<7.29.1": ">=7.29.1"
+  piscina@<5.1.5: ">=5.1.5"
