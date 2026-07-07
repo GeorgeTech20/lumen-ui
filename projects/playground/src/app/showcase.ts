@@ -22,6 +22,7 @@ import { Tooltip } from '@/components/ui/tooltip';
 import { HoverCard } from '@/components/ui/hover-card';
 import { Command } from '@/components/ui/command';
 import { ToastService } from '@/components/ui/toast';
+import { PRESETS } from './theme-customizer';
 import { Accordion } from '@/components/ui/accordion';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { ContextMenu } from '@/components/ui/context-menu';
@@ -357,6 +358,9 @@ export class Users {
   ]);
 
   protected readonly CATS = ['Enterprise', 'Avanzados', 'Pro', 'Formularios', 'Overlays', 'Navegación', 'Datos', 'Display', 'Gráficos'];
+  // reuse the ThemeCustomizer brand presets as section-accent variety instead of repeating
+  // --color-primary everywhere — one visual signal that this page isn't monotone.
+  protected readonly CAT_ACCENT = PRESETS.map((p) => p.primary);
   protected readonly DEMOS: Demo[] = [
     { name: 'DataTable', cat: 'Enterprise', code: `<signng-data-table [data]="rows" [columns]="cols" [selectable]="true" groupBy="dept" />` },
     { name: 'MultiLineChart', cat: 'Enterprise', code: `<signng-multi-line-chart [series]="series" [labels]="labels" />` },
