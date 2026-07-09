@@ -4,6 +4,7 @@ import { Blocks } from './blocks';
 import { Dashboard } from './dashboard';
 import { IconsPage } from './icons';
 import { ColorsPage } from './colors';
+import { DocsPage } from './docs';
 
 // 'demo' (Fase 0 scratch page) intentionally not routed — superseded by Showcase,
 // file kept on disk for reference, not reachable from the site.
@@ -13,4 +14,6 @@ export const routes: Routes = [
   { path: 'dashboard', component: Dashboard, title: 'signng — dashboard' },
   { path: 'icons', component: IconsPage, title: 'signng — icons' },
   { path: 'colors', component: ColorsPage, title: 'signng — colors' },
+  { path: 'docs', component: DocsPage, title: 'signng — docs' },
+  { path: 'docs/:name', component: DocsPage, title: 'signng — docs' },
 ];

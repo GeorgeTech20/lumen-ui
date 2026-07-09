@@ -10,6 +10,7 @@
       <a routerLink="/blocks" class="hidden rounded-md px-2.5 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground sm:inline-flex">Blocks</a>
       <a routerLink="/icons" class="hidden rounded-md px-2.5 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground sm:inline-flex">Icons</a>
       <a routerLink="/colors" class="hidden rounded-md px-2.5 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground sm:inline-flex">Colors</a>
+      <a routerLink="/docs" class="hidden rounded-md px-2.5 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground sm:inline-flex">Docs</a>
       <a routerLink="/dashboard" class="hidden rounded-md px-2.5 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground sm:inline-flex">Dashboard</a>
       <a href="https://github.com/GeorgeTech20/signng-ui" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-sm hover:bg-accent">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 1A11 11 0 0 0 8.52 22.44c.55.1.75-.24.75-.53v-1.86c-3.06.67-3.7-1.47-3.7-1.47-.5-1.27-1.22-1.61-1.22-1.61-1-.68.08-.67.08-.67 1.1.08 1.68 1.13 1.68 1.13.98 1.68 2.57 1.2 3.2.92.1-.71.38-1.2.7-1.47-2.44-.28-5.01-1.22-5.01-5.43 0-1.2.43-2.18 1.13-2.95-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.02 1.13a10.4 10.4 0 0 1 5.5 0C17.46 5.6 18.38 5.9 18.38 5.9c.6 1.52.22 2.64.11 2.92.7.77 1.13 1.75 1.13 2.95 0 4.22-2.58 5.15-5.03 5.42.39.34.74 1.01.74 2.04v3.03c0 .29.2.64.76.53A11 11 0 0 0 12 1Z"/></svg>
@@ -112,7 +113,7 @@
 
             <!-- ============ ENTERPRISE ============ -->
             @if (cat === 'Enterprise') {
-              @if (match('DataTable')) { <article class="dc">
+              @if (match('DataTable')) { <article class="dc" id="c-DataTable">
                 <div class="dh"><span class="dn">DataTable</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">ENTERPRISE</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'DataTable'}" /></div>
                 @if (mode('DataTable')==='code') { <signng-code [code]="code('DataTable')" /> } @else { <div class="p-4">
                   <signng-data-table [(data)]="tableData" [columns]="tableCols" [selectable]="true" [pageSize]="5" caption="empleados" />
@@ -120,42 +121,42 @@
                 </div> }
               </article> }
 
-              @if (match('MultiLineChart')) { <article class="dc">
+              @if (match('MultiLineChart')) { <article class="dc" id="c-MultiLineChart">
                 <div class="dh"><span class="dn">MultiLineChart</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">ENTERPRISE</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'MultiLineChart'}" /></div>
                 @if (mode('MultiLineChart')==='code') { <signng-code [code]="code('MultiLineChart')" /> } @else { <div class="p-5"><signng-multi-line-chart [series]="mlSeries" [labels]="mlLabels" label="Ingresos por año" /></div> }
               </article> }
 
-              @if (match('StackedBarChart')) { <article class="dc">
+              @if (match('StackedBarChart')) { <article class="dc" id="c-StackedBarChart">
                 <div class="dh"><span class="dn">StackedBarChart</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'StackedBarChart'}" /></div>
                 @if (mode('StackedBarChart')==='code') { <signng-code [code]="code('StackedBarChart')" /> } @else { <div class="p-5"><signng-stacked-bar-chart [series]="stackSeries" [labels]="stackLabels" /></div> }
               </article> }
 
-              @if (match('GroupedBarChart')) { <article class="dc">
+              @if (match('GroupedBarChart')) { <article class="dc" id="c-GroupedBarChart">
                 <div class="dh"><span class="dn">GroupedBarChart</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'GroupedBarChart'}" /></div>
                 @if (mode('GroupedBarChart')==='code') { <signng-code [code]="code('GroupedBarChart')" /> } @else { <div class="p-5"><signng-grouped-bar-chart [series]="stackSeries" [labels]="stackLabels" /></div> }
               </article> }
 
-              @if (match('ScatterChart')) { <article class="dc">
+              @if (match('ScatterChart')) { <article class="dc" id="c-ScatterChart">
                 <div class="dh"><span class="dn">ScatterChart</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'ScatterChart'}" /></div>
                 @if (mode('ScatterChart')==='code') { <signng-code [code]="code('ScatterChart')" /> } @else { <div class="p-5"><signng-scatter-chart [data]="scatter" /></div> }
               </article> }
 
-              @if (match('Heatmap')) { <article class="dc">
+              @if (match('Heatmap')) { <article class="dc" id="c-Heatmap">
                 <div class="dh"><span class="dn">Heatmap</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Heatmap'}" /></div>
                 @if (mode('Heatmap')==='code') { <signng-code [code]="code('Heatmap')" /> } @else { <div class="flex justify-center p-5"><signng-heatmap [matrix]="heat" [height]="120" /></div> }
               </article> }
 
-              @if (match('FileUpload')) { <article class="dc">
+              @if (match('FileUpload')) { <article class="dc" id="c-FileUpload">
                 <div class="dh"><span class="dn">FileUpload</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">ENTERPRISE</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'FileUpload'}" /></div>
                 @if (mode('FileUpload')==='code') { <signng-code [code]="code('FileUpload')" /> } @else { <div class="p-4"><signng-file-upload accept="image/*,.pdf" [maxSize]="5242880" [multiple]="true" /></div> }
               </article> }
 
-              @if (match('ImageUpload')) { <article class="dc">
+              @if (match('ImageUpload')) { <article class="dc" id="c-ImageUpload">
                 <div class="dh"><span class="dn">ImageUpload</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'ImageUpload'}" /></div>
                 @if (mode('ImageUpload')==='code') { <signng-code [code]="code('ImageUpload')" /> } @else { <div class="p-4"><signng-image-upload [multiple]="true" /></div> }
               </article> }
 
-              @if (match('LoginForm')) { <article class="dc">
+              @if (match('LoginForm')) { <article class="dc" id="c-LoginForm">
                 <div class="dh"><span class="dn">LoginForm</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">BLOCK</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'LoginForm'}" /></div>
                 @if (mode('LoginForm')==='code') { <signng-code [code]="code('LoginForm')" /> } @else { <div class="bg-muted/30 p-6"><signng-login-form mode="login" [social]="true" (submitted)="login($event)" /></div> }
               </article> }
@@ -163,7 +164,7 @@
 
             <!-- ============ AVANZADOS ============ -->
             @if (cat === 'Avanzados') {
-              @if (match('StatCard')) { <article class="dc">
+              @if (match('StatCard')) { <article class="dc" id="c-StatCard">
                 <div class="dh"><span class="dn">StatCard</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'StatCard'}" /></div>
                 @if (mode('StatCard')==='code') { <signng-code [code]="code('StatCard')" /> } @else { <div class="dp w-full">
                   <signng-stat-card label="MRR" [value]="'$48.2k'" delta="+12%" [up]="true" icon="trending" hint="vs mes anterior" class="w-full max-w-[220px]" />
@@ -171,12 +172,12 @@
                 </div> }
               </article> }
 
-              @if (match('Stepper')) { <article class="dc">
+              @if (match('Stepper')) { <article class="dc" id="c-Stepper">
                 <div class="dh"><span class="dn">Stepper</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Stepper'}" /></div>
                 @if (mode('Stepper')==='code') { <signng-code [code]="code('Stepper')" /> } @else { <div class="dp w-full"><signng-stepper [steps]="steps" [(current)]="stepIdx" [clickable]="true" class="w-full" /></div> }
               </article> }
 
-              @if (match('NumberInput')) { <article class="dc">
+              @if (match('NumberInput')) { <article class="dc" id="c-NumberInput">
                 <div class="dh"><span class="dn">NumberInput</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'NumberInput'}" /></div>
                 @if (mode('NumberInput')==='code') { <signng-code [code]="code('NumberInput')" /> } @else { <div class="dp">
                   <signng-number-input [(value)]="qty" [min]="0" [max]="99" label="Cantidad" />
@@ -184,37 +185,37 @@
                 </div> }
               </article> }
 
-              @if (match('MultiSelect')) { <article class="dc">
+              @if (match('MultiSelect')) { <article class="dc" id="c-MultiSelect">
                 <div class="dh"><span class="dn">MultiSelect</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'MultiSelect'}" /></div>
                 @if (mode('MultiSelect')==='code') { <signng-code [code]="code('MultiSelect')" /> } @else { <div class="dp w-full"><signng-multi-select [options]="skillOpts" [(value)]="skills" placeholder="Elegir skills…" class="w-full max-w-xs" /></div> }
               </article> }
 
-              @if (match('TagInput')) { <article class="dc">
+              @if (match('TagInput')) { <article class="dc" id="c-TagInput">
                 <div class="dh"><span class="dn">TagInput</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'TagInput'}" /></div>
                 @if (mode('TagInput')==='code') { <signng-code [code]="code('TagInput')" /> } @else { <div class="dp w-full"><signng-tag-input [(tags)]="tags" placeholder="Añadir etiqueta…" class="w-full max-w-xs" /></div> }
               </article> }
 
-              @if (match('DateRangePicker')) { <article class="dc">
+              @if (match('DateRangePicker')) { <article class="dc" id="c-DateRangePicker">
                 <div class="dh"><span class="dn">DateRangePicker</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'DateRangePicker'}" /></div>
                 @if (mode('DateRangePicker')==='code') { <signng-code [code]="code('DateRangePicker')" /> } @else { <div class="dp"><signng-date-range-picker [(start)]="rangeStart" [(end)]="rangeEnd" /></div> }
               </article> }
 
-              @if (match('TreeView')) { <article class="dc">
+              @if (match('TreeView')) { <article class="dc" id="c-TreeView">
                 <div class="dh"><span class="dn">TreeView</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'TreeView'}" /></div>
                 @if (mode('TreeView')==='code') { <signng-code [code]="code('TreeView')" /> } @else { <div class="dp w-full"><signng-tree-view [nodes]="tree" [defaultOpen]="true" class="w-full" /></div> }
               </article> }
 
-              @if (match('Timeline')) { <article class="dc">
+              @if (match('Timeline')) { <article class="dc" id="c-Timeline">
                 <div class="dh"><span class="dn">Timeline</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Timeline'}" /></div>
                 @if (mode('Timeline')==='code') { <signng-code [code]="code('Timeline')" /> } @else { <div class="dp w-full"><signng-timeline [items]="feed" class="w-full" /></div> }
               </article> }
 
-              @if (match('EmptyState')) { <article class="dc">
+              @if (match('EmptyState')) { <article class="dc" id="c-EmptyState">
                 <div class="dh"><span class="dn">EmptyState</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'EmptyState'}" /></div>
                 @if (mode('EmptyState')==='code') { <signng-code [code]="code('EmptyState')" /> } @else { <div class="dp w-full"><signng-empty-state title="Sin proyectos" description="Crea tu primer proyecto para empezar." icon="search" class="w-full"><button signngButton size="sm">Nuevo proyecto</button></signng-empty-state></div> }
               </article> }
 
-              @if (match('Toolbar')) { <article class="dc">
+              @if (match('Toolbar')) { <article class="dc" id="c-Toolbar">
                 <div class="dh"><span class="dn">Toolbar</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Toolbar'}" /></div>
                 @if (mode('Toolbar')==='code') { <signng-code [code]="code('Toolbar')" /> } @else { <div class="dp">
                   <signng-toolbar label="Formato de texto">
@@ -226,12 +227,12 @@
                 </div> }
               </article> }
 
-              @if (match('Transfer')) { <article class="dc">
+              @if (match('Transfer')) { <article class="dc" id="c-Transfer">
                 <div class="dh"><span class="dn">Transfer</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Transfer'}" /></div>
                 @if (mode('Transfer')==='code') { <signng-code [code]="code('Transfer')" /> } @else { <div class="dp"><signng-transfer [items]="transferItems" [(selected)]="transferSel" [titles]="['Módulos','Activos']" /></div> }
               </article> }
 
-              @if (match('Descriptions')) { <article class="dc">
+              @if (match('Descriptions')) { <article class="dc" id="c-Descriptions">
                 <div class="dh"><span class="dn">Descriptions</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Descriptions'}" /></div>
                 @if (mode('Descriptions')==='code') { <signng-code [code]="code('Descriptions')" /> } @else { <div class="dp w-full"><signng-descriptions [items]="descItems" [columns]="2" [bordered]="true" class="w-full" /></div> }
               </article> }
@@ -244,17 +245,17 @@
                 @if (mode('Kanban')==='code') { <signng-code [code]="code('Kanban')" /> } @else { <div class="p-4"><signng-kanban [(columns)]="board" /><p class="mt-2 text-xs text-muted-foreground">Arrastra tarjetas entre columnas (mouse o teclado).</p></div> }
               </article> }
 
-              @if (match('NotificationCenter')) { <article class="dc">
+              @if (match('NotificationCenter')) { <article class="dc" id="c-NotificationCenter">
                 <div class="dh"><span class="dn">NotificationCenter</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'NotificationCenter'}" /></div>
                 @if (mode('NotificationCenter')==='code') { <signng-code [code]="code('NotificationCenter')" /> } @else { <div class="dp"><signng-notification-center [(items)]="notifs" /><span class="text-sm text-muted-foreground">← click la campana</span></div> }
               </article> }
 
-              @if (match('Rating')) { <article class="dc">
+              @if (match('Rating')) { <article class="dc" id="c-Rating">
                 <div class="dh"><span class="dn">Rating</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Rating'}" /></div>
                 @if (mode('Rating')==='code') { <signng-code [code]="code('Rating')" /> } @else { <div class="dp"><signng-rating [(value)]="stars" [max]="5" label="Calificación" /><span class="text-sm text-muted-foreground">{{ stars() }}/5</span></div> }
               </article> }
 
-              @if (match('ColorPicker')) { <article class="dc">
+              @if (match('ColorPicker')) { <article class="dc" id="c-ColorPicker">
                 <div class="dh"><span class="dn">ColorPicker</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'ColorPicker'}" /></div>
                 @if (mode('ColorPicker')==='code') { <signng-code [code]="code('ColorPicker')" /> } @else { <div class="dp"><signng-color-picker [(value)]="brand" /><span class="size-6 rounded border border-border" [style.background]="brand()"></span></div> }
               </article> }
@@ -262,7 +263,7 @@
 
             <!-- ============ FORMULARIOS ============ -->
             @if (cat === 'Formularios') {
-              @if (match('Button')) { <article class="dc">
+              @if (match('Button')) { <article class="dc" id="c-Button">
                 <div class="dh"><span class="dn">Button</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Button'}" /></div>
                 @if (mode('Button')==='code') { <signng-code [code]="code('Button')" /> } @else { <div class="dp">
                   <button signngButton>Default</button>
@@ -273,35 +274,35 @@
                 </div> }
               </article> }
 
-              @if (match('Input')) { <article class="dc">
+              @if (match('Input')) { <article class="dc" id="c-Input">
                 <div class="dh"><span class="dn">Input</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Input'}" /></div>
                 @if (mode('Input')==='code') { <signng-code [code]="code('Input')" /> } @else { <div class="dp">
                   <input signngInput placeholder="email@ejemplo.com" class="max-w-xs" />
                 </div> }
               </article> }
 
-              @if (match('Textarea')) { <article class="dc">
+              @if (match('Textarea')) { <article class="dc" id="c-Textarea">
                 <div class="dh"><span class="dn">Textarea</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Textarea'}" /></div>
                 @if (mode('Textarea')==='code') { <signng-code [code]="code('Textarea')" /> } @else { <div class="dp">
                   <textarea signngTextarea placeholder="Escribe tu mensaje…" class="max-w-xs"></textarea>
                 </div> }
               </article> }
 
-              @if (match('Switch')) { <article class="dc">
+              @if (match('Switch')) { <article class="dc" id="c-Switch">
                 <div class="dh"><span class="dn">Switch</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Switch'}" /></div>
                 @if (mode('Switch')==='code') { <signng-code [code]="code('Switch')" /> } @else { <div class="dp">
                   <signng-switch ariaLabelledby="sc-sw" [(checked)]="sw" /><span id="sc-sw" class="text-sm">{{ sw() ? 'Activado' : 'Apagado' }}</span>
                 </div> }
               </article> }
 
-              @if (match('Checkbox')) { <article class="dc">
+              @if (match('Checkbox')) { <article class="dc" id="c-Checkbox">
                 <div class="dh"><span class="dn">Checkbox</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Checkbox'}" /></div>
                 @if (mode('Checkbox')==='code') { <signng-code [code]="code('Checkbox')" /> } @else { <div class="dp">
                   <signng-checkbox ariaLabelledby="sc-chk" [(checked)]="chk" /><span id="sc-chk" class="text-sm">Aceptar términos</span>
                 </div> }
               </article> }
 
-              @if (match('RadioGroup')) { <article class="dc">
+              @if (match('RadioGroup')) { <article class="dc" id="c-RadioGroup">
                 <div class="dh"><span class="dn">RadioGroup</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'RadioGroup'}" /></div>
                 @if (mode('RadioGroup')==='code') { <signng-code [code]="code('RadioGroup')" /> } @else { <div class="dp">
                   <signng-radio-group [(value)]="radio" aria-label="Plan" class="flex gap-4">
@@ -310,35 +311,35 @@
                 </div> }
               </article> }
 
-              @if (match('Select')) { <article class="dc">
+              @if (match('Select')) { <article class="dc" id="c-Select">
                 <div class="dh"><span class="dn">Select</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Select'}" /></div>
                 @if (mode('Select')==='code') { <signng-code [code]="code('Select')" /> } @else { <div class="dp">
                   <signng-select label="Región" placeholder="Elegir" [options]="regions" [(value)]="region" />
                 </div> }
               </article> }
 
-              @if (match('Slider')) { <article class="dc">
+              @if (match('Slider')) { <article class="dc" id="c-Slider">
                 <div class="dh"><span class="dn">Slider</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Slider'}" /></div>
                 @if (mode('Slider')==='code') { <signng-code [code]="code('Slider')" /> } @else { <div class="dp w-full">
                   <signng-slider ariaLabel="Valor" [min]="0" [max]="100" [(value)]="sld" class="max-w-xs" /><span class="text-sm text-muted-foreground">{{ sld() }}</span>
                 </div> }
               </article> }
 
-              @if (match('Combobox')) { <article class="dc">
+              @if (match('Combobox')) { <article class="dc" id="c-Combobox">
                 <div class="dh"><span class="dn">Combobox</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Combobox'}" /></div>
                 @if (mode('Combobox')==='code') { <signng-code [code]="code('Combobox')" /> } @else { <div class="dp">
                   <signng-combobox label="Framework" placeholder="Buscar…" [options]="frameworks" [(value)]="fw" />
                 </div> }
               </article> }
 
-              @if (match('InputOtp')) { <article class="dc">
+              @if (match('InputOtp')) { <article class="dc" id="c-InputOtp">
                 <div class="dh"><span class="dn">InputOtp</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'InputOtp'}" /></div>
                 @if (mode('InputOtp')==='code') { <signng-code [code]="code('InputOtp')" /> } @else { <div class="dp">
                   <signng-input-otp [(value)]="otp" [length]="4" label="Código" />
                 </div> }
               </article> }
 
-              @if (match('FormField')) { <article class="dc">
+              @if (match('FormField')) { <article class="dc" id="c-FormField">
                 <div class="dh"><span class="dn">FormField</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'FormField'}" /></div>
                 @if (mode('FormField')==='code') { <signng-code [code]="code('FormField')" /> } @else { <div class="dp w-full">
                   <signng-form-field label="Nombre" htmlFor="sc-ff" description="Como aparece en tu perfil." class="w-full max-w-xs">
@@ -347,14 +348,14 @@
                 </div> }
               </article> }
 
-              @if (match('Toggle')) { <article class="dc">
+              @if (match('Toggle')) { <article class="dc" id="c-Toggle">
                 <div class="dh"><span class="dn">Toggle</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Toggle'}" /></div>
                 @if (mode('Toggle')==='code') { <signng-code [code]="code('Toggle')" /> } @else { <div class="dp">
                   <button signngToggle variant="outline" [(pressed)]="tog" aria-label="Negrita">B</button><span class="text-sm text-muted-foreground">{{ tog() ? 'activo' : 'inactivo' }}</span>
                 </div> }
               </article> }
 
-              @if (match('ToggleGroup')) { <article class="dc">
+              @if (match('ToggleGroup')) { <article class="dc" id="c-ToggleGroup">
                 <div class="dh"><span class="dn">ToggleGroup</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'ToggleGroup'}" /></div>
                 @if (mode('ToggleGroup')==='code') { <signng-code [code]="code('ToggleGroup')" /> } @else { <div class="dp">
                   <div signngToggleGroup [(value)]="tgroup" type="single" aria-label="Vista">
@@ -364,14 +365,14 @@
                 </div> }
               </article> }
 
-              @if (match('Segmented')) { <article class="dc">
+              @if (match('Segmented')) { <article class="dc" id="c-Segmented">
                 <div class="dh"><span class="dn">Segmented</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Segmented'}" /></div>
                 @if (mode('Segmented')==='code') { <signng-code [code]="code('Segmented')" /> } @else { <div class="dp">
                   <signng-segmented [options]="segOpts" [(value)]="seg" ariaLabel="Vista" /><span class="text-sm text-muted-foreground">{{ seg() }}</span>
                 </div> }
               </article> }
 
-              @if (match('Form')) { <article class="dc">
+              @if (match('Form')) { <article class="dc" id="c-Form">
                 <div class="dh"><span class="dn">Form</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">VALIDACIÓN</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Form'}" /></div>
                 @if (mode('Form')==='code') { <signng-code [code]="code('Form')" /> } @else { <div class="dp w-full">
                   <form [formGroup]="demoForm" class="w-full max-w-sm space-y-3">
@@ -386,7 +387,7 @@
                 </div> }
               </article> }
 
-              @if (match('RangeSlider')) { <article class="dc">
+              @if (match('RangeSlider')) { <article class="dc" id="c-RangeSlider">
                 <div class="dh"><span class="dn">RangeSlider</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'RangeSlider'}" /></div>
                 @if (mode('RangeSlider')==='code') { <signng-code [code]="code('RangeSlider')" /> } @else { <div class="dp w-full">
                   <signng-range-slider [(value)]="range" [min]="0" [max]="100" ariaLabel="Precio" class="w-full max-w-xs" />
@@ -397,7 +398,7 @@
 
             <!-- ============ OVERLAYS ============ -->
             @if (cat === 'Overlays') {
-              @if (match('Dialog')) { <article class="dc">
+              @if (match('Dialog')) { <article class="dc" id="c-Dialog">
                 <div class="dh"><span class="dn">Dialog</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Dialog'}" /></div>
                 @if (mode('Dialog')==='code') { <signng-code [code]="code('Dialog')" /> } @else { <div class="dp">
                   <signng-dialog title="Confirmar" description="¿Seguro que deseas continuar?" triggerLabel="Abrir dialog">
@@ -406,14 +407,14 @@
                 </div> }
               </article> }
 
-              @if (match('AlertDialog')) { <article class="dc">
+              @if (match('AlertDialog')) { <article class="dc" id="c-AlertDialog">
                 <div class="dh"><span class="dn">AlertDialog</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'AlertDialog'}" /></div>
                 @if (mode('AlertDialog')==='code') { <signng-code [code]="code('AlertDialog')" /> } @else { <div class="dp">
                   <signng-alert-dialog triggerLabel="Eliminar" title="¿Eliminar cuenta?" description="No se puede deshacer." (confirmed)="notify('Eliminado')" />
                 </div> }
               </article> }
 
-              @if (match('Sheet')) { <article class="dc">
+              @if (match('Sheet')) { <article class="dc" id="c-Sheet">
                 <div class="dh"><span class="dn">Sheet</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Sheet'}" /></div>
                 @if (mode('Sheet')==='code') { <signng-code [code]="code('Sheet')" /> } @else { <div class="dp">
                   <signng-sheet side="right" triggerLabel="Abrir panel" title="Filtros" description="Refina la vista.">
@@ -422,7 +423,7 @@
                 </div> }
               </article> }
 
-              @if (match('Drawer')) { <article class="dc">
+              @if (match('Drawer')) { <article class="dc" id="c-Drawer">
                 <div class="dh"><span class="dn">Drawer</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Drawer'}" /></div>
                 @if (mode('Drawer')==='code') { <signng-code [code]="code('Drawer')" /> } @else { <div class="dp">
                   <signng-drawer triggerLabel="Abrir drawer" title="Detalles" description="Bottom sheet móvil.">
@@ -431,7 +432,7 @@
                 </div> }
               </article> }
 
-              @if (match('Popover')) { <article class="dc">
+              @if (match('Popover')) { <article class="dc" id="c-Popover">
                 <div class="dh"><span class="dn">Popover</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Popover'}" /></div>
                 @if (mode('Popover')==='code') { <signng-code [code]="code('Popover')" /> } @else { <div class="dp">
                   <signng-popover triggerLabel="Abrir popover" label="Dimensiones">
@@ -440,14 +441,14 @@
                 </div> }
               </article> }
 
-              @if (match('Tooltip')) { <article class="dc">
+              @if (match('Tooltip')) { <article class="dc" id="c-Tooltip">
                 <div class="dh"><span class="dn">Tooltip</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Tooltip'}" /></div>
                 @if (mode('Tooltip')==='code') { <signng-code [code]="code('Tooltip')" /> } @else { <div class="dp">
                   <signng-tooltip text="Añadir a la biblioteca"><button signngButton variant="outline">Pasa el mouse</button></signng-tooltip>
                 </div> }
               </article> }
 
-              @if (match('HoverCard')) { <article class="dc">
+              @if (match('HoverCard')) { <article class="dc" id="c-HoverCard">
                 <div class="dh"><span class="dn">HoverCard</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'HoverCard'}" /></div>
                 @if (mode('HoverCard')==='code') { <signng-code [code]="code('HoverCard')" /> } @else { <div class="dp">
                   <signng-hover-card label="Perfil">
@@ -457,14 +458,14 @@
                 </div> }
               </article> }
 
-              @if (match('Command')) { <article class="dc">
+              @if (match('Command')) { <article class="dc" id="c-Command">
                 <div class="dh"><span class="dn">Command</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Command'}" /></div>
                 @if (mode('Command')==='code') { <signng-code [code]="code('Command')" /> } @else { <div class="dp">
                   <signng-command triggerLabel="Buscar… ⌘K" [commands]="cmds" (selected)="notify('Comando ' + $event)" />
                 </div> }
               </article> }
 
-              @if (match('Toast')) { <article class="dc">
+              @if (match('Toast')) { <article class="dc" id="c-Toast">
                 <div class="dh"><span class="dn">Toast</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Toast'}" /></div>
                 @if (mode('Toast')==='code') { <signng-code [code]="code('Toast')" /> } @else { <div class="dp">
                   <button signngButton (click)="notify('Guardado correctamente')">Disparar toast</button>
@@ -474,7 +475,7 @@
 
             <!-- ============ NAVEGACIÓN ============ -->
             @if (cat === 'Navegación') {
-              @if (match('Tabs')) { <article class="dc">
+              @if (match('Tabs')) { <article class="dc" id="c-Tabs">
                 <div class="dh"><span class="dn">Tabs</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Tabs'}" /></div>
                 @if (mode('Tabs')==='code') { <signng-code [code]="code('Tabs')" /> } @else { <div class="dp w-full">
                   <div ngTabs class="w-full">
@@ -489,21 +490,21 @@
                 </div> }
               </article> }
 
-              @if (match('Accordion')) { <article class="dc">
+              @if (match('Accordion')) { <article class="dc" id="c-Accordion">
                 <div class="dh"><span class="dn">Accordion</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Accordion'}" /></div>
                 @if (mode('Accordion')==='code') { <signng-code [code]="code('Accordion')" /> } @else { <div class="dp w-full">
                   <signng-accordion [items]="faq" class="w-full" />
                 </div> }
               </article> }
 
-              @if (match('DropdownMenu')) { <article class="dc">
+              @if (match('DropdownMenu')) { <article class="dc" id="c-DropdownMenu">
                 <div class="dh"><span class="dn">DropdownMenu</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'DropdownMenu'}" /></div>
                 @if (mode('DropdownMenu')==='code') { <signng-code [code]="code('DropdownMenu')" /> } @else { <div class="dp">
                   <signng-dropdown-menu triggerLabel="Acciones ▾" label="Acciones" [items]="menuItems" (selected)="notify($event)" />
                 </div> }
               </article> }
 
-              @if (match('ContextMenu')) { <article class="dc">
+              @if (match('ContextMenu')) { <article class="dc" id="c-ContextMenu">
                 <div class="dh"><span class="dn">ContextMenu</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'ContextMenu'}" /></div>
                 @if (mode('ContextMenu')==='code') { <signng-code [code]="code('ContextMenu')" /> } @else { <div class="dp">
                   <signng-context-menu [items]="ctx" (selected)="notify($event)">
@@ -512,14 +513,14 @@
                 </div> }
               </article> }
 
-              @if (match('Menubar')) { <article class="dc">
+              @if (match('Menubar')) { <article class="dc" id="c-Menubar">
                 <div class="dh"><span class="dn">Menubar</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Menubar'}" /></div>
                 @if (mode('Menubar')==='code') { <signng-code [code]="code('Menubar')" /> } @else { <div class="dp">
                   <signng-menubar [menus]="bar" (selected)="notify($event.menu + ': ' + $event.value)" />
                 </div> }
               </article> }
 
-              @if (match('NavigationMenu')) { <article class="dc">
+              @if (match('NavigationMenu')) { <article class="dc" id="c-NavigationMenu">
                 <div class="dh"><span class="dn">NavigationMenu</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'NavigationMenu'}" /></div>
                 @if (mode('NavigationMenu')==='code') { <signng-code [code]="code('NavigationMenu')" /> } @else { <div class="dp">
                   <signng-nav-menu>
@@ -529,7 +530,7 @@
                 </div> }
               </article> }
 
-              @if (match('Breadcrumb')) { <article class="dc">
+              @if (match('Breadcrumb')) { <article class="dc" id="c-Breadcrumb">
                 <div class="dh"><span class="dn">Breadcrumb</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Breadcrumb'}" /></div>
                 @if (mode('Breadcrumb')==='code') { <signng-code [code]="code('Breadcrumb')" /> } @else { <div class="dp">
                   <nav signngBreadcrumb><ol signngBreadcrumbList>
@@ -542,14 +543,14 @@
                 </div> }
               </article> }
 
-              @if (match('Pagination')) { <article class="dc">
+              @if (match('Pagination')) { <article class="dc" id="c-Pagination">
                 <div class="dh"><span class="dn">Pagination</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Pagination'}" /></div>
                 @if (mode('Pagination')==='code') { <signng-code [code]="code('Pagination')" /> } @else { <div class="dp">
                   <signng-pagination [(page)]="page" [total]="8" />
                 </div> }
               </article> }
 
-              @if (match('Sidebar')) { <article class="dc">
+              @if (match('Sidebar')) { <article class="dc" id="c-Sidebar">
                 <div class="dh"><span class="dn">Sidebar</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Sidebar'}" /></div>
                 @if (mode('Sidebar')==='code') { <signng-code [code]="code('Sidebar')" /> } @else { <div class="dp">
                   <signng-sidebar class="h-44 rounded-md border border-border">
@@ -565,28 +566,28 @@
 
             <!-- ============ DATOS ============ -->
             @if (cat === 'Datos') {
-              @if (match('Calendar')) { <article class="dc">
+              @if (match('Calendar')) { <article class="dc" id="c-Calendar">
                 <div class="dh"><span class="dn">Calendar</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Calendar'}" /></div>
                 @if (mode('Calendar')==='code') { <signng-code [code]="code('Calendar')" /> } @else { <div class="dp">
                   <signng-calendar label="Fecha" [(value)]="date" />
                 </div> }
               </article> }
 
-              @if (match('DatePicker')) { <article class="dc">
+              @if (match('DatePicker')) { <article class="dc" id="c-DatePicker">
                 <div class="dh"><span class="dn">DatePicker</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'DatePicker'}" /></div>
                 @if (mode('DatePicker')==='code') { <signng-code [code]="code('DatePicker')" /> } @else { <div class="dp">
                   <signng-date-picker label="Fecha" [(value)]="date" />
                 </div> }
               </article> }
 
-              @if (match('TimePicker')) { <article class="dc">
+              @if (match('TimePicker')) { <article class="dc" id="c-TimePicker">
                 <div class="dh"><span class="dn">TimePicker</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'TimePicker'}" /></div>
                 @if (mode('TimePicker')==='code') { <signng-code [code]="code('TimePicker')" /> } @else { <div class="dp">
                   <signng-time-picker [(value)]="time" [minuteStep]="5" label="Hora" /><span class="text-sm text-muted-foreground">{{ time() }}</span>
                 </div> }
               </article> }
 
-              @if (match('Table')) { <article class="dc">
+              @if (match('Table')) { <article class="dc" id="c-Table">
                 <div class="dh"><span class="dn">Table</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Table'}" /></div>
                 @if (mode('Table')==='code') { <signng-code [code]="code('Table')" /> } @else { <div class="dp w-full">
                   <table signngTable class="w-full">
@@ -602,91 +603,91 @@
 
             <!-- ============ DISPLAY ============ -->
             @if (cat === 'Display') {
-              @if (match('Card')) { <article class="dc">
+              @if (match('Card')) { <article class="dc" id="c-Card">
                 <div class="dh"><span class="dn">Card</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Card'}" /></div>
                 @if (mode('Card')==='code') { <signng-code [code]="code('Card')" /> } @else { <div class="dp w-full">
                   <div signngCard class="w-full max-w-xs"><div signngCardHeader><span signngCardTitle>Plan Pro</span><span signngCardDescription>$29/mes</span></div><div signngCardContent class="text-sm text-muted-foreground">Todo lo del Free + soporte.</div></div>
                 </div> }
               </article> }
 
-              @if (match('Badge')) { <article class="dc">
+              @if (match('Badge')) { <article class="dc" id="c-Badge">
                 <div class="dh"><span class="dn">Badge</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Badge'}" /></div>
                 @if (mode('Badge')==='code') { <signng-code [code]="code('Badge')" /> } @else { <div class="dp">
                   <span signngBadge>Default</span><span signngBadge variant="secondary">Secondary</span><span signngBadge variant="destructive">Destructive</span><span signngBadge variant="outline">Outline</span>
                 </div> }
               </article> }
 
-              @if (match('Avatar')) { <article class="dc">
+              @if (match('Avatar')) { <article class="dc" id="c-Avatar">
                 <div class="dh"><span class="dn">Avatar</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Avatar'}" /></div>
                 @if (mode('Avatar')==='code') { <signng-code [code]="code('Avatar')" /> } @else { <div class="dp">
                   <signng-avatar fallback="GF" alt="Giorgi" /><signng-avatar fallback="AT" alt="Ana" /><signng-avatar fallback="LM" alt="Luis" />
                 </div> }
               </article> }
 
-              @if (match('Alert')) { <article class="dc">
+              @if (match('Alert')) { <article class="dc" id="c-Alert">
                 <div class="dh"><span class="dn">Alert</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Alert'}" /></div>
                 @if (mode('Alert')==='code') { <signng-code [code]="code('Alert')" /> } @else { <div class="dp w-full">
                   <div signngAlert class="w-full"><div signngAlertTitle>Heads up</div><div signngAlertDescription>Puedes añadir componentes a tu app.</div></div>
                 </div> }
               </article> }
 
-              @if (match('Separator')) { <article class="dc">
+              @if (match('Separator')) { <article class="dc" id="c-Separator">
                 <div class="dh"><span class="dn">Separator</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Separator'}" /></div>
                 @if (mode('Separator')==='code') { <signng-code [code]="code('Separator')" /> } @else { <div class="dp w-full"><div class="w-full max-w-xs text-sm">
                   <div>Arriba</div><hr signngSeparator class="my-2" /><div>Abajo</div>
                 </div></div> }
               </article> }
 
-              @if (match('Skeleton')) { <article class="dc">
+              @if (match('Skeleton')) { <article class="dc" id="c-Skeleton">
                 <div class="dh"><span class="dn">Skeleton</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Skeleton'}" /></div>
                 @if (mode('Skeleton')==='code') { <signng-code [code]="code('Skeleton')" /> } @else { <div class="dp w-full"><div class="w-full max-w-xs space-y-2">
                   <div signngSkeleton class="h-4 w-3/4"></div><div signngSkeleton class="h-4 w-1/2"></div><div signngSkeleton class="h-16 w-full"></div>
                 </div></div> }
               </article> }
 
-              @if (match('Progress')) { <article class="dc">
+              @if (match('Progress')) { <article class="dc" id="c-Progress">
                 <div class="dh"><span class="dn">Progress</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Progress'}" /></div>
                 @if (mode('Progress')==='code') { <signng-code [code]="code('Progress')" /> } @else { <div class="dp w-full">
                   <signng-progress [value]="62" label="Progreso" class="w-full max-w-xs" />
                 </div> }
               </article> }
 
-              @if (match('Spinner')) { <article class="dc">
+              @if (match('Spinner')) { <article class="dc" id="c-Spinner">
                 <div class="dh"><span class="dn">Spinner</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Spinner'}" /></div>
                 @if (mode('Spinner')==='code') { <signng-code [code]="code('Spinner')" /> } @else { <div class="dp text-primary">
                   <signng-spinner [size]="18" /><signng-spinner [size]="28" /><signng-spinner [size]="22" label="Cargando…" />
                 </div> }
               </article> }
 
-              @if (match('Code')) { <article class="dc">
+              @if (match('Code')) { <article class="dc" id="c-Code">
                 <div class="dh"><span class="dn">Code</span> <span class="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">SHADCN</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Code'}" /></div>
                 @if (mode('Code')==='code') { <signng-code [code]="code('Code')" /> } @else { <div class="p-4">
                   <signng-code [code]="codeSample" />
                 </div> }
               </article> }
 
-              @if (match('Collapsible')) { <article class="dc">
+              @if (match('Collapsible')) { <article class="dc" id="c-Collapsible">
                 <div class="dh"><span class="dn">Collapsible</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Collapsible'}" /></div>
                 @if (mode('Collapsible')==='code') { <signng-code [code]="code('Collapsible')" /> } @else { <div class="dp w-full">
                   <signng-collapsible triggerLabel="Opciones avanzadas" class="w-full"><div class="text-sm text-muted-foreground">Webhooks, claves de API.</div></signng-collapsible>
                 </div> }
               </article> }
 
-              @if (match('ScrollArea')) { <article class="dc">
+              @if (match('ScrollArea')) { <article class="dc" id="c-ScrollArea">
                 <div class="dh"><span class="dn">ScrollArea</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'ScrollArea'}" /></div>
                 @if (mode('ScrollArea')==='code') { <signng-code [code]="code('ScrollArea')" /> } @else { <div class="dp w-full">
                   <div signngScrollArea class="h-24 w-full max-w-xs border border-border p-2 text-sm">@for (i of [1,2,3,4,5,6,7,8]; track i) { <div class="py-1">Elemento {{ i }}</div> }</div>
                 </div> }
               </article> }
 
-              @if (match('AspectRatio')) { <article class="dc">
+              @if (match('AspectRatio')) { <article class="dc" id="c-AspectRatio">
                 <div class="dh"><span class="dn">AspectRatio</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'AspectRatio'}" /></div>
                 @if (mode('AspectRatio')==='code') { <signng-code [code]="code('AspectRatio')" /> } @else { <div class="dp w-full">
                   <div signngAspectRatio ratio="16/9" class="w-full max-w-xs rounded-md bg-muted"><div class="flex h-full items-center justify-center text-sm font-medium">16 / 9</div></div>
                 </div> }
               </article> }
 
-              @if (match('Carousel')) { <article class="dc">
+              @if (match('Carousel')) { <article class="dc" id="c-Carousel">
                 <div class="dh"><span class="dn">Carousel</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Carousel'}" /></div>
                 @if (mode('Carousel')==='code') { <signng-code [code]="code('Carousel')" /> } @else { <div class="dp w-full">
                   <signng-carousel label="Destacados" class="w-full max-w-xs">
@@ -696,7 +697,7 @@
                 </div> }
               </article> }
 
-              @if (match('Icon')) { <article class="dc">
+              @if (match('Icon')) { <article class="dc" id="c-Icon">
                 <div class="dh"><span class="dn">Icon</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'Icon'}" /></div>
                 @if (mode('Icon')==='code') { <signng-code [code]="code('Icon')" /> } @else { <div class="dp text-foreground">
                   <signng-icon name="heart" [size]="22" /><signng-icon name="star" [size]="22" /><signng-icon name="bell" [size]="22" /><signng-icon name="settings" [size]="22" /><signng-icon name="trending" [size]="22" />
@@ -706,22 +707,22 @@
 
             <!-- ============ GRÁFICOS ============ -->
             @if (cat === 'Gráficos') {
-              @if (match('BarChart')) { <article class="dc">
+              @if (match('BarChart')) { <article class="dc" id="c-BarChart">
                 <div class="dh"><span class="dn">BarChart</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'BarChart'}" /></div>
                 @if (mode('BarChart')==='code') { <signng-code [code]="code('BarChart')" /> } @else { <div class="dp w-full"><signng-bar-chart [data]="bars" class="w-full" /></div> }
               </article> }
 
-              @if (match('LineChart')) { <article class="dc">
+              @if (match('LineChart')) { <article class="dc" id="c-LineChart">
                 <div class="dh"><span class="dn">LineChart</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'LineChart'}" /></div>
                 @if (mode('LineChart')==='code') { <signng-code [code]="code('LineChart')" /> } @else { <div class="dp w-full"><signng-line-chart [data]="bars" class="w-full" /></div> }
               </article> }
 
-              @if (match('DonutChart')) { <article class="dc">
+              @if (match('DonutChart')) { <article class="dc" id="c-DonutChart">
                 <div class="dh"><span class="dn">DonutChart</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'DonutChart'}" /></div>
                 @if (mode('DonutChart')==='code') { <signng-code [code]="code('DonutChart')" /> } @else { <div class="dp w-full justify-center"><signng-donut-chart [data]="parts" /></div> }
               </article> }
 
-              @if (match('RadialChart')) { <article class="dc">
+              @if (match('RadialChart')) { <article class="dc" id="c-RadialChart">
                 <div class="dh"><span class="dn">RadialChart</span> <ng-container [ngTemplateOutlet]="tabsTpl" [ngTemplateOutletContext]="{n:'RadialChart'}" /></div>
                 @if (mode('RadialChart')==='code') { <signng-code [code]="code('RadialChart')" /> } @else { <div class="dp w-full justify-center"><signng-radial-chart [value]="72" label="meta" /></div> }
               </article> }

@@ -5,7 +5,7 @@
 html { scroll-behavior: smooth; }
 
 /* showcase demo-card chrome */
-.dc { border: 1px solid var(--color-border); border-radius: 0.75rem; background: var(--color-card); overflow: hidden; transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
+.dc { border: 1px solid var(--color-border); border-radius: 0.75rem; background: var(--color-card); overflow: hidden; transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; scroll-margin-top: 6.5rem; }
 
 /* --- motion: hover-lift + JS-free scroll reveal (animation-timeline: view) --- */
 @media (prefers-reduced-motion: no-preference) {
