@@ -54,10 +54,17 @@ const STROKES = [1, 1.5, 2, 2.5];
       </div>
 
       <main class="mx-auto max-w-5xl px-4 py-8">
-        <p class="mb-6 text-sm text-muted-foreground">
-          Feather-style stroke icons, 24px grid, zero dependencies. Adjust size/stroke above,
-          then click any icon to copy it as a component or as raw SVG.
-        </p>
+        <div class="fade-up mb-8">
+          <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">A crisp set of <span class="text-primary">{{ names().length }} stroke icons</span></h1>
+          <p class="mt-3 max-w-2xl text-muted-foreground">
+            Feather-style, 24px grid, zero dependencies — rendered as pure paths, no innerHTML.
+            Adjust size and stroke above, then click any icon to copy it as a component or raw SVG.
+          </p>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <code class="rounded-lg border border-[#27272a] bg-[#18181b] px-4 py-2.5 font-mono text-sm text-[#e4e4e7]"><span class="text-[#6a9955]">$</span> pnpm signng add icon</code>
+            <span class="text-xs text-muted-foreground">ed25519-signed · SRI-verified before write</span>
+          </div>
+        </div>
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 md:grid-cols-6">
           @for (name of filtered(); track name) {
             <button

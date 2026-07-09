@@ -55,12 +55,14 @@ import { CodeBlock } from '@/components/ui/code-block';
       @if (mode() === 'code') {
         <div class="p-4"><signng-code [code]="CODE[block()]" /></div>
       } @else {
-      <div [class]="'mx-auto overflow-x-auto transition-[max-width] duration-200 ' + DEVICE_WIDTH[device()]">
+      <!-- @container: block layouts below use container-query variants (@lg:/@2xl:/@4xl:) instead of
+           viewport breakpoints, so the Desktop/Tablet/Mobile width toggle actually re-flows them. -->
+      <div [class]="'@container mx-auto overflow-x-auto transition-[max-width] duration-200 ' + DEVICE_WIDTH[device()]">
       @switch (block()) {
         <!-- ============ AUTH ============ -->
         @case ('Auth') {
-          <div class="fade-up grid min-h-[calc(100vh-49px)] lg:grid-cols-2">
-            <div class="relative hidden flex-col justify-between overflow-hidden bg-primary p-10 text-primary-foreground lg:flex">
+          <div class="fade-up grid min-h-[calc(100vh-49px)] @4xl:grid-cols-2">
+            <div class="relative hidden flex-col justify-between overflow-hidden bg-primary p-10 text-primary-foreground @4xl:flex">
               <div class="flex items-center gap-2 text-lg font-bold"><signng-icon name="bar" [size]="22" /> signng</div>
               <div>
                 <blockquote class="text-2xl font-medium leading-snug">"Enviamos UI accesible en días, no meses. El registry firmado pasó la auditoría enterprise sin fricción."</blockquote>
@@ -80,10 +82,10 @@ import { CodeBlock } from '@/components/ui/code-block';
               <h1 class="text-3xl font-bold tracking-tight">Precios simples y transparentes</h1>
               <p class="mt-3 text-muted-foreground">Empieza gratis. Escala cuando crezcas.</p>
             </div>
-            <div class="mt-10 grid gap-6 md:grid-cols-3">
+            <div class="mt-10 grid gap-6 @2xl:grid-cols-3">
               @for (t of tiers; track t.name) {
                 <div signngCard [class]="t.popular ? 'relative border-primary shadow-lg' : ''">
-                  @if (t.popular) { <span signngBadge class="absolute -top-2.5 left-1/2 -translate-x-1/2">Más popular</span> }
+                  @if (t.popular) { <span signngBadge class="absolute -top-2.5 left-1/2 -translate-x-1/2 whitespace-nowrap">Más popular</span> }
                   <div signngCardHeader>
                     <span signngCardTitle>{{ t.name }}</span>
                     <span signngCardDescription>{{ t.tagline }}</span>
@@ -108,7 +110,7 @@ import { CodeBlock } from '@/components/ui/code-block';
           <div class="fade-up mx-auto max-w-4xl px-6 py-10">
             <h1 class="text-2xl font-bold tracking-tight">Configuración</h1>
             <p class="text-muted-foreground">Administra tu perfil y preferencias.</p>
-            <div class="mt-6 grid gap-8 md:grid-cols-[180px_1fr]">
+            <div class="mt-6 grid gap-8 @2xl:grid-cols-[180px_1fr]">
               <nav class="space-y-1 text-sm">
                 @for (s of ['Perfil','Cuenta','Notificaciones','Facturación']; track s; let i = $index) {
                   <a href="#" [class]="'block rounded-md px-3 py-2 ' + (i === 0 ? 'bg-accent font-medium' : 'text-muted-foreground hover:bg-accent/50')">{{ s }}</a>
@@ -121,7 +123,7 @@ import { CodeBlock } from '@/components/ui/code-block';
                     <signng-avatar fallback="GF" alt="Giorgi" class="size-16 text-xl" />
                     <button signngButton variant="outline" size="sm">Cambiar foto</button>
                   </div>
-                  <div class="grid gap-4 sm:grid-cols-2">
+                  <div class="grid gap-4 @lg:grid-cols-2">
                     <div class="space-y-1.5"><label signngLabel for="b-name">Nombre</label><input signngInput id="b-name" value="Giorgi Franck" /></div>
                     <div class="space-y-1.5"><label signngLabel for="b-email">Email</label><input signngInput id="b-email" type="email" value="giorgi@example.com" /></div>
                   </div>
@@ -143,14 +145,14 @@ import { CodeBlock } from '@/components/ui/code-block';
           <div class="fade-up mx-auto max-w-5xl px-6 py-10">
             <h1 class="text-2xl font-bold tracking-tight">Resumen</h1>
             <p class="text-muted-foreground">Métricas clave del último mes.</p>
-            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-6 grid gap-4 @lg:grid-cols-2 @4xl:grid-cols-4">
               <signng-stat-card label="MRR" [value]="'$48.2k'" delta="+12%" [up]="true" icon="trending" />
               <signng-stat-card label="Usuarios" [value]="'3,940'" delta="+4%" [up]="true" icon="users" />
               <signng-stat-card label="Churn" [value]="'2.1%'" delta="-0.3%" [up]="false" icon="trending" />
               <signng-stat-card label="Tickets" [value]="38" delta="+9" [up]="false" icon="bell" />
             </div>
-            <div class="mt-6 grid gap-4 lg:grid-cols-3">
-              <div signngCard class="lg:col-span-2">
+            <div class="mt-6 grid gap-4 @4xl:grid-cols-3">
+              <div signngCard class="@4xl:col-span-2">
                 <div signngCardHeader class="pb-2"><span signngCardTitle class="text-sm">Ingresos por mes</span></div>
                 <div signngCardContent class="pt-0"><signng-bar-chart [data]="bars" /></div>
               </div>
@@ -164,7 +166,7 @@ import { CodeBlock } from '@/components/ui/code-block';
 
         <!-- ============ MAIL ============ -->
         @case ('Mail') {
-          <div class="grid h-[calc(100vh-49px)] grid-cols-1 md:grid-cols-[320px_1fr]">
+          <div class="grid h-[calc(100vh-49px)] grid-cols-1 @2xl:grid-cols-[320px_1fr]">
             <div class="overflow-auto border-r border-border">
               <div class="border-b border-border px-4 py-3 font-semibold">Bandeja de entrada</div>
               @for (m of inbox; track m.id) {
@@ -209,7 +211,7 @@ import { CodeBlock } from '@/components/ui/code-block';
           <div class="fade-up mx-auto max-w-5xl px-6 py-10">
             <h1 class="text-2xl font-bold tracking-tight">Cards</h1>
             <p class="text-muted-foreground">Patrones de tarjeta compuestos.</p>
-            <div class="mt-6 grid gap-5 md:grid-cols-3">
+            <div class="mt-6 grid gap-5 @2xl:grid-cols-3">
               <signng-stat-card label="Ingresos" [value]="'$48.2k'" delta="+12%" [up]="true" icon="trending" hint="vs mes anterior" />
               <div signngCard>
                 <div signngCardHeader><span signngCardTitle>Crear proyecto</span><span signngCardDescription>Despliega en un click.</span></div>
@@ -227,7 +229,7 @@ import { CodeBlock } from '@/components/ui/code-block';
                 </div>
                 <div signngCardContent class="text-sm text-muted-foreground">Construye MLM Suite + signng. 3 repos activos.</div>
               </div>
-              <div signngCard class="md:col-span-2">
+              <div signngCard class="@2xl:col-span-2">
                 <div signngCardHeader class="pb-2"><span signngCardTitle class="text-sm">Actividad semanal</span></div>
                 <div signngCardContent class="pt-0"><signng-line-chart [data]="bars" /></div>
               </div>
