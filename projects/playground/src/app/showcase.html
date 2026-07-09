@@ -29,22 +29,49 @@
   <!-- Hero -->
   <header class="relative overflow-hidden border-b border-border">
     <div class="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-primary/10 via-primary/[0.03] to-transparent"></div>
-    <div class="fade-up relative mx-auto max-w-6xl px-6 py-16 sm:py-20">
-      <span class="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-3 py-1 text-xs text-muted-foreground">
-        <span class="size-1.5 rounded-full bg-primary"></span> {{ t().eyebrow }}
-      </span>
-      <h1 class="mt-5 max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight sm:text-6xl">
-        {{ t().h1a }}<span class="text-primary">{{ t().h1b }}</span>.
-      </h1>
-      <p class="mt-5 max-w-2xl text-lg text-muted-foreground">{{ t().sub }}</p>
-      <div class="mt-7 flex flex-wrap items-center gap-3">
-        <code class="rounded-lg border border-[#27272a] bg-[#18181b] px-4 py-2.5 font-mono text-sm text-[#e4e4e7]"><span class="text-[#6a9955]">$</span> pnpm signng add button data-table chart-analytics</code>
-        <button signngButton variant="outline" (click)="copy('Button')">{{ t().copy }}</button>
-        <button signngButton variant="ghost" (click)="search.focus()">{{ t().explore }}</button>
-        <a signngButton variant="ghost" routerLink="/dashboard">{{ t().dashboard }}</a>
+    <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 sm:py-20 lg:grid-cols-[1fr_minmax(0,400px)]">
+      <div class="fade-up">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-3 py-1 text-xs text-muted-foreground">
+          <span class="size-1.5 rounded-full bg-primary"></span> {{ t().eyebrow }}
+        </span>
+        <h1 class="mt-5 max-w-3xl text-4xl font-bold leading-[1.1] tracking-tight sm:text-6xl">
+          {{ t().h1a }}<span class="text-primary">{{ t().h1b }}</span>.
+        </h1>
+        <p class="mt-5 max-w-2xl text-lg text-muted-foreground">{{ t().sub }}</p>
+        <div class="mt-7 flex flex-wrap items-center gap-3">
+          <code class="rounded-lg border border-[#27272a] bg-[#18181b] px-4 py-2.5 font-mono text-sm text-[#e4e4e7]"><span class="text-[#6a9955]">$</span> pnpm signng add button data-table chart-analytics</code>
+          <button signngButton variant="outline" (click)="copy('Button')">{{ t().copy }}</button>
+          <button signngButton variant="ghost" (click)="search.focus()">{{ t().explore }}</button>
+          <a signngButton variant="ghost" routerLink="/dashboard">{{ t().dashboard }}</a>
+        </div>
+        <div class="mt-9 flex flex-wrap gap-2">
+          @for (b of t().badges; track b) { <span signngBadge variant="secondary">{{ b }}</span> }
+        </div>
       </div>
-      <div class="mt-9 flex flex-wrap gap-2">
-        @for (b of t().badges; track b) { <span signngBadge variant="secondary">{{ b }}</span> }
+
+      <!-- Live component collage: the library demoing itself (every widget here is real + interactive) -->
+      <div class="hidden lg:block">
+        <div class="fade-up rounded-xl border border-border bg-card p-4 shadow-lg" style="animation-delay: .08s">
+          <div class="mb-2 flex items-center justify-between text-sm">
+            <span class="font-medium">MRR</span>
+            <span signngBadge>+12%</span>
+          </div>
+          <div class="text-2xl font-bold tracking-tight">$48.2k</div>
+          <signng-bar-chart [data]="bars" class="mt-2 block w-full" />
+        </div>
+        <div class="fade-up mt-4 -rotate-1 rounded-xl border border-border bg-card p-4 shadow-lg" style="animation-delay: .16s">
+          <signng-calendar [(value)]="date" class="block [&>div]:border-0 [&>div]:p-0" />
+        </div>
+        <div class="fade-up mt-4 rotate-1 rounded-xl border border-border bg-card p-4 shadow-lg" style="animation-delay: .24s">
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <signng-switch ariaLabel="Demo" [(checked)]="sw" />
+              <span class="text-sm">{{ sw() ? 'On' : 'Off' }}</span>
+            </div>
+            <button signngButton size="sm" (click)="notify('Hero')">Action</button>
+          </div>
+          <signng-slider class="mt-4 block" ariaLabel="Demo slider" [(value)]="sld" />
+        </div>
       </div>
     </div>
     <div class="relative border-t border-border bg-muted/30 py-3">

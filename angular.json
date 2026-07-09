@@ -48,6 +48,11 @@
               {
                 "glob": "**/*",
                 "input": "projects/playground/public"
+              },
+              {
+                "glob": "*.json",
+                "input": "registry/public/r",
+                "output": "/r"
               }
             ],
             "styles": ["projects/playground/src/styles.css"],

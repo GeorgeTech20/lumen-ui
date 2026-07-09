@@ -163,6 +163,36 @@ export class Showcase {
   }
   protected setMode(name: string, m: 'preview' | 'code'): void {
     this.tabs.update((t) => ({ ...t, [name]: m }));
+    if (m === 'code') this.loadSource(name);
+  }
+
+  // Full component source, fetched from the signed registry (served at /r) — the same file
+  // `signng add` would write into your repo, not just the one-line usage snippet.
+  private readonly sources = signal<Record<string, string>>({});
+  // Demos whose registry item doesn't match a plain kebab-case of the demo name.
+  private static readonly REGISTRY_ITEM: Record<string, string> = {
+    BarChart: 'chart', LineChart: 'chart', AreaChart: 'chart', DonutChart: 'chart',
+    PieChart: 'chart', RadialChart: 'chart', Sparkline: 'chart',
+    MultiLineChart: 'chart-analytics', StackedBarChart: 'chart-analytics',
+    GroupedBarChart: 'chart-analytics', ScatterChart: 'chart-analytics', Heatmap: 'chart-analytics',
+    ImageUpload: 'file-upload',
+  };
+  private loadSource(name: string): void {
+    if (typeof window === 'undefined' || this.sources()[name] !== undefined) return;
+    const item =
+      Showcase.REGISTRY_ITEM[name] ?? name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+    fetch(`/r/${item}.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j: { files?: Array<{ content?: string }> } | null) => {
+        const content = j?.files?.[0]?.content;
+        if (!content) return;
+        const usage = this.DEMOS.find((d) => d.name === name)?.code ?? '';
+        const header = usage
+          ? ['// Usage:', ...usage.split('\n').map((l) => `//   ${l}`), '', ''].join('\n')
+          : '';
+        this.sources.update((s) => ({ ...s, [name]: header + content }));
+      })
+      .catch(() => {/* offline/404 — the usage snippet fallback stands */});
   }
   protected match = (name: string) => {
     const q = this.q().toLowerCase().trim();
@@ -178,7 +208,7 @@ export class Showcase {
     }
   }
   protected code(name: string): string {
-    return this.DEMOS.find((x) => x.name === name)?.code ?? '';
+    return this.sources()[name] ?? this.DEMOS.find((x) => x.name === name)?.code ?? '';
   }
 
   protected focusSearch(e: Event): void {
