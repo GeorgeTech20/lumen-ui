@@ -17,7 +17,7 @@ const STROKES = [1, 1.5, 2, 2.5];
   imports: [RouterLink, Icon, Input],
   template: `
     <div class="min-h-screen bg-background text-foreground">
-      <div class="sticky top-0 z-20 border-b border-border bg-background/90 px-4 py-3 backdrop-blur">
+      <div class="sticky top-[52px] z-20 border-b border-border bg-background/90 px-4 py-3 backdrop-blur">
         <div class="mx-auto flex max-w-5xl flex-wrap items-center gap-3">
           <a routerLink="/" class="flex items-center gap-2 font-bold hover:opacity-80">
             <span class="text-primary"><signng-icon name="bar" [size]="18" /></span> Icons

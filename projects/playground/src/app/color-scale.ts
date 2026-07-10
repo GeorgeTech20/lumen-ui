@@ -37,7 +37,9 @@ function hexToOklch(hex: string): Oklch {
   return { l: L, c, h };
 }
 
-const STEPS: Array<{ l?: number; cMul: number; lMul?: number }> = [
+type Step = { l?: number; cMul: number; lMul?: number };
+
+const LIGHT_STEPS: Step[] = [
   { l: 0.99, cMul: 0.05 },
   { l: 0.97, cMul: 0.09 },
   { l: 0.94, cMul: 0.16 },
@@ -52,16 +54,35 @@ const STEPS: Array<{ l?: number; cMul: number; lMul?: number }> = [
   { l: 0.22, cMul: 0.5 },
 ];
 
+// Dark-mode ramp (Radix grouping mirrored): 1-2 near-black app bg, 3-8 rising component
+// surfaces/borders, 9 the solid unchanged, 10 hover slightly LIGHTER (dark-mode convention),
+// 11-12 readable light text tints.
+const DARK_STEPS: Step[] = [
+  { l: 0.19, cMul: 0.12 },
+  { l: 0.22, cMul: 0.2 },
+  { l: 0.26, cMul: 0.3 },
+  { l: 0.3, cMul: 0.4 },
+  { l: 0.34, cMul: 0.5 },
+  { l: 0.4, cMul: 0.62 },
+  { l: 0.47, cMul: 0.76 },
+  { l: 0.55, cMul: 0.9 },
+  { cMul: 1, lMul: 1 },
+  { cMul: 0.95, lMul: 1.12 },
+  { l: 0.78, cMul: 0.55 },
+  { l: 0.94, cMul: 0.2 },
+];
+
 export interface ScaleStep {
   step: number;
   css: string;
 }
 
-export function generateScale(hex: string): ScaleStep[] {
+export function generateScale(hex: string, mode: 'light' | 'dark' = 'light'): ScaleStep[] {
   const base = hexToOklch(hex);
   const maxC = Math.min(base.c, 0.37); // clamp to stay in-gamut for typical displays
-  return STEPS.map((s, i) => {
-    const l = s.l ?? base.l * (s.lMul ?? 1);
+  const steps = mode === 'dark' ? DARK_STEPS : LIGHT_STEPS;
+  return steps.map((s, i) => {
+    const l = Math.min(s.l ?? base.l * (s.lMul ?? 1), 0.99);
     const c = maxC * s.cMul;
     return { step: i + 1, css: `oklch(${(l * 100).toFixed(1)}% ${c.toFixed(3)} ${base.h.toFixed(1)})` };
   });

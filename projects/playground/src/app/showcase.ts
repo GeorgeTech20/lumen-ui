@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, computed, effect, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Button } from '@/components/ui/button';
@@ -107,17 +107,7 @@ import { CATS, DEMOS, fetchRegistryItem, type Demo } from './component-catalog';
 export class Showcase {
   private readonly toast = inject(ToastService);
   protected readonly search = viewChild<ElementRef<HTMLInputElement>>('search');
-
-  protected readonly dark = signal(false);
-  constructor() {
-    // theme toggle lives on <html> so CDK overlays (dropdowns, popovers) inherit it too
-    effect(() => {
-      if (typeof document !== 'undefined') document.documentElement.classList.toggle('dark', this.dark());
-    });
-    inject(DestroyRef).onDestroy(() => {
-      if (typeof document !== 'undefined') document.documentElement.classList.remove('dark');
-    });
-  }
+  // Dark-mode toggle moved to the global SiteNav (app shell) — one owner for <html>.dark.
 
   // Enterprise audience defaults to English; the shell (hero/nav/categories/search) is bilingual.
   // Per-component demo copy stays as-is for now — full i18n of all 74 cards is a separate pass.
