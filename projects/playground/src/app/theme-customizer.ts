@@ -10,13 +10,29 @@ export interface Preset {
   fg: string;
 }
 
+// Radix-Colors step-9 solids as brand seeds (professional, contrast-vetted hues). Light hues
+// (amber/lime) flip to a dark foreground — white text on them fails contrast.
 export const PRESETS: Preset[] = [
   { key: 'violet', label: 'Violet', primary: '#6d4aff', fg: '#ffffff' },
-  { key: 'blue', label: 'Blue', primary: '#2563eb', fg: '#ffffff' },
-  { key: 'green', label: 'Green', primary: '#16a34a', fg: '#ffffff' },
-  { key: 'rose', label: 'Rose', primary: '#e11d48', fg: '#ffffff' },
-  { key: 'orange', label: 'Orange', primary: '#ea580c', fg: '#ffffff' },
-  { key: 'cyan', label: 'Cyan', primary: '#0891b2', fg: '#ffffff' },
+  { key: 'iris', label: 'Iris', primary: '#5b5bd6', fg: '#ffffff' },
+  { key: 'indigo', label: 'Indigo', primary: '#3e63dd', fg: '#ffffff' },
+  { key: 'blue', label: 'Blue', primary: '#0090ff', fg: '#ffffff' },
+  { key: 'cyan', label: 'Cyan', primary: '#00a2c7', fg: '#ffffff' },
+  { key: 'teal', label: 'Teal', primary: '#12a594', fg: '#ffffff' },
+  { key: 'jade', label: 'Jade', primary: '#29a383', fg: '#ffffff' },
+  { key: 'green', label: 'Green', primary: '#30a46c', fg: '#ffffff' },
+  { key: 'grass', label: 'Grass', primary: '#46a758', fg: '#ffffff' },
+  { key: 'lime', label: 'Lime', primary: '#bdee63', fg: '#1c2024' },
+  { key: 'amber', label: 'Amber', primary: '#ffc53d', fg: '#1c2024' },
+  { key: 'orange', label: 'Orange', primary: '#f76b15', fg: '#ffffff' },
+  { key: 'tomato', label: 'Tomato', primary: '#e54d2e', fg: '#ffffff' },
+  { key: 'red', label: 'Red', primary: '#e5484d', fg: '#ffffff' },
+  { key: 'ruby', label: 'Ruby', primary: '#e54666', fg: '#ffffff' },
+  { key: 'crimson', label: 'Crimson', primary: '#e93d82', fg: '#ffffff' },
+  { key: 'pink', label: 'Pink', primary: '#d6409f', fg: '#ffffff' },
+  { key: 'plum', label: 'Plum', primary: '#ab4aba', fg: '#ffffff' },
+  { key: 'purple', label: 'Purple', primary: '#8e4ec6', fg: '#ffffff' },
+  { key: 'bronze', label: 'Bronze', primary: '#a18072', fg: '#ffffff' },
 ];
 const RADII = ['0', '0.375', '0.5', '0.75', '1'];
 const STORAGE_KEY = 'signng-theme-customizer';
@@ -48,7 +64,7 @@ const STORAGE_KEY = 'signng-theme-customizer';
         </div>
 
         <div class="mb-1.5 text-xs font-medium text-muted-foreground">Brand color</div>
-        <div class="mb-4 grid grid-cols-6 gap-1.5">
+        <div class="mb-4 grid grid-cols-8 gap-1.5">
           @for (p of PRESETS; track p.key) {
             <button (click)="applyColor(p)" [style.background]="p.primary" [attr.aria-label]="p.label" [attr.aria-pressed]="themeKey() === p.key"
               [class]="'size-7 rounded-md ring-offset-2 ring-offset-popover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ' + (themeKey() === p.key ? 'ring-2 ring-foreground' : '')"></button>

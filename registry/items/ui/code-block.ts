@@ -20,12 +20,14 @@ const THEME = {
 // Anchored, single-pass tokenizer (no backtracking-prone patterns; length-capped). Output is rendered as
 // escaped text in <span> per token — never innerHTML — so it can't inject markup (security:lint clean).
 const RULES: [RegExp, keyof typeof THEME][] = [
-  [/^<!--[\s\S]*?-->/, 'cm'],
+  // Multi-line constructs are length-capped ({0,4000}) so an unterminated opener can't make the
+  // anchored scan quadratic on large inputs (full registry sources run ~20k chars).
+  [/^<!--[\s\S]{0,4000}?-->/, 'cm'],
   [/^\/\/[^\n]*/, 'cm'],
-  [/^\/\*[\s\S]*?\*\//, 'cm'],
-  [/^"(?:[^"\\]|\\.)*"/, 'st'],
-  [/^'(?:[^'\\]|\\.)*'/, 'st'],
-  [/^`(?:[^`\\]|\\.)*`/, 'st'],
+  [/^\/\*[\s\S]{0,4000}?\*\//, 'cm'],
+  [/^"(?:[^"\\]|\\.){0,2000}"/, 'st'],
+  [/^'(?:[^'\\]|\\.){0,2000}'/, 'st'],
+  [/^`(?:[^`\\]|\\.){0,4000}`/, 'st'],
   [/^<\/?[\w-]+/, 'tg'],
   [/^\/?>/, 'pn'],
   [/^[\w@[\]():.*-]+(?==)/, 'at'],
@@ -34,7 +36,8 @@ const RULES: [RegExp, keyof typeof THEME][] = [
 ];
 
 function tokenize(code: string): Token[] {
-  if (!code || code.length > 6000) return [{ t: code, c: 'df' }];
+  // 40k covers every registry source (largest is ~20k); beyond that fall back to plain text.
+  if (!code || code.length > 40_000) return [{ t: code, c: 'df' }];
   const out: Token[] = [];
   let buf = '';
   let s = code;

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, resource, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive, ActivatedRoute, Router } from '@angular/router';
+import { RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Icon } from '@/components/ui/icon';
 import { CodeBlock } from '@/components/ui/code-block';
@@ -68,7 +68,14 @@ import { ToastService } from '@/components/ui/toast';
 
               <div class="mt-5 flex flex-wrap items-center gap-3">
                 <code class="rounded-lg border border-[#27272a] bg-[#18181b] px-4 py-2.5 font-mono text-sm text-[#e4e4e7]"><span class="text-[#6a9955]">$</span> pnpm signng add {{ registryName() }}</code>
-                <button type="button" (click)="copyInstall()" class="rounded-md border border-border px-2.5 py-1.5 text-sm hover:bg-accent">Copy</button>
+                <button
+                  type="button"
+                  (click)="copyInstall()"
+                  [class]="'inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-sm transition-colors ' + (copiedInstall() ? 'border-primary text-primary' : 'border-border hover:bg-accent')"
+                >
+                  <signng-icon [name]="copiedInstall() ? 'check' : 'copy'" [size]="14" />
+                  {{ copiedInstall() ? 'Copied' : 'Copy' }}
+                </button>
               </div>
 
               @if (it.dependencies?.length || it.registryDependencies?.length) {
@@ -96,7 +103,6 @@ import { ToastService } from '@/components/ui/toast';
 })
 export class DocsPage {
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
   private readonly toast = inject(ToastService);
   protected readonly CATS = CATS;
   protected readonly DEMOS = DEMOS;
@@ -114,9 +120,12 @@ export class DocsPage {
     return this.DEMOS.filter((d) => d.cat === cat);
   }
 
+  protected readonly copiedInstall = signal(false);
   protected copyInstall(): void {
     const cmd = `pnpm signng add ${this.registryName()}`;
     navigator.clipboard?.writeText(cmd);
+    this.copiedInstall.set(true);
+    setTimeout(() => this.copiedInstall.set(false), 1500);
     this.toast.success('Copied', cmd);
   }
 }

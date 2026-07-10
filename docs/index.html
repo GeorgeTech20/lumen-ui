@@ -223,7 +223,7 @@ document.documentElement.classList.toggle('dark', isDark);</code></pre>
     <h2 style="margin-top:0;border:0">Distribución firmada — la cuña enterprise</h2>
     <p class="desc">El registry se firma con <strong>ed25519</strong>. El CLI verifica la firma contra el <strong>signer pineado</strong> y el hash <strong>SRI</strong> de cada archivo <em>antes</em> de escribir — <strong>fail-closed</strong>: si algo no cuadra, no escribe nada.</p>
     <p class="integrity">signer (pubkey): MCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X…</p>
-    <p class="integrity">signature: O8PcNabWi4HCy09scxJS9rZhasDg7Bzbn5XA7PZ9VAMY…</p>
+    <p class="integrity">signature: 59YTsGHda10DSoOGepSlwlMGfWCOqiLiGTeVMAT8nfh5…</p>
   </section>
 
   <section id="faq">
@@ -7704,12 +7704,14 @@ const THEME = {
 // Anchored, single-pass tokenizer (no backtracking-prone patterns; length-capped). Output is rendered as
 // escaped text in &lt;span&gt; per token — never innerHTML — so it can&#39;t inject markup (security:lint clean).
 const RULES: [RegExp, keyof typeof THEME][] = [
-  [/^&lt;!--[\s\S]*?--&gt;/, &#39;cm&#39;],
+  // Multi-line constructs are length-capped ({0,4000}) so an unterminated opener can&#39;t make the
+  // anchored scan quadratic on large inputs (full registry sources run ~20k chars).
+  [/^&lt;!--[\s\S]{0,4000}?--&gt;/, &#39;cm&#39;],
   [/^\/\/[^\n]*/, &#39;cm&#39;],
-  [/^\/\*[\s\S]*?\*\//, &#39;cm&#39;],
-  [/^&quot;(?:[^&quot;\\]|\\.)*&quot;/, &#39;st&#39;],
-  [/^&#39;(?:[^&#39;\\]|\\.)*&#39;/, &#39;st&#39;],
-  [/^`(?:[^`\\]|\\.)*`/, &#39;st&#39;],
+  [/^\/\*[\s\S]{0,4000}?\*\//, &#39;cm&#39;],
+  [/^&quot;(?:[^&quot;\\]|\\.){0,2000}&quot;/, &#39;st&#39;],
+  [/^&#39;(?:[^&#39;\\]|\\.){0,2000}&#39;/, &#39;st&#39;],
+  [/^`(?:[^`\\]|\\.){0,4000}`/, &#39;st&#39;],
   [/^&lt;\/?[\w-]+/, &#39;tg&#39;],
   [/^\/?&gt;/, &#39;pn&#39;],
   [/^[\w@[\]():.*-]+(?==)/, &#39;at&#39;],
@@ -7718,7 +7720,8 @@ const RULES: [RegExp, keyof typeof THEME][] = [
 ];
 
 function tokenize(code: string): Token[] {
-  if (!code || code.length &gt; 6000) return [{ t: code, c: &#39;df&#39; }];
+  // 40k covers every registry source (largest is ~20k); beyond that fall back to plain text.
+  if (!code || code.length &gt; 40_000) return [{ t: code, c: &#39;df&#39; }];
   const out: Token[] = [];
   let buf = &#39;&#39;;
   let s = code;
@@ -7794,7 +7797,7 @@ export class CodeBlock {
 }
 </code></pre>
     </details>
-    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-T8WEfTqqyY04PkxttKSYAtpXTX8fx/KwwZhmVlf7tFs=</p>
+    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-Gvmvb3XIrrLokF1VzvCd5X0sgPTTDxrL2y/P1BzEBeU=</p>
   </section>
   <section id="c-icon" class="component">
     <h3>icon <span class="badge">ui</span></h3>

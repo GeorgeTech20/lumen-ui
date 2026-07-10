@@ -163,7 +163,7 @@
       "name": "code",
       "type": "registry:ui",
       "description": "Syntax-highlighted code block (always-dark like shadcn) + copy button; safe tokenizer, no deps.",
-      "integrity": "sha256-meKWmki0fwKTbiMlDJdzIMM7OOOx/ZDPFPWTzZXoKCI="
+      "integrity": "sha256-Q1ak6g4erJr2GrJipKv7pVJiKTuHFOQrz6kj+S0NWvg="
     },
     {
       "name": "utils",
@@ -473,6 +473,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "O8PcNabWi4HCy09scxJS9rZhasDg7Bzbn5XA7PZ9VAMYP2fLd1DQbQWlEq9Yp/OzXL3ELq44yLSyZqeJLTdODA==",
+  "signature": "59YTsGHda10DSoOGepSlwlMGfWCOqiLiGTeVMAT8nfh5HXcrN/uO5TjCcNE+htSEeoM1AhO0g7oLa6k14P3HAw==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }
