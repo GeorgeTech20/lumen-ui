@@ -1,6 +1,6 @@
 {
   "$schema": "https://signng.dev/schema/registry.json",
-  "name": "signng-ui",
+  "name": "signng",
   "homepage": "https://signng.dev",
   "items": [
     {
@@ -181,19 +181,19 @@
       "name": "slider",
       "type": "registry:ui",
       "description": "Accessible slider styled on the @signng/core/slider primitive.",
-      "integrity": "sha256-RP120kDTaAUpA2wBgfhB8HLBVcOw3JV+QqhhdZdy2D4="
+      "integrity": "sha256-HJf6Q5xV8pvnT5wUewHZPe+KdeWXykHRgsoU0IRjF/o="
     },
     {
       "name": "switch",
       "type": "registry:ui",
       "description": "Accessible switch (role=switch) on @signng/core/switch.",
-      "integrity": "sha256-vc4ozZlnYchumIyuEPQL8Rnlj7OvbFnvqJWwyuvjp10="
+      "integrity": "sha256-7SnW3k9RuMhtEoxyqRS2V9+kbqZrabFscOPz8mMjalU="
     },
     {
       "name": "checkbox",
       "type": "registry:ui",
       "description": "Tri-state checkbox (role=checkbox, mixed) on @signng/core/checkbox.",
-      "integrity": "sha256-s4RT5Bc5JDgVo9EkWiSy63iS/mHpaiXWKHXjUTlXzgw="
+      "integrity": "sha256-iTet7qSiglI/wU2hIj2GSlsMSkUs8BZg/uLNqVTUl3U="
     },
     {
       "name": "input",
@@ -211,13 +211,13 @@
       "name": "overlay",
       "type": "registry:style",
       "description": "CDK overlay prebuilt CSS + dialog backdrop. Required by dialog/tooltip/popover.",
-      "integrity": "sha256-qbndzsrwFdR+D/6Od3yDuQGBf+h0q7+/+A1nyCZnmHE="
+      "integrity": "sha256-DVflyeWhXkDrHaUHxdKk/qqqwgSJFkgHMm4Qg4ex6+M="
     },
     {
       "name": "dialog",
       "type": "registry:ui",
       "description": "Modal dialog (focus trap, backdrop, Esc, restore focus) on @signng/core/dialog.",
-      "integrity": "sha256-aX+aGHMJUm3fU23T/tFiWSuyfCHhMGF5pPzGgVdxK4c="
+      "integrity": "sha256-Lpl0bayiPhI+kOXO3XA6u+ClCeuivrnzbX5xZkfdVC4="
     },
     {
       "name": "tooltip",
@@ -229,7 +229,7 @@
       "name": "radio-group",
       "type": "registry:ui",
       "description": "Accessible radio group (roving tabindex, arrow nav) on @signng/core/radio-group.",
-      "integrity": "sha256-l2p01BEWkcOm7clzHTntazPSRZihctZ0f3prmCaYUHQ="
+      "integrity": "sha256-UN+leSK4+8UEnY7IllXbhJ+eP4b1wxZb4E4r63bpIfI="
     },
     {
       "name": "popover",
@@ -247,7 +247,7 @@
       "name": "accordion",
       "type": "registry:ui",
       "description": "Accordion over @angular/aria (keyboard, aria-expanded, lazy content inherited).",
-      "integrity": "sha256-x+hukM5T9kiNmLfm8FB+gciNJgFgp8jKEHznU/h/2Ww="
+      "integrity": "sha256-/zu5wjBlcXMoyR4wMe5bc2r1PeDWsf6TWuEvN77ka84="
     },
     {
       "name": "select",
@@ -283,7 +283,7 @@
       "name": "alert-dialog",
       "type": "registry:ui",
       "description": "Confirm/cancel modal (role=alertdialog) on @signng/core/dialog.",
-      "integrity": "sha256-KP/XxKko1B3mg+IDRtbdE/EJgYris5um4iJXKFhXgqc="
+      "integrity": "sha256-/PZHXDrkZPkuXKQwAtnTUZZwotKFEPHK3zHoHGtkQ/M="
     },
     {
       "name": "dropdown-menu",
@@ -313,7 +313,7 @@
       "name": "sheet",
       "type": "registry:ui",
       "description": "Side drawer (edge-positioned modal) on @signng/core/dialog.",
-      "integrity": "sha256-rpvW1l7Pq4KG4HbwOZLkUIg59JFV8t9+uKfVwSpRIgg="
+      "integrity": "sha256-rEbv2/ASzWE9Hj7ky7qxViQqPost8KtZIm/wdIfS7Yg="
     },
     {
       "name": "toast",
@@ -367,7 +367,7 @@
       "name": "drawer",
       "type": "registry:ui",
       "description": "Bottom-sheet drawer (grab handle) on @signng/core/dialog.",
-      "integrity": "sha256-aNTu+2aWwMnEtit4ikwLasWBgjopGQx/A+qEeBkVs0I="
+      "integrity": "sha256-ciWX7wPHEk1iiOWLRP69f0bqvVpZ7cSIRuE2nXLgA1M="
     },
     {
       "name": "form-field",
@@ -463,16 +463,16 @@
       "name": "command",
       "type": "registry:ui",
       "description": "Command palette: modal (@signng/core/dialog) + filtered command listbox.",
-      "integrity": "sha256-L/maY60ToaneB76K5+aHjlsBmJU6JWOdu0qu6k1Oe5U="
+      "integrity": "sha256-tcb3Arn0bgTPpNKf5+SmBiwMFkV3fIg4XlpZNIw84XE="
     },
     {
       "name": "theme",
       "type": "registry:theme",
-      "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
-      "integrity": "sha256-dP3kZla6E99TbHSpkBqaLvUFQNsSwIrqAQyEtKedF7Q="
+      "description": "SignNG oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
+      "integrity": "sha256-PZ8B7j8rqbkp42ZRvUZED2gwzZqHYcgxpchB7bhtbiE="
     }
   ],
   "algorithm": "ed25519",
-  "signature": "GdqsR2pyR1eerActMIOrOSAeVC4QMh1R+NRBXm7dRjBhsLueTWhi6ZOKnEX2dmVzgNS9FJIKycke6jKudyR4CQ==",
+  "signature": "I6nLxA1pKwEo707pZxhp/NlxPGZ+zl2X1fH5nIhPB5UisaGV3qT68iCCAMlmQNR24H0UAU9bcN3J8bOkW8pHBA==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

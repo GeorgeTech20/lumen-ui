@@ -2,7 +2,7 @@
   "$schema": "https://signng.dev/schema/registry-item.json",
   "name": "theme",
   "type": "registry:theme",
-  "description": "signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
+  "description": "SignNG oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.",
   "dependencies": [],
   "registryDependencies": [],
   "files": [
@@ -14,5 +14,5 @@
       "integrity": "sha256-UwY1tjDBtK/nBap4YfowDtkpSk5rgitJJywDunA+rM4="
     }
   ],
-  "integrity": "sha256-dP3kZla6E99TbHSpkBqaLvUFQNsSwIrqAQyEtKedF7Q="
+  "integrity": "sha256-PZ8B7j8rqbkp42ZRvUZED2gwzZqHYcgxpchB7bhtbiE="
 }

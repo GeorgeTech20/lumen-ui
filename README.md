@@ -207,7 +207,7 @@ pnpm security:test     # 9/9 fail-closed
 
 ```
 signng/
-├─ projects/signng/core/      # primitivos publicables (@signng/core, entry points secundarios)
+├─ projects/signng/core/        # primitivos publicables (@signng/core, entry points secundarios)
 │  ├─ slider/ switch/ checkbox/ radio-group/ dialog/ tabs/ accordion/ primitives/
 ├─ registry/
 │  ├─ items/ui/*.ts             # los componentes "helm" (el código que copias)

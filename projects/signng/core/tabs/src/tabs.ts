@@ -5,7 +5,7 @@
  * is funneled through THIS one file. If aria's selectors/exports change between previews,
  * only this adapter changes — never the consumer's templates or the styled `helm` layer.
  *
- * signng does NOT re-author the accordion/tabs state machine; it inherits Google's
+ * SignNG does NOT re-author the accordion/tabs state machine; it inherits Google's
  * accessibility (roving focus, `aria-selected`, panel wiring) and adds the styled skin on top.
  *
  * Selectors provided (unchanged, from aria): `[ngTabs]`, `[ngTabList]`, `[ngTab]`,

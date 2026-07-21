@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneless)', () => {
+test.describe('SignNG Fase 0 — a11y + behavior gate (SSR + hydration + zoneless)', () => {
   test('no WCAG 2.0/2.1/2.2 A+AA axe violations', async ({ page }) => {
     await page.goto('/demo');
     await page.waitForSelector('[data-testid="app-root"]');
@@ -369,7 +369,7 @@ test.describe('signng Fase 0 — a11y + behavior gate (SSR + hydration + zoneles
     page,
   }) => {
     await page.goto('/demo');
-    const trigger = page.getByRole('button', { name: '¿Qué es signng?' });
+    const trigger = page.getByRole('button', { name: '¿Qué es SignNG?' });
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await trigger.click();
     await expect(trigger).toHaveAttribute('aria-expanded', 'true');

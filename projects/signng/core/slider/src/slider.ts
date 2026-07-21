@@ -14,7 +14,7 @@ import {
 
 /**
  * Net-new headless Slider primitive — authored from scratch because no accessible slider
- * primitive exists in `@angular/aria` *or* `@angular/cdk` (it is part of signng's
+ * primitive exists in `@angular/aria` *or* `@angular/cdk` (it is part of SignNG's
  * contribution surface, per the architecture analysis).
  *
  * Design rules:

@@ -37,7 +37,7 @@ import { Separator } from '@/components/ui/separator';
 import { Avatar } from '@/components/ui/avatar';
 import { AlertDialog } from '@/components/ui/alert-dialog';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
-import { Toaster, ToastService } from '@/components/ui/toast';
+import { ToastService } from '@/components/ui/toast';
 import { SIGNNG_ALERT } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Progress } from '@/components/ui/progress';
@@ -51,7 +51,7 @@ import { SIGNNG_TABS } from '@signng/core/tabs';
   imports: [
     Button, Slider, Switch, Checkbox, Input, Label, Textarea,
     RadioGroup, Radio, Dialog, Tooltip, Popover, Accordion, Select,
-    Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet, Toaster,
+    Badge, Separator, Avatar, AlertDialog, DropdownMenu, Sheet,
     Skeleton, Progress, Combobox, Calendar, DatePicker, Pagination, Command,
     Toggle, Collapsible, HoverCard, ContextMenu, ScrollArea, AspectRatio,
     InputOtp, SignngResizable, Menubar,

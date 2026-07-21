@@ -576,7 +576,7 @@ const ITEMS: ItemDef[] = [
   {
     name: 'theme',
     type: 'registry:theme',
-    description: 'signng oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.',
+    description: 'SignNG oklch theme (Tailwind v4 @theme + dark). tweakcn-compatible.',
     files: [{ src: '../../tokens/dist/theme.css', target: 'src/signng-theme.css', type: 'registry:theme' }],
   },
 ];
@@ -627,7 +627,7 @@ const signature = signRegistry(signed, privatePem);
 
 const registry = {
   $schema: 'https://signng.dev/schema/registry.json',
-  name: 'signng-ui',
+  name: 'signng',
   homepage: 'https://signng.dev',
   items: index,
   algorithm: 'ed25519',
