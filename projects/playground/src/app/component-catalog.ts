@@ -138,7 +138,9 @@ export function fetchRegistryItem(demoName: string): Promise<RegistryItem | null
   const item = registryItemFor(demoName);
   let p = registryCache.get(item);
   if (!p) {
-    p = fetch(`/r/${item}.json`)
+    // baseURI-relative (not "/r/...") so it works when the site is hosted under a subpath
+    // (e.g. GitHub Pages /signng/) as well as at the domain root.
+    p = fetch(new URL(`r/${item}.json`, document.baseURI).toString())
       .then((r) => (r.ok ? r.json() : null))
       .catch(() => null);
     registryCache.set(item, p);

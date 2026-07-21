@@ -4,6 +4,7 @@
   "type": "module",
   "description": "Secure copy-paste installer for signng components (SRI-verified, sandboxed writer).",
   "bin": {
+    "signng": "./dist/index.mjs",
     "signng": "./dist/index.mjs"
   },
   "files": ["dist"],

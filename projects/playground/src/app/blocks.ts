@@ -18,7 +18,7 @@ import { CodeBlock } from '@/components/ui/code-block';
 type BlockKey = 'Auth' | 'Pricing' | 'Settings' | 'Stats' | 'Mail' | 'Cards';
 
 /**
- * Blocks gallery — full-page composed templates (shadcn "blocks" style) assembled from signng components:
+ * Blocks gallery — full-page composed templates (shadcn "blocks" style) assembled from SignNG components:
  * Auth (split brand panel + login), Pricing (3 tiers), Settings (nav + profile form), Stats (KPI grid +
  * chart). A sub-nav switches between them. Pure demo (lives in the playground), not a registry item.
  */
@@ -42,7 +42,7 @@ type BlockKey = 'Auth' | 'Pricing' | 'Settings' | 'Stats' | 'Mail' | 'Cards';
       <header class="fade-up mx-auto max-w-3xl px-6 pb-10 pt-16 text-center">
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Bloques listos para <span class="text-primary">copiar y poseer</span></h1>
         <p class="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
-          Páginas completas compuestas con componentes signng — mismo registry firmado, mismo CLI, cero dependencias extra.
+          Páginas completas compuestas con componentes SignNG — mismo registry firmado, mismo CLI, cero dependencias extra.
         </p>
         <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
           <a signngButton routerLink="/dashboard">Ver dashboard →</a>
@@ -90,7 +90,7 @@ type BlockKey = 'Auth' | 'Pricing' | 'Settings' | 'Stats' | 'Mail' | 'Cards';
         @case ('Auth') {
           <div class="fade-up grid min-h-[560px] @4xl:grid-cols-2">
             <div class="relative hidden flex-col justify-between overflow-hidden bg-primary p-10 text-primary-foreground @4xl:flex">
-              <div class="flex items-center gap-2 text-lg font-bold"><signng-icon name="bar" [size]="22" /> signng</div>
+              <div class="flex items-center gap-2 text-lg font-bold"><signng-icon name="bar" [size]="22" /> SignNG</div>
               <div>
                 <blockquote class="text-2xl font-medium leading-snug">"Enviamos UI accesible en días, no meses. El registry firmado pasó la auditoría enterprise sin fricción."</blockquote>
                 <p class="mt-4 text-sm opacity-80">— Equipo de plataforma, fintech LatAm</p>
@@ -254,7 +254,7 @@ type BlockKey = 'Auth' | 'Pricing' | 'Settings' | 'Stats' | 'Mail' | 'Cards';
                   <div><div signngCardTitle class="text-base">Giorgi Franck</div><div signngCardDescription>Owner</div></div>
                   <span signngBadge class="ml-auto">Pro</span>
                 </div>
-                <div signngCardContent class="text-sm text-muted-foreground">Construye MLM Suite + signng. 3 repos activos.</div>
+                <div signngCardContent class="text-sm text-muted-foreground">Construye MLM Suite + SignNG. 3 repos activos.</div>
               </div>
               <div signngCard class="@2xl:col-span-2">
                 <div signngCardHeader class="pb-2"><span signngCardTitle class="text-sm">Actividad semanal</span></div>

@@ -4,7 +4,7 @@
     <div signngSidebarHeader>
       <a routerLink="/" class="flex items-center gap-2 hover:opacity-80">
         <signng-icon name="bar" [size]="22" class="text-primary" />
-        @if (!sidebarCollapsed()) { <span class="text-lg font-semibold">signng</span> }
+        @if (!sidebarCollapsed()) { <span class="text-lg font-semibold">SignNG</span> }
       </a>
       <signng-sidebar-trigger class="ml-auto" />
     </div>
@@ -24,7 +24,7 @@
   <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
   <!-- Topbar: menubar chrome in sidebar layout; section nav inline when there's no sidebar -->
   <header class="flex items-center gap-4 border-b border-border bg-background/95 px-6 py-3 backdrop-blur">
-    <span class="text-lg font-semibold tracking-tight">signng <span class="text-muted-foreground">Admin</span></span>
+    <span class="text-lg font-semibold tracking-tight">SignNG <span class="text-muted-foreground">Admin</span></span>
     @if (layout() === 'topnav') {
       <nav class="flex items-center gap-1" aria-label="Secciones">
         @for (item of NAV_ITEMS; track item.key) {

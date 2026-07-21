@@ -2,7 +2,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/signng-logo-dark.svg">
-  <img src="assets/signng-logo-light.svg" alt="signng" width="240">
+  <img src="assets/signng-logo-light.svg" alt="SignNG" width="240">
 </picture>
 
 ### Componentes Angular accesibles que **copias a tu repo y posees**
@@ -21,9 +21,9 @@ Signals-native · zoneless · SSR · WCAG 2.2 AA · cero dependencias pesadas.
 
 ---
 
-## ¿Qué es signng?
+## ¿Qué es SignNG?
 
-signng es una librería de componentes Angular al estilo **shadcn/ui**: no instalas un paquete opaco
+SignNG es una librería de componentes Angular al estilo **shadcn/ui**: no instalas un paquete opaco
 de `node_modules`, sino que un CLI **copia el código fuente de cada componente a tu proyecto**. Tú lo
 posees, lo editas, lo versionas. La diferencia frente a copiar-pegar a mano: el CLI trae el código
 desde un **registry firmado criptográficamente** y lo verifica **antes** de escribir nada — la cuña
@@ -45,7 +45,7 @@ pnpm signng add button dialog calendar    # verifica firma + SRI, luego escribe
 
 ## Los 3 patrones de arquitectura
 
-signng no reinventa la accesibilidad — la **hereda** donde puede, **compone** donde conviene, y solo
+SignNG no reinventa la accesibilidad — la **hereda** donde puede, **compone** donde conviene, y solo
 **autora** lo que no existe:
 
 | Patrón | Qué hace | Componentes |
@@ -185,7 +185,7 @@ bootstrapApplication(App, {
 ## Modelo de seguridad — la cuña enterprise
 
 El problema de "copia-pega del registry": ¿cómo sabes que el código que escribes en tu repo no fue
-manipulado? signng lo resuelve:
+manipulado? SignNG lo resuelve:
 
 1. **Registry firmado** — cada build firma el índice del registry con **`ed25519`**.
 2. **Signer pineado** — `signng init` guarda la clave pública del signer en `ui.config.json`.
@@ -206,7 +206,7 @@ pnpm security:test     # 9/9 fail-closed
 ## Arquitectura del repo
 
 ```
-signng-ui/
+signng/
 ├─ projects/signng/core/      # primitivos publicables (@signng/core, entry points secundarios)
 │  ├─ slider/ switch/ checkbox/ radio-group/ dialog/ tabs/ accordion/ primitives/
 ├─ registry/
