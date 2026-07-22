@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, model, output, signal } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
+import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { cn } from '@/lib/utils';
 import { Icon } from '@/components/ui/icon';
 import { SIGNNG_I18N } from '@/components/ui/i18n';
@@ -26,7 +27,7 @@ export interface DataColumn {
  */
 @Component({
   selector: 'signng-data-table',
-  imports: [Icon, NgTemplateOutlet],
+  imports: [Icon, NgTemplateOutlet, CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'block' },
   template: `
@@ -65,6 +66,74 @@ export interface DataColumn {
         </div>
       }
 
+      @if (virtualScroll() && !groupBy()) {
+        <!-- Virtualized mode: cdk-virtual-scroll-viewport only renders the ~visible rows (plus a
+             buffer) — real <table>/<tbody> can't be virtualized (breaks table layout/semantics), so
+             this uses an ARIA grid (role=table/row/cell) over CSS grid instead. Needed once a dataset
+             is too large to paginate away (10k+ rows) — the default paginated <table> below is fine
+             for everything smaller and stays the default (virtualScroll defaults to false). -->
+        <div class="rounded-md border border-border overflow-hidden" role="table" [attr.aria-label]="caption() || null">
+          <div class="flex border-b border-border bg-muted/40" role="row" [style.grid-template-columns]="gridTemplate()" style="display: grid;">
+            @if (selectable()) {
+              <div class="flex h-11 items-center px-3" role="columnheader">
+                <input type="checkbox" [checked]="allSelected()" [indeterminate]="someSelected()" (change)="toggleAll()" aria-label="Seleccionar todo" class="size-4 cursor-pointer accent-[var(--color-primary)]" />
+              </div>
+            }
+            @for (col of columns(); track col.key) {
+              <div
+                role="columnheader"
+                [class]="cn('flex h-11 items-center px-4 font-medium text-muted-foreground', alignCls(col), col.sortable ? 'cursor-pointer select-none' : '')"
+                [attr.aria-sort]="col.sortable ? ariaSort(col.key) : null"
+                (click)="col.sortable && sort(col.key)"
+              >
+                <span class="inline-flex items-center gap-1">
+                  {{ col.header }}
+                  @if (col.sortable) {
+                    <signng-icon
+                      [name]="sortKey() === col.key ? (sortDir() === 'asc' ? 'chevron-up' : 'chevron-down') : 'chevron-down'"
+                      [size]="13"
+                      [class]="sortKey() === col.key && sortDir() !== 'none' ? 'text-foreground' : 'opacity-40'"
+                    />
+                  }
+                </span>
+              </div>
+            }
+          </div>
+          <cdk-virtual-scroll-viewport [itemSize]="rowHeight()" [style.height.px]="viewportHeight()" class="block">
+            <div
+              *cdkVirtualFor="let row of processed(); trackBy: trackRow"
+              role="row"
+              class="flex border-b border-border transition-colors hover:bg-muted/50"
+              [class.bg-accent]="isSelected(row)"
+              [style.grid-template-columns]="gridTemplate()"
+              [style.height.px]="rowHeight()"
+              style="display: grid;"
+            >
+              @if (selectable()) {
+                <div class="flex items-center px-3" role="cell">
+                  <input type="checkbox" [checked]="isSelected(row)" (change)="toggleRow(row)" aria-label="Seleccionar fila" class="size-4 cursor-pointer accent-[var(--color-primary)]" />
+                </div>
+              }
+              @for (col of columns(); track col.key) {
+                <div [class]="cn('flex items-center px-4 truncate', alignCls(col), col.editable ? 'cursor-text' : '')" role="cell" (click)="col.editable && startEdit(row, col.key)">
+                  @if (isEditing(row, col.key)) {
+                    <input
+                      [value]="row[col.key]"
+                      (blur)="commitEdit(row, col.key, $any($event.target).value)"
+                      (keydown.enter)="commitEdit(row, col.key, $any($event.target).value)"
+                      (keydown.escape)="editing.set(null)"
+                      autofocus
+                      class="h-7 w-full rounded border border-input bg-background px-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    />
+                  } @else {
+                    {{ col.format ? col.format(row[col.key], row) : row[col.key] }}
+                  }
+                </div>
+              }
+            </div>
+          </cdk-virtual-scroll-viewport>
+        </div>
+      } @else {
       <div class="overflow-x-auto rounded-md border border-border">
         <table class="w-full caption-bottom text-sm">
           @if (caption()) { <caption class="mt-2 text-xs text-muted-foreground">{{ caption() }}</caption> }
@@ -130,9 +199,10 @@ export interface DataColumn {
           </tbody>
         </table>
       </div>
+      }
 
-      <!-- pagination (hidden when grouped) -->
-      @if (!groupBy() && totalPages() > 1) {
+      <!-- pagination (hidden when grouped or virtualized) -->
+      @if (!groupBy() && !virtualScroll() && totalPages() > 1) {
         <div class="flex items-center justify-between text-sm text-muted-foreground">
           <span>{{ rangeFrom() }}–{{ rangeTo() }} de {{ processed().length }}</span>
           <div class="flex items-center gap-1">
@@ -185,6 +255,10 @@ export class DataTable {
   readonly exportable = input(true);
   readonly groupBy = input<string | null>(null);
   readonly caption = input('');
+  /** Skip pagination and virtualize all `processed()` rows instead — for datasets too large to page away. */
+  readonly virtualScroll = input(false);
+  readonly rowHeight = input(44);
+  readonly viewportHeight = input(480);
   readonly selectionChange = output<Row[]>();
 
   protected readonly cn = cn;
@@ -242,6 +316,14 @@ export class DataTable {
     }
     return [...map.entries()].map(([key, rows]) => ({ key, rows }));
   });
+
+  protected readonly gridTemplate = computed(() => {
+    const sel = this.selectable() ? '40px ' : '';
+    return `${sel}repeat(${this.columns().length}, minmax(0,1fr))`;
+  });
+  protected trackRow(_index: number, row: Row): Row {
+    return row;
+  }
 
   protected colspan(): number {
     return this.columns().length + (this.selectable() ? 1 : 0);

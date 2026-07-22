@@ -223,7 +223,7 @@ document.documentElement.classList.toggle('dark', isDark);</code></pre>
     <h2 style="margin-top:0;border:0">Distribución firmada — la cuña enterprise</h2>
     <p class="desc">El registry se firma con <strong>ed25519</strong>. El CLI verifica la firma contra el <strong>signer pineado</strong> y el hash <strong>SRI</strong> de cada archivo <em>antes</em> de escribir — <strong>fail-closed</strong>: si algo no cuadra, no escribe nada.</p>
     <p class="integrity">signer (pubkey): MCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X…</p>
-    <p class="integrity">signature: pWZ8MpSRzVwqQ0BdZpeuSwga4/WX9mFyiqzWSAGqJ6WX…</p>
+    <p class="integrity">signature: OnnqMq9FHdOZoZBEUNoFprts2xsiV9AL2EA6cKAbA6KI…</p>
   </section>
 
   <section id="faq">
@@ -400,24 +400,41 @@ export class Textarea {
     <pre class="cmd" tabindex="0">pnpm signng add checkbox</pre>
     <details>
       <summary>Ver fuente — <code>src/components/ui/checkbox.ts</code></summary>
-      <pre class="src"><code>import { ChangeDetectionStrategy, Component, booleanAttribute, input, model } from &#39;@angular/core&#39;;
+      <pre class="src"><code>import {
+  ChangeDetectionStrategy,
+  Component,
+  booleanAttribute,
+  computed,
+  effect,
+  forwardRef,
+  input,
+  model,
+  signal,
+} from &#39;@angular/core&#39;;
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from &#39;@angular/forms&#39;;
 import { SignngCheckbox } from &#39;@signng/core/checkbox&#39;;
 import { cn } from &#39;@/lib/utils&#39;;
 
-/** Styled tri-state Checkbox (helm) over the @signng/core/checkbox primitive. */
+/**
+ * Styled tri-state Checkbox (helm) over the @signng/core/checkbox primitive.
+ * Implements ControlValueAccessor — works with `formControlName`/`[(ngModel)]` in a reactive
+ * or template-driven form, on top of the plain `[(checked)]` signal binding.
+ */
 @Component({
   selector: &#39;signng-checkbox&#39;,
   imports: [SignngCheckbox],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() =&gt; Checkbox), multi: true }],
   template: `
     &lt;button
       type=&quot;button&quot;
       signngCheckbox
       [(checked)]=&quot;checked&quot;
       [(indeterminate)]=&quot;indeterminate&quot;
-      [disabled]=&quot;disabled()&quot;
+      [disabled]=&quot;isDisabled()&quot;
       [attr.aria-labelledby]=&quot;ariaLabelledby()&quot;
       [attr.aria-label]=&quot;ariaLabel()&quot;
+      (blur)=&quot;onTouched()&quot;
       [class]=&quot;
         cn(
           &#39;inline-flex size-6 shrink-0 items-center justify-center rounded border border-primary shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground data-[state=indeterminate]:bg-primary data-[state=indeterminate]:text-primary-foreground&#39;,
@@ -437,7 +454,7 @@ import { cn } from &#39;@/lib/utils&#39;;
     &lt;/button&gt;
   `,
 })
-export class Checkbox {
+export class Checkbox implements ControlValueAccessor {
   readonly checked = model(false);
   readonly indeterminate = model(false);
   readonly disabled = input(false, { transform: booleanAttribute });
@@ -445,10 +462,34 @@ export class Checkbox {
   readonly ariaLabelledby = input&lt;string | undefined&gt;(undefined);
   readonly class = input(&#39;&#39;);
   protected readonly cn = cn;
+
+  private readonly formDisabled = signal(false);
+  protected readonly isDisabled = computed(() =&gt; this.disabled() || this.formDisabled());
+
+  private onChange: (value: boolean) =&gt; void = () =&gt; {};
+  protected onTouched: () =&gt; void = () =&gt; {};
+
+  constructor() {
+    // Bridge the signal model -&gt; CVA onChange (fires on writeValue&#39;s own set() too; harmless/idempotent).
+    effect(() =&gt; this.onChange(this.checked()));
+  }
+
+  writeValue(value: boolean): void {
+    this.checked.set(!!value);
+  }
+  registerOnChange(fn: (value: boolean) =&gt; void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () =&gt; void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.formDisabled.set(isDisabled);
+  }
 }
 </code></pre>
     </details>
-    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-cUOQ7uGPMo5u2WoR1FMRImE/Tm4K7FN5U9VF5E4oP0E=</p>
+    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-9msNrpl9m4DaxNognQEOu7N/PUv792YDqQT2WHdpHWY=</p>
   </section>
   <section id="c-switch" class="component">
     <h3>switch <span class="badge">ui</span></h3>
@@ -458,21 +499,37 @@ export class Checkbox {
     <pre class="cmd" tabindex="0">pnpm signng add switch</pre>
     <details>
       <summary>Ver fuente — <code>src/components/ui/switch.ts</code></summary>
-      <pre class="src"><code>import { ChangeDetectionStrategy, Component, booleanAttribute, input, model } from &#39;@angular/core&#39;;
+      <pre class="src"><code>import {
+  ChangeDetectionStrategy,
+  Component,
+  booleanAttribute,
+  computed,
+  effect,
+  forwardRef,
+  input,
+  model,
+  signal,
+} from &#39;@angular/core&#39;;
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from &#39;@angular/forms&#39;;
 import { SignngSwitch } from &#39;@signng/core/switch&#39;;
 import { cn } from &#39;@/lib/utils&#39;;
 
-/** Styled Switch (helm). Behaviour + a11y from the versioned @signng/core/switch primitive. */
+/**
+ * Styled Switch (helm). Behaviour + a11y from the versioned @signng/core/switch primitive.
+ * Implements ControlValueAccessor — works with `formControlName`/`[(ngModel)]`.
+ */
 @Component({
   selector: &#39;signng-switch&#39;,
   imports: [SignngSwitch],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() =&gt; Switch), multi: true }],
   template: `
     &lt;button
       type=&quot;button&quot;
       signngSwitch
       [(checked)]=&quot;checked&quot;
-      [disabled]=&quot;disabled()&quot;
+      [disabled]=&quot;isDisabled()&quot;
+      (blur)=&quot;onTouched()&quot;
       [attr.aria-labelledby]=&quot;ariaLabelledby()&quot;
       [attr.aria-label]=&quot;ariaLabel()&quot;
       [class]=&quot;
@@ -489,17 +546,40 @@ import { cn } from &#39;@/lib/utils&#39;;
     &lt;/button&gt;
   `,
 })
-export class Switch {
+export class Switch implements ControlValueAccessor {
   readonly checked = model(false);
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input&lt;string | undefined&gt;(undefined);
   readonly ariaLabelledby = input&lt;string | undefined&gt;(undefined);
   readonly class = input(&#39;&#39;);
   protected readonly cn = cn;
+
+  private readonly formDisabled = signal(false);
+  protected readonly isDisabled = computed(() =&gt; this.disabled() || this.formDisabled());
+
+  private onChange: (value: boolean) =&gt; void = () =&gt; {};
+  protected onTouched: () =&gt; void = () =&gt; {};
+
+  constructor() {
+    effect(() =&gt; this.onChange(this.checked()));
+  }
+
+  writeValue(value: boolean): void {
+    this.checked.set(!!value);
+  }
+  registerOnChange(fn: (value: boolean) =&gt; void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () =&gt; void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.formDisabled.set(isDisabled);
+  }
 }
 </code></pre>
     </details>
-    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-G3gSmUAqJOc6Nyakk5Afyi9w/3cRbDx44zK/4L9MDZA=</p>
+    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-QKUTUDFsKHtVUdm11aD+6a7OyhjA7mybVVnMYtRFy5k=</p>
   </section>
   <section id="c-radio-group" class="component">
     <h3>radio-group <span class="badge">ui</span></h3>
@@ -509,13 +589,15 @@ export class Switch {
     <pre class="cmd" tabindex="0">pnpm signng add radio-group</pre>
     <details>
       <summary>Ver fuente — <code>src/components/ui/radio-group.ts</code></summary>
-      <pre class="src"><code>import { ChangeDetectionStrategy, Component, inject } from &#39;@angular/core&#39;;
+      <pre class="src"><code>import { ChangeDetectionStrategy, Component, effect, forwardRef, inject } from &#39;@angular/core&#39;;
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from &#39;@angular/forms&#39;;
 import { SignngRadio, SignngRadioGroup } from &#39;@signng/core/radio-group&#39;;
 
 /**
  * Styled RadioGroup (helm) over the @signng/core/radio-group compound primitive.
  * Container: `&lt;signng-radio-group [(value)]=&quot;x&quot; aria-labelledby=&quot;...&quot;&gt;`.
  * Item: `&lt;signng-radio value=&quot;a&quot;&gt;Label&lt;/signng-radio&gt;` — the projected text is the radio&#39;s name.
+ * Implements ControlValueAccessor — works with `formControlName`/`[(ngModel)]` too.
  */
 @Component({
   selector: &#39;signng-radio-group&#39;,
@@ -523,10 +605,35 @@ import { SignngRadio, SignngRadioGroup } from &#39;@signng/core/radio-group&#39;
     { directive: SignngRadioGroup, inputs: [&#39;value&#39;, &#39;disabled&#39;, &#39;orientation&#39;], outputs: [&#39;valueChange&#39;] },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: &#39;grid gap-2&#39; },
+  host: { class: &#39;grid gap-2&#39;, &#39;(focusout)&#39;: &#39;onTouched()&#39; },
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() =&gt; RadioGroup), multi: true }],
   template: `&lt;ng-content /&gt;`,
 })
-export class RadioGroup {}
+export class RadioGroup implements ControlValueAccessor {
+  // Injected directly (bypasses hostDirectives&#39; template-binding-only forwarding) so CVA can set
+  // value/disabled imperatively — both are `model()` on the primitive, so this is a plain signal write.
+  private readonly group = inject(SignngRadioGroup, { self: true });
+
+  private onChange: (value: string | null) =&gt; void = () =&gt; {};
+  protected onTouched: () =&gt; void = () =&gt; {};
+
+  constructor() {
+    effect(() =&gt; this.onChange(this.group.value()));
+  }
+
+  writeValue(value: string | null): void {
+    this.group.value.set(value);
+  }
+  registerOnChange(fn: (value: string | null) =&gt; void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () =&gt; void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.group.disabled.set(isDisabled);
+  }
+}
 
 @Component({
   selector: &#39;signng-radio&#39;,
@@ -552,7 +659,7 @@ export class Radio {
 }
 </code></pre>
     </details>
-    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-VSoR+G6KjCiOMAwnR+NTGVUNZcYM+RyTcPh0pvhdCT4=</p>
+    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-Xpt0SSrHvMEFD0wGb7RHmk4A/nrV4vF8OQ7tgD/TtqY=</p>
   </section>
   <section id="c-select" class="component">
     <h3>select <span class="badge">ui</span></h3>
@@ -562,7 +669,19 @@ export class Radio {
     <pre class="cmd" tabindex="0">pnpm signng add select</pre>
     <details>
       <summary>Ver fuente — <code>src/components/ui/select.ts</code></summary>
-      <pre class="src"><code>import { ChangeDetectionStrategy, Component, computed, inject, input, model, signal } from &#39;@angular/core&#39;;
+      <pre class="src"><code>import {
+  ChangeDetectionStrategy,
+  Component,
+  booleanAttribute,
+  computed,
+  effect,
+  forwardRef,
+  inject,
+  input,
+  model,
+  signal,
+} from &#39;@angular/core&#39;;
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from &#39;@angular/forms&#39;;
 import { CdkTrapFocus, _IdGenerator } from &#39;@angular/cdk/a11y&#39;;
 import { CdkConnectedOverlay, CdkOverlayOrigin, type ConnectedPosition } from &#39;@angular/cdk/overlay&#39;;
 import { Listbox, Option } from &#39;@angular/aria/listbox&#39;;
@@ -586,7 +705,9 @@ export interface SelectOption {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     &#39;(document:keydown.escape)&#39;: &#39;onEscape()&#39;,
+    &#39;(focusout)&#39;: &#39;onTouched()&#39;,
   },
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() =&gt; Select), multi: true }],
   template: `
     &lt;button
       cdkOverlayOrigin
@@ -597,13 +718,14 @@ export interface SelectOption {
       [attr.aria-expanded]=&quot;open()&quot;
       [attr.aria-controls]=&quot;open() ? listboxId : null&quot;
       [attr.aria-label]=&quot;label() || null&quot;
+      [disabled]=&quot;isDisabled()&quot;
       [class]=&quot;
         cn(
           &#39;flex h-10 w-full min-w-48 items-center justify-between gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50&#39;,
           class()
         )
       &quot;
-      (click)=&quot;open.set(!open())&quot;
+      (click)=&quot;!isDisabled() &amp;&amp; open.set(!open())&quot;
     &gt;
       &lt;span [class.text-muted-foreground]=&quot;value() === null&quot;&gt;{{ selectedLabel() }}&lt;/span&gt;
       &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; class=&quot;size-4 opacity-60&quot; aria-hidden=&quot;true&quot;&gt;
@@ -645,13 +767,14 @@ export interface SelectOption {
     &lt;/ng-template&gt;
   `,
 })
-export class Select {
+export class Select implements ControlValueAccessor {
   protected readonly i18n = inject(SIGNNG_I18N);
   readonly options = input&lt;SelectOption[]&gt;([]);
   readonly value = model&lt;string | null&gt;(null);
   readonly placeholder = input(&#39;&#39;);
   readonly label = input(&#39;&#39;);
   readonly class = input(&#39;&#39;);
+  readonly disabled = input(false, { transform: booleanAttribute });
   readonly open = signal(false);
 
   protected readonly cn = cn;
@@ -660,6 +783,29 @@ export class Select {
     () =&gt; this.options().find((o) =&gt; o.value === this.value())?.label ?? (this.placeholder() || this.i18n.selectPlaceholder),
   );
   protected readonly listboxValue = computed(() =&gt; (this.value() !== null ? [this.value()!] : []));
+
+  private readonly formDisabled = signal(false);
+  protected readonly isDisabled = computed(() =&gt; this.disabled() || this.formDisabled());
+
+  private onChangeCb: (value: string | null) =&gt; void = () =&gt; {};
+  protected onTouched: () =&gt; void = () =&gt; {};
+
+  constructor() {
+    effect(() =&gt; this.onChangeCb(this.value()));
+  }
+
+  writeValue(value: string | null): void {
+    this.value.set(value);
+  }
+  registerOnChange(fn: (value: string | null) =&gt; void): void {
+    this.onChangeCb = fn;
+  }
+  registerOnTouched(fn: () =&gt; void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.formDisabled.set(isDisabled);
+  }
 
   protected onChange(values: string[]): void {
     this.value.set(values[0] ?? null);
@@ -677,7 +823,7 @@ export class Select {
 }
 </code></pre>
     </details>
-    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-IAaGNefCAoRMIV3qrfYKAXd/ALWuRkY1+k46FwKDtfY=</p>
+    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-kSbJGW/sHg/DdekIP8c5TpRaCCKFVv4TSAad5oXtWBs=</p>
   </section>
   <section id="c-slider" class="component">
     <h3>slider <span class="badge">ui</span></h3>
@@ -5279,6 +5425,7 @@ export const SIGNNG_CHART = [BarChart, LineChart, AreaChart, DonutChart, PieChar
       <summary>Ver fuente — <code>src/components/ui/data-table.ts</code></summary>
       <pre class="src"><code>import { ChangeDetectionStrategy, Component, computed, inject, input, model, output, signal } from &#39;@angular/core&#39;;
 import { NgTemplateOutlet } from &#39;@angular/common&#39;;
+import { CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport } from &#39;@angular/cdk/scrolling&#39;;
 import { cn } from &#39;@/lib/utils&#39;;
 import { Icon } from &#39;@/components/ui/icon&#39;;
 import { SIGNNG_I18N } from &#39;@/components/ui/i18n&#39;;
@@ -5305,7 +5452,7 @@ export interface DataColumn {
  */
 @Component({
   selector: &#39;signng-data-table&#39;,
-  imports: [Icon, NgTemplateOutlet],
+  imports: [Icon, NgTemplateOutlet, CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: &#39;block&#39; },
   template: `
@@ -5344,6 +5491,74 @@ export interface DataColumn {
         &lt;/div&gt;
       }
 
+      @if (virtualScroll() &amp;&amp; !groupBy()) {
+        &lt;!-- Virtualized mode: cdk-virtual-scroll-viewport only renders the ~visible rows (plus a
+             buffer) — real &lt;table&gt;/&lt;tbody&gt; can&#39;t be virtualized (breaks table layout/semantics), so
+             this uses an ARIA grid (role=table/row/cell) over CSS grid instead. Needed once a dataset
+             is too large to paginate away (10k+ rows) — the default paginated &lt;table&gt; below is fine
+             for everything smaller and stays the default (virtualScroll defaults to false). --&gt;
+        &lt;div class=&quot;rounded-md border border-border overflow-hidden&quot; role=&quot;table&quot; [attr.aria-label]=&quot;caption() || null&quot;&gt;
+          &lt;div class=&quot;flex border-b border-border bg-muted/40&quot; role=&quot;row&quot; [style.grid-template-columns]=&quot;gridTemplate()&quot; style=&quot;display: grid;&quot;&gt;
+            @if (selectable()) {
+              &lt;div class=&quot;flex h-11 items-center px-3&quot; role=&quot;columnheader&quot;&gt;
+                &lt;input type=&quot;checkbox&quot; [checked]=&quot;allSelected()&quot; [indeterminate]=&quot;someSelected()&quot; (change)=&quot;toggleAll()&quot; aria-label=&quot;Seleccionar todo&quot; class=&quot;size-4 cursor-pointer accent-[var(--color-primary)]&quot; /&gt;
+              &lt;/div&gt;
+            }
+            @for (col of columns(); track col.key) {
+              &lt;div
+                role=&quot;columnheader&quot;
+                [class]=&quot;cn(&#39;flex h-11 items-center px-4 font-medium text-muted-foreground&#39;, alignCls(col), col.sortable ? &#39;cursor-pointer select-none&#39; : &#39;&#39;)&quot;
+                [attr.aria-sort]=&quot;col.sortable ? ariaSort(col.key) : null&quot;
+                (click)=&quot;col.sortable &amp;&amp; sort(col.key)&quot;
+              &gt;
+                &lt;span class=&quot;inline-flex items-center gap-1&quot;&gt;
+                  {{ col.header }}
+                  @if (col.sortable) {
+                    &lt;signng-icon
+                      [name]=&quot;sortKey() === col.key ? (sortDir() === &#39;asc&#39; ? &#39;chevron-up&#39; : &#39;chevron-down&#39;) : &#39;chevron-down&#39;&quot;
+                      [size]=&quot;13&quot;
+                      [class]=&quot;sortKey() === col.key &amp;&amp; sortDir() !== &#39;none&#39; ? &#39;text-foreground&#39; : &#39;opacity-40&#39;&quot;
+                    /&gt;
+                  }
+                &lt;/span&gt;
+              &lt;/div&gt;
+            }
+          &lt;/div&gt;
+          &lt;cdk-virtual-scroll-viewport [itemSize]=&quot;rowHeight()&quot; [style.height.px]=&quot;viewportHeight()&quot; class=&quot;block&quot;&gt;
+            &lt;div
+              *cdkVirtualFor=&quot;let row of processed(); trackBy: trackRow&quot;
+              role=&quot;row&quot;
+              class=&quot;flex border-b border-border transition-colors hover:bg-muted/50&quot;
+              [class.bg-accent]=&quot;isSelected(row)&quot;
+              [style.grid-template-columns]=&quot;gridTemplate()&quot;
+              [style.height.px]=&quot;rowHeight()&quot;
+              style=&quot;display: grid;&quot;
+            &gt;
+              @if (selectable()) {
+                &lt;div class=&quot;flex items-center px-3&quot; role=&quot;cell&quot;&gt;
+                  &lt;input type=&quot;checkbox&quot; [checked]=&quot;isSelected(row)&quot; (change)=&quot;toggleRow(row)&quot; aria-label=&quot;Seleccionar fila&quot; class=&quot;size-4 cursor-pointer accent-[var(--color-primary)]&quot; /&gt;
+                &lt;/div&gt;
+              }
+              @for (col of columns(); track col.key) {
+                &lt;div [class]=&quot;cn(&#39;flex items-center px-4 truncate&#39;, alignCls(col), col.editable ? &#39;cursor-text&#39; : &#39;&#39;)&quot; role=&quot;cell&quot; (click)=&quot;col.editable &amp;&amp; startEdit(row, col.key)&quot;&gt;
+                  @if (isEditing(row, col.key)) {
+                    &lt;input
+                      [value]=&quot;row[col.key]&quot;
+                      (blur)=&quot;commitEdit(row, col.key, $any($event.target).value)&quot;
+                      (keydown.enter)=&quot;commitEdit(row, col.key, $any($event.target).value)&quot;
+                      (keydown.escape)=&quot;editing.set(null)&quot;
+                      autofocus
+                      class=&quot;h-7 w-full rounded border border-input bg-background px-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring&quot;
+                    /&gt;
+                  } @else {
+                    {{ col.format ? col.format(row[col.key], row) : row[col.key] }}
+                  }
+                &lt;/div&gt;
+              }
+            &lt;/div&gt;
+          &lt;/cdk-virtual-scroll-viewport&gt;
+        &lt;/div&gt;
+      } @else {
       &lt;div class=&quot;overflow-x-auto rounded-md border border-border&quot;&gt;
         &lt;table class=&quot;w-full caption-bottom text-sm&quot;&gt;
           @if (caption()) { &lt;caption class=&quot;mt-2 text-xs text-muted-foreground&quot;&gt;{{ caption() }}&lt;/caption&gt; }
@@ -5409,9 +5624,10 @@ export interface DataColumn {
           &lt;/tbody&gt;
         &lt;/table&gt;
       &lt;/div&gt;
+      }
 
-      &lt;!-- pagination (hidden when grouped) --&gt;
-      @if (!groupBy() &amp;&amp; totalPages() &gt; 1) {
+      &lt;!-- pagination (hidden when grouped or virtualized) --&gt;
+      @if (!groupBy() &amp;&amp; !virtualScroll() &amp;&amp; totalPages() &gt; 1) {
         &lt;div class=&quot;flex items-center justify-between text-sm text-muted-foreground&quot;&gt;
           &lt;span&gt;{{ rangeFrom() }}–{{ rangeTo() }} de {{ processed().length }}&lt;/span&gt;
           &lt;div class=&quot;flex items-center gap-1&quot;&gt;
@@ -5464,6 +5680,10 @@ export class DataTable {
   readonly exportable = input(true);
   readonly groupBy = input&lt;string | null&gt;(null);
   readonly caption = input(&#39;&#39;);
+  /** Skip pagination and virtualize all `processed()` rows instead — for datasets too large to page away. */
+  readonly virtualScroll = input(false);
+  readonly rowHeight = input(44);
+  readonly viewportHeight = input(480);
   readonly selectionChange = output&lt;Row[]&gt;();
 
   protected readonly cn = cn;
@@ -5521,6 +5741,14 @@ export class DataTable {
     }
     return [...map.entries()].map(([key, rows]) =&gt; ({ key, rows }));
   });
+
+  protected readonly gridTemplate = computed(() =&gt; {
+    const sel = this.selectable() ? &#39;40px &#39; : &#39;&#39;;
+    return `${sel}repeat(${this.columns().length}, minmax(0,1fr))`;
+  });
+  protected trackRow(_index: number, row: Row): Row {
+    return row;
+  }
 
   protected colspan(): number {
     return this.columns().length + (this.selectable() ? 1 : 0);
@@ -5613,7 +5841,7 @@ export class DataTable {
 }
 </code></pre>
     </details>
-    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-iVdKgoKsbc9hTnRTQgM2nf85DdGNLzSeimZ8OEfJ+Yw=</p>
+    <p class="integrity" title="Subresource Integrity verificado por el CLI antes de escribir">sha256-1DT7dpsCCc/3yHPbOWFH9/Vy4tPzNRt2HkgO+KWxRIc=</p>
   </section>
   <section id="c-chart-analytics" class="component">
     <h3>chart-analytics <span class="badge">ui</span></h3>

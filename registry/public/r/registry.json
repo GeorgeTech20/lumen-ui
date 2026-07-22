@@ -13,7 +13,7 @@
       "name": "data-table",
       "type": "registry:ui",
       "description": "Smart DataTable: sort, global search, row selection, inline edit, grouping, pagination, CSV export.",
-      "integrity": "sha256-nbgivwchAL9zueGhcMvqEHQ7xUB9R4VKfe0lFqeLo5o="
+      "integrity": "sha256-Nt1/q7z1xsGuWWjsf46x7rcaqIKlTQzimfkmXPLEioI="
     },
     {
       "name": "chart-analytics",
@@ -187,13 +187,13 @@
       "name": "switch",
       "type": "registry:ui",
       "description": "Accessible switch (role=switch) on @signng/core/switch.",
-      "integrity": "sha256-7SnW3k9RuMhtEoxyqRS2V9+kbqZrabFscOPz8mMjalU="
+      "integrity": "sha256-b+nAgCh8zhf4amVzGo/5rfA4PbzQVAmTRSKJFSzKEK8="
     },
     {
       "name": "checkbox",
       "type": "registry:ui",
       "description": "Tri-state checkbox (role=checkbox, mixed) on @signng/core/checkbox.",
-      "integrity": "sha256-iTet7qSiglI/wU2hIj2GSlsMSkUs8BZg/uLNqVTUl3U="
+      "integrity": "sha256-2Y/gVkRj3010DAeB2Sg7mGh+znk+FtAku7fmrnoQ2+g="
     },
     {
       "name": "input",
@@ -229,7 +229,7 @@
       "name": "radio-group",
       "type": "registry:ui",
       "description": "Accessible radio group (roving tabindex, arrow nav) on @signng/core/radio-group.",
-      "integrity": "sha256-UN+leSK4+8UEnY7IllXbhJ+eP4b1wxZb4E4r63bpIfI="
+      "integrity": "sha256-0FvE/FBopl/ZGzwrBcE77fibf7MJTPuvd+XSYiKbvoE="
     },
     {
       "name": "popover",
@@ -253,7 +253,7 @@
       "name": "select",
       "type": "registry:ui",
       "description": "Select: trigger + CDK overlay hosting @angular/aria Listbox (single-select).",
-      "integrity": "sha256-7+xpgo6QZlpH29RBgECd5SOw3cYjGzMLSCMLLE1ZFWI="
+      "integrity": "sha256-XqpGDysu5H3AkrG8AiUsTgxlUsXx2W/YxK7IznEFpyI="
     },
     {
       "name": "card",
@@ -473,6 +473,6 @@
     }
   ],
   "algorithm": "ed25519",
-  "signature": "pWZ8MpSRzVwqQ0BdZpeuSwga4/WX9mFyiqzWSAGqJ6WXbENWC2R3iwFNrWNoxBByo//BfVtZz5PWdStm/Y/uCg==",
+  "signature": "OnnqMq9FHdOZoZBEUNoFprts2xsiV9AL2EA6cKAbA6KIo9lJaTdokXuHAdzGLfnnH0V2ibUAMm3WiiLBB9rbAQ==",
   "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATRx/hFf/r6/Z9PiBw9FwlYHmZz0X1k0grDEAD2eD2yE=\n-----END PUBLIC KEY-----\n"
 }

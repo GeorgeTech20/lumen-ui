@@ -1,6 +1,6 @@
 {
   "name": "@signng/core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/GeorgeTech20/signng.git" },
   "peerDependencies": {

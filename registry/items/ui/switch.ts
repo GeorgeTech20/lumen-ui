@@ -1,18 +1,34 @@
-import { ChangeDetectionStrategy, Component, booleanAttribute, input, model } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  booleanAttribute,
+  computed,
+  effect,
+  forwardRef,
+  input,
+  model,
+  signal,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SignngSwitch } from '@signng/core/switch';
 import { cn } from '@/lib/utils';
 
-/** Styled Switch (helm). Behaviour + a11y from the versioned @signng/core/switch primitive. */
+/**
+ * Styled Switch (helm). Behaviour + a11y from the versioned @signng/core/switch primitive.
+ * Implements ControlValueAccessor — works with `formControlName`/`[(ngModel)]`.
+ */
 @Component({
   selector: 'signng-switch',
   imports: [SignngSwitch],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => Switch), multi: true }],
   template: `
     <button
       type="button"
       signngSwitch
       [(checked)]="checked"
-      [disabled]="disabled()"
+      [disabled]="isDisabled()"
+      (blur)="onTouched()"
       [attr.aria-labelledby]="ariaLabelledby()"
       [attr.aria-label]="ariaLabel()"
       [class]="
@@ -29,11 +45,34 @@ import { cn } from '@/lib/utils';
     </button>
   `,
 })
-export class Switch {
+export class Switch implements ControlValueAccessor {
   readonly checked = model(false);
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string | undefined>(undefined);
   readonly ariaLabelledby = input<string | undefined>(undefined);
   readonly class = input('');
   protected readonly cn = cn;
+
+  private readonly formDisabled = signal(false);
+  protected readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
+
+  private onChange: (value: boolean) => void = () => {};
+  protected onTouched: () => void = () => {};
+
+  constructor() {
+    effect(() => this.onChange(this.checked()));
+  }
+
+  writeValue(value: boolean): void {
+    this.checked.set(!!value);
+  }
+  registerOnChange(fn: (value: boolean) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.formDisabled.set(isDisabled);
+  }
 }

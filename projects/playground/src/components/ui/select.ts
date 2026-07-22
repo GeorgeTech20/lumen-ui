@@ -1,4 +1,16 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, model, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  booleanAttribute,
+  computed,
+  effect,
+  forwardRef,
+  inject,
+  input,
+  model,
+  signal,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CdkTrapFocus, _IdGenerator } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin, type ConnectedPosition } from '@angular/cdk/overlay';
 import { Listbox, Option } from '@angular/aria/listbox';
@@ -22,7 +34,9 @@ export interface SelectOption {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(document:keydown.escape)': 'onEscape()',
+    '(focusout)': 'onTouched()',
   },
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => Select), multi: true }],
   template: `
     <button
       cdkOverlayOrigin
@@ -33,13 +47,14 @@ export interface SelectOption {
       [attr.aria-expanded]="open()"
       [attr.aria-controls]="open() ? listboxId : null"
       [attr.aria-label]="label() || null"
+      [disabled]="isDisabled()"
       [class]="
         cn(
           'flex h-10 w-full min-w-48 items-center justify-between gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
           class()
         )
       "
-      (click)="open.set(!open())"
+      (click)="!isDisabled() && open.set(!open())"
     >
       <span [class.text-muted-foreground]="value() === null">{{ selectedLabel() }}</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="size-4 opacity-60" aria-hidden="true">
@@ -81,13 +96,14 @@ export interface SelectOption {
     </ng-template>
   `,
 })
-export class Select {
+export class Select implements ControlValueAccessor {
   protected readonly i18n = inject(SIGNNG_I18N);
   readonly options = input<SelectOption[]>([]);
   readonly value = model<string | null>(null);
   readonly placeholder = input('');
   readonly label = input('');
   readonly class = input('');
+  readonly disabled = input(false, { transform: booleanAttribute });
   readonly open = signal(false);
 
   protected readonly cn = cn;
@@ -96,6 +112,29 @@ export class Select {
     () => this.options().find((o) => o.value === this.value())?.label ?? (this.placeholder() || this.i18n.selectPlaceholder),
   );
   protected readonly listboxValue = computed(() => (this.value() !== null ? [this.value()!] : []));
+
+  private readonly formDisabled = signal(false);
+  protected readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
+
+  private onChangeCb: (value: string | null) => void = () => {};
+  protected onTouched: () => void = () => {};
+
+  constructor() {
+    effect(() => this.onChangeCb(this.value()));
+  }
+
+  writeValue(value: string | null): void {
+    this.value.set(value);
+  }
+  registerOnChange(fn: (value: string | null) => void): void {
+    this.onChangeCb = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.formDisabled.set(isDisabled);
+  }
 
   protected onChange(values: string[]): void {
     this.value.set(values[0] ?? null);

@@ -83,7 +83,8 @@ export class SignngRadio {
 export class SignngRadioGroup {
   /** Two-way bound selected value: `[(value)]`. */
   readonly value = model<string | null>(null);
-  readonly disabled = input(false, { transform: booleanAttribute });
+  /** `model()` so a CVA wrapper (or any consumer) can set it imperatively, not just via `[disabled]`. */
+  readonly disabled = model(false);
   readonly orientation = input<'horizontal' | 'vertical'>('vertical');
 
   readonly items = contentChildren(SignngRadio);
